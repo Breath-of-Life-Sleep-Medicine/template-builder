@@ -3,6 +3,7 @@
 
   function get_map() {
     return {
+      "scored_at": clip_percent(scored_at.value, 0, 3, 4),
       "duration": clip_minutes(duration.value),
       "ahi": clip_index(ahi.value),
       "ai": clip_index(ai.value), // calculate
@@ -16,7 +17,7 @@
       "pulse_min": clip_number(pulse_min.value, 1, 0),
       "pulse_avg": clip_number(pulse_avg.value, 1, 0),
       "pulse_max": clip_number(pulse_max.value, 1, 0),
-      "snores": snores.value,
+      "snores": clip_number(snores.value, 0, 0),
     };
   }
 
@@ -25,6 +26,15 @@
     ai.dispatchEvent(new Event('change'));
   }
 </script>
+
+<!-- comments: scored at -->
+
+<label for="scored_at">Comments</label>
+<select id="scored_at" class="form-control">
+  <option value="4" selected>empty / unspecified</option> <!--default value is 4%-->
+  <option value="3">3%</option>
+  <option value="4">4%</option>
+</select>
 
 <!-- duration -->
 

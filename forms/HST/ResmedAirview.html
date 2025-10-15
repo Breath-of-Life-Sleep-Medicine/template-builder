@@ -10,6 +10,7 @@
     let duration = duration_str(...Object.values((duration2.checked ? duration2_value : duration1_value)));
 
     let map = {
+      "scored_at": clip_percent(scored_at.value,0,3,4),
       "start": time_str(start),
       "end": time_str(end),
       "duration": duration,
@@ -48,6 +49,11 @@
     hi.value = ahi.value - ai.value;
     hi.dispatchEvent(new Event('change'));
   }
+
+  function update_scored_at(event, guidelines, scored_at) {
+    scored_at.value = guidelines.value;
+  }
+
 </script>
 
 <!-- resmed airview form -->
@@ -197,7 +203,26 @@
   <span class="input-group-text">bpm</span>
 </div>
 
+<!-- snores -->
 <div class="form-floating">
   <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="snores" class="form-control" aria-label="Number of snores" placeholder="">
   <label for="snores">Snores</label>
+</div>
+
+<!-- scored_at -->
+
+<label for="">Analysis guidelines AASM</label>
+<select name="" id="guidelines" class="form-control" onchange="update_scored_at(event, guidelines, scored_at);">
+  <!-- 2007: 4% -->
+  <option value="4" selected>2007</option>
+  <!-- 2012: 3% -->
+  <option value="3">2012</option>
+</select>
+
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 3, 4)" name="" id="scored_at" class="form-control calculated" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="" value="4">
+    <label for="scored_at">Hypopneas scored at oxygen desaturation %</label>
+  </div>
+  <span class="input-group-text">%</span>
 </div>
