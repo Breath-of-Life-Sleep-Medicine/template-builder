@@ -1,0 +1,142 @@
+<script>
+  initialize();
+
+  function get_map() {
+    return {
+      "duration": clip_minutes(duration.value),
+      "ahi": clip_index(ahi.value),
+      "ai": clip_index(ai.value), // calculate
+      "hi": clip_index(hi.value),
+      "s_ahi": clip_index(s_ahi.value),
+      "s_percent": clip_percent(s_percent.value),
+      "ox_avg": clip_percent(ox_avg.value),
+      "ox_min": clip_percent(ox_min.value),
+      "odi": clip_index(odi.value),
+      "od_duration": clip_minutes(od_duration.value),
+      "pulse_min": clip_number(pulse_min.value, 1, 0),
+      "pulse_avg": clip_number(pulse_avg.value, 1, 0),
+      "pulse_max": clip_number(pulse_max.value, 1, 0),
+      "snores": snores.value,
+    };
+  }
+
+  function update_ai(event, ahi, ai, hi) {
+    ai.value = ahi.value - hi.value;
+    ai.dispatchEvent(new Event('change'));
+  }
+</script>
+
+<!-- duration -->
+
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="duration" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="duration">Total recording time</label>
+  </div>
+  <span class="input-group-text">min</span>
+</div>
+
+
+<div class="input-group">
+  <!-- ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control" onchange="validate.call(this, event, 1, 0); update_ai(event, ahi, ai, hi);" placeholder="">
+    <label for="ahi">AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- ai: calculate ai from ahi & hi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ai" class="form-control calculated" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="ai">Apnea index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- hi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="hi" class="form-control" onchange="validate.call(this, event, 1, 0); update_ai(event, ahi, ai, hi);" placeholder="">
+    <label for="hi">Hypopnea index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label for="">Supine</label>
+<div class="input-group">
+  <!-- s_ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_ahi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="s_ahi">AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- s_percent -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_percent" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="s_percent">Duration</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<label for="oximetry"> Oxygen saturation (oximetry)</label>
+
+<div class="input-group" id="oximetry">
+  <!-- ox_avg -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_avg" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="ox_avg">Mean</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- ox_min -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_min" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="ox_min">Minimum</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<!-- odi -->
+
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="odi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="odi">Oxygen desaturation index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<!-- od_duration -->
+
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="od_duration" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="od_duration">Duration with oxygen saturation <=89%</label>
+  </div>
+  <span class="input-group-text">min</span>
+</div>
+
+<label for="pulse"> Heart rate</label>
+
+<div class="input-group" id="pulse">
+  <!-- pulse_min -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_min" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="pulse_min">Minimum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <!-- pulse_avg -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_avg" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="pulse_avg">Average</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <!-- pulse_max -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_max" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="pulse_max">Maximum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+</div>
+
+<!-- snores -->
+
+<div class="form-floating">
+  <input type="text" inputmode="numeric" id="snores" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+  <label for="snores">Snores</label>
+</div>

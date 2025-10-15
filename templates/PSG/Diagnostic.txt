@@ -1,0 +1,51 @@
+POLYSOMNOGRAM SUMMARY REPORT FOR ADULT DIAGNOSTIC STUDY
+Date of study: ${date}
+Referring provider: ${referring}
+Sleep provider: ${provider}
+Interpreting Sleep Physician: Mary-Alice Jaeger MD
+BRIEF CLINICAL SUMMARY: []
+Medications: []
+ESS: []
+STOPBANG: []
+BMI: []
+SUMMARY OF REPORT: This was an attended overnight DIAGNOSTIC polysomnogram performed at Aspen Sleep Centers monitoring the following physiologic parameters: EEG 4 channels, EOG 2 channels, airflow at the nose and mouth, chin EMG, tibialis EMG, chest and abdominal movements, EKG with surface electrodes, pulse oximetry, and body position. The patient was prepared for the study without difficulty. The waveforms were reviewed and were technically adequate.
+Lights out occurred at []. Study ended at [].
+1. SLEEP STAGES: Total Recording Time: [] minutes, Total Sleep Time: [] minutes,
+Sleep Efficiency: []%.
+Sleep Latency: [] minutes, Wake After Sleep Onset: [] minutes, REM Latency: [] minutes
+Sleep architecture: Stage N1: []%, Stage N2: []%, Stage N3: []%, Stage R: []%.
+Sleep architecture distribution is [].
+2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
+AHI: []/hr, RDI: []/hr.
+CENTRAL APNEAS: [], OBSTRUCTIVE APNEAS: [], MIXED APNEAS: [], HYPOPNEAS: [], RERA: []
+Non-REM AHI: []/hr, REM AHI: []/hr
+Snoring was [].
+3. BODY POSITION: Supine: []% TST, Prone: []% TST, Left Side: []% TST, Right Side: []% TST
+Left Side RDI: []/hr, Right Side RDI: []/hr, Supine RDI: []/hr.
+4. AROUSALS: Total arousals: [], Spontaneous arousal index: []/hr,
+Respiratory arousal index: []/hr
+5. EMG: Total Limb Movements: [], LMAI: []/hr, PLM index: []/hr
+6. OXYGEN SATURATION on room air: Wake Average: []%
+Sleep: Average: []%, Minimum: []%, Time spent <= 88%: [] minutes
+7. HEART RATE during sleep: Minimum: [] bpm, Average: [] bpm, Maximum: [] bpm
+No significant cardiac arrhythmias were identified.
+IMPRESSIONS:
+1. [] Obstructive sleep apnea [] significant oxygen desaturations.
+1. No evidence of clinically significant obstructive sleep apnea identified on this diagnostic polysomnogram.
+[]. [] Sleep efficiency
+[]. Sleep onset delay
+[]. Short sleep onset latency
+[]. Excessive Daytime Sleepiness with high ESS score
+[]. Class [] Obesity with BMI: []
+[]. Snoring
+RECOMMENDATIONS:
+1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] centimeters H2O with EPR 3 cm H2O and with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
+Alternatively, the patient may benefit from oral appliance therapy provided by a dentist.
+[]. Consider other causes of subjective daytime fatigue/sleepiness/insomnia, such as poor sleep hygiene, insufficient sleep, irregular sleep-wake pattern/circadian rhythm disorder, medication/substance effects, mood disorders, medical disorders, primary hypersomnias, etc. Clinical correlation with further evaluation/management as indicated is recommended.
+[]. If the patient is interested in further management for primary snoring, then therapeutic options as clinically appropriate may include optimization of nasal breathing(saline rinses, nasal dilators, nasal lubricants, nasal breathing practice, nasal steroids, allergy medications, Singulair, ENT referral), sleep/airway dental/orthodontic referral for further evaluation and management with arch expansion with fixed or removable appliances, anti snore devices, weight loss, physical exercise, etc. Clinical correlation with further evaluation/management as indicated is recommended.
+[]. Central sleep apnea may be associated with obstructive sleep apnea, cardiopulmonary disorders such as CHF, asthma/COPD, obesity hypoventilation syndrome, neurologic disorders such as Chiari malformation, other CNS pathology, medication/substance effects such as with opioid use, etc.. Clinical correlation with further evaluation/management as indicated is recommended.
+[]. Aside from significant obstructive sleep apnea, causes of nocturnal oxygen desaturations may include various disorders such as pulmonary parenchymal and/or vascular disease, cardiac disease, thoracic cage anomalies, neuromuscular disease, medication/substance effects, obesity hypoventilation syndrome, etc.. Clinical correlation with further evaluation/management as indicated is recommended.
+[]. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.
+[]. Under medical supervision, regular exercise as tolerated and weight reduction is encouraged. For patient's with a BMI 35 or greater, bariatric/nutritional evaluation may be appropriate.
+COMMENT: This patient has been seen in consultation by [] and will be contacted with the results of the study.
+Thank you very much for your kind referral.

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- jQuery from google CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script>
+    // document ready function (short version)
+    $(function(){
+      load_form(template, null);
+    });
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Template builder</h1>
+
+    <!-- shortcuts -->
+
+    <div class="accordion" id="accordion_shortcuts">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Shortcuts
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="accordion_shortcuts">
+          <div class="accordion-body">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <td>Next field</td>
+                  <td><kbd>Tab</kbd></td>
+                </tr>
+                <tr>
+                  <td>Previous field</td>
+                  <td><kbd>Shift</kbd> + <kbd>Tab</kbd></td>
+                </tr>
+                <tr>
+                  <td>Copy template to clipboard</td>
+                  <td><kbd>Enter</kbd></td>
+                </tr>
+                <tr>
+                  <td>Clear the form</td>
+                  <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- form -->
+
+    <form id="formID">
+      <!-- general -->
+      <div class="form-floating">
+        <input type="date" id="date" class="form-control">
+        <label for="date">Date of study</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" id="referring" placeholder="" aria-label="Referring provider" class="form-control">
+        <label for="referring">Referring provider</label>
+      </div>
+      <div class="form-floating">
+        <input list="provider_options" id="provider" placeholder="" aria-label="Sleep provider" class="form-control">
+        <datalist name="" id="provider_options">
+          <option value="Mary-Alice Jaeger MD">Mary-Alice Jaeger MD</option>
+          <option value="Lisa Williams FNP">Lisa Williams FNP</option>
+          <option value="Ryan Smith PAC">Ryan Smith PAC</option>
+          <option value="Michael Coats MD">Michael Coats MD</option>
+        </datalist>
+        <label for="provider">Sleep provider</label>
+      </div>
+
+      <div class="form-floating">
+        <select name="" id="template" placeholder="" aria-label="Template" class="form-control" onchange="load_form.call(this, event)">
+          <optgroup label="HST">
+            <option value="HST/ResmedAirview">Resmed Airview</option>
+            <option value="HST/MediByte">MediByte</option>
+            <option value="HST/AliceOne">AliceOne</option>
+          </optgroup>
+          <hr>
+          <optgroup label="PSG">
+            <option value="PSG/Diagnostic">Diagnostic Polysomnogram</option>
+            <option value="PSG/SplitNight">Split Night Polysomnogram</option>
+            <option value="PSG/PAP">PAP Titration Polysomnogram</option>
+            <option value="PSG/Inspire">Inspire Titration Polysomnogram</option>
+            <option value="PSG/MSLT">MSLT</option>
+          </optgroup>
+        </select>
+        <label for="template">Template</label>
+      </div>
+
+      <hr>
+
+      <div id="form_container"></div>
+
+      <hr>
+
+      <input type="submit" value="copy template to clipboard">
+    </form>
+    
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

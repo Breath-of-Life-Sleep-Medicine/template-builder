@@ -1,0 +1,51 @@
+POLYSOMNOGRAM SUMMARY REPORT FOR ADULT SPLIT-NIGHT STUDY
+Date of study: ${date}
+Referring provider: ${referring}
+Sleep provider: ${provider}
+Interpreting Sleep Physician: Mary-Alice Jaeger MD
+BRIEF CLINICAL SUMMARY: []
+Medications: []
+ESS: []
+STOPBANG: []
+BMI: []
+SUMMARY OF REPORT: This was an attended overnight SPLIT NIGHT polysomnogram performed at Aspen Sleep Centers monitoring the following physiologic parameters: EEG 4 channels, EOG 2 channels, airflow at the nose and mouth, chin EMG, tibialis EMG, chest and abdominal movements, EKG with surface electrodes, pulse oximetry, and body position. The patient was prepared for the study without difficulty. The waveforms were reviewed and were technically adequate.
+Lights out occurred at ${start}.
+DIAGNOSTIC PORTION OF STUDY:
+1. SLEEP STAGES: Total Recording Time: ${trt} minutes, Total Sleep Time: ${tst} minutes, Sleep Efficiency: ${efficiency}%.
+Sleep Latency: ${latency} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_latency}
+Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
+Sleep architecture distribution is [].
+2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
+AHI: ${ahi} EVENTS PER HOUR, RDI: ${rdi} EVENTS PER HOUR.
+CENTRAL APNEAS: ${a_cc}, OBSTRUCTIVE APNEAS: ${a_oc}, MIXED APNEAS: ${a_mc}, HYPOPNEAS: ${h_c}, RERA: ${rera}
+Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}.
+Snoring was [].
+3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
+${rdi_positions}.
+4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index: ${arousals_sai}/hr, Respiratory Arousal Index: ${asousals_rai}/hr.
+5. EMG: Total Limb Movements: ${limb}, Limb Movement Arousal Index: ${limb_ai}/hr. PLM index: ${limb_plmi}/hr.
+6. OXYGEN SATURATION on room air: Wake Average: ${ox_w_avg}%, Sleep: Average: ${ox_tst_avg}%, Minimum: ${ox_tst_min}%, Time spent <= 88%: ${od_duration} minutes
+7. HEART RATE during sleep: Minimum: ${pulse_min} bpm, Average: ${pulse_avg} bpm, Maximum: ${pulse_max} bpm. No significant cardiac arrhythmias were identified.
+TITRATION PORTION OF STUDY:
+A CPAP titration protocol was instituted at ${ti_start}. Study ended at ${ti_end}.
+Total Recording Time: ${ti_trt} minutes. Total Sleep Time: ${ti_tst} minutes.
+Sleep Efficiency: ${ti_efficiency}%, Sleep Latency: ${ti_latency} minutes, REM Sleep: ${ti_rem_duration} minutes/${ti_rem}%, Supine Sleep: ${ti_supine_duration} minutes/${ti_supine}%.
+Titration AHI: ${ti_ahi}/hr, Titration CAI: ${ti_cai}/hr
+Mask: [], Initial Pressure: [] centimeters H2O.
+Pressure was titrated up to [] centimeters H2O reduced the AHI to [] and improved the oxygen saturation to [].
+IMPRESSIONS:
+1. [] Obstructive sleep apnea [] significant oxygen desaturations. These events were improved with [].
+[]. [] Sleep efficiency
+[]. Sleep onset delay
+[]. Short sleep onset latency
+[]. Excessive Daytime Sleepiness with high ESS score
+[]. Class [] Obesity with BMI: []
+[]. Snoring
+RECOMMENDATIONS:
+1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] cm H2O with EPR 3 cm H2O with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
+[]. Central sleep apnea may be associated with obstructive sleep apnea, cardiopulmonary disorders such as CHF, asthma/COPD, obesity hypoventilation syndrome, neurologic disorders such as Chiari malformation, other CNS pathology, medication/substance effects such as with opioid use, etc. Clinical correlation with further evaluation/management as indicated is recommended.
+[]. Aside from significant obstructive sleep apnea, causes of nocturnal oxygen desaturations may include various disorders such as pulmonary parenchymal and/or vascular disease, cardiac disease, thoracic cage anomalies, neuromuscular disease, medication/substance effects, obesity hypoventilation syndrome, etc.. Clinical correlation with further evaluation/management as indicated is recommended.
+[]. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.
+[]. Under medical supervision, regular exercise as tolerated and weight reduction is encouraged. For patient's with a BMI 35 or greater, bariatric/nutritional evaluation may be appropriate.
+COMMENT: This patient has been seen in consultation by [] and will be contacted with the results of the study.
+Thank you very much for your kind referral.

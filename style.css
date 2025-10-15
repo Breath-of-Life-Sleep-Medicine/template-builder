@@ -1,0 +1,32 @@
+.accordion-button.collapsed {
+  background: #252525;
+  color: white;
+}
+
+/* Modify the floated position and size */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  transform: scale(0.75) translateY(-1.5rem) translateX(0.25rem);
+  font-size: 0.875em;
+}
+
+/* Remove bulky spacing */
+.form-floating > .form-control, .form-floating label, .input-group-text, .form-floating > .form-control:not(:placeholder-shown), .form-floating > .form-control:placeholder-shown, input[type=text] {
+  padding: 5px;
+  height: auto;
+  min-height: auto;
+  line-height: normal;
+}
+
+form > div, #form_container > div, #form_container > label {
+  margin-top: 15px;
+}
+
+#form_container > label + div {
+  margin-top: 7px;
+}
+
+#form_container > hr + label {
+  margin-top: 0px;
+}

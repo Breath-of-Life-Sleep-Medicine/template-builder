@@ -1,0 +1,203 @@
+<script>
+  initialize();
+
+  // keep updated duration value objects here b/c input.value can't store objects, only string
+  var duration1_value = {"h":0, "m":0};
+  var duration2_value = {"h":0, "m":0};
+
+  function get_map() {
+    let [start, end] = get_dt(date.value, time_started.value, time_ended.value);
+    let duration = duration_str(...Object.values((duration2.checked ? duration2_value : duration1_value)));
+
+    let map = {
+      "start": time_str(start),
+      "end": time_str(end),
+      "duration": duration,
+      "ahi": clip_index(ahi.value),
+      "ai": clip_index(ai.value),
+      "hi": clip_index(hi.value),
+      "s_ahi": clip_index(s_ahi.value),
+      "s_duration": duration_str(s_duration_hr.value, s_duration_min.value),
+      "s_percent": clip_percent(s_percent, 0),
+      "ox_base": clip_percent(ox_base.value, 0),
+      "ox_avg": clip_percent(ox_avg.value, 0),
+      "ox_min": clip_percent(ox_min.value, 0),
+      "odi": clip_index(odi.value),
+      "od_duration": duration_str(od_duration_hr.value, od_duration_min.value),
+      "od_percent": clip_percent(od_percent.value,0),
+      "pulse_min": clip_number(pulse_min.value,0,0),
+      "pulse_avg": clip_number(pulse_avg.value,0,0),
+      "pulse_max": clip_number(pulse_max.value,0,0),
+      "snores": clip_number(snores.value,0,0),
+    };
+
+    return map;
+  }
+
+  function update_duration(event) {
+    let [start, end] = get_dt("01/01/2000", time_started.value, time_ended.value);
+    let d1 = get_duration(start, new Date(end.getTime() - 1000 * 60));
+    let d2 = get_duration(start, end);
+    duration1_label.textContent = duration_short_str(...Object.values(d1));
+    duration2_label.textContent = duration_short_str(...Object.values(d2));
+    duration1_value = d1;
+    duration2_value = d2;
+  }
+
+  function update_hi(event, ahi, ai, hi) {
+    hi.value = ahi.value - ai.value;
+    hi.dispatchEvent(new Event('change'));
+  }
+</script>
+
+<!-- resmed airview form -->
+
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="time_started" class="form-control" onchange="update_duration.call(this, event)">
+    <label for="time_started">Started</label>
+  </div>
+  <!-- end -->
+  <div class="form-floating">
+    <input type="time" id="time_ended" class="form-control" onchange="update_duration.call(this, event)">
+    <label for="time_ended">Ended</label>
+  </div>
+</div>
+
+
+<!-- duration: semi-calculation - choose between calculation - 1 and calculation-->
+
+<label for="">Duration</label>
+
+<div>
+  <div class="form-check-inline">
+    <input class="form-check-input" type="radio" name="duration" id="duration1" inputmode="numeric" checked>
+    <label class="form-check-label" for="duration1" id="duration1_label">00:00</label>
+  </div>
+  <div class="form-check-inline">
+    <input class="form-check-input" type="radio" name="duration" id="duration2" inputmode="numeric">
+    <label class="form-check-label" for="duration2" id="duration2_label">00:00</label>
+  </div>
+</div>
+
+
+<div class="input-group">
+  <!-- ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0); update_hi(event, ahi, ai, hi);" id="ahi" class="form-control" aria-label="AHI" placeholder="AHI">
+    <label for="ahi">AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- apnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0); update_hi(event, ahi, ai, hi);" id="ai" class="form-control" aria-label="Apnea index" placeholder="Apnea index">
+    <label for="ai">Apnea index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- hypopnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" id="hi" class="form-control calculated" aria-label="Apnea index" placeholder="Apnea index">
+    <label for="hi">Hypopnea index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<!-- supine ahi -->
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" id="s_ahi" class="form-control" aria-label="Supine AHI" placeholder="Supine AHI">
+    <label for="s_ahi">Supine AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label for="">Duration supine</label>
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="s_duration_hr" class="form-control" aria-label="hours spent supine" placeholder="">
+    <label for="s_duration_hr">Hours</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="s_duration_min" class="form-control" aria-label="minutes spent supine" placeholder="">
+    <label for="s_duration_min">Minutes</label>
+  </div>
+  <span class="input-group-text">/</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" name="" id="s_percent" class="form-control" aria-label="percent of flow monitoring time spent supine" placeholder="">
+    <label for="s_percent">% FMT</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<label for=""> Oxygen saturation</label>
+
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="ox_base" class="form-control" aria-label="" placeholder="">
+    <label for="ox_base">Baseline</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="ox_avg" class="form-control" aria-label="" placeholder="">
+    <label for="ox_avg">Average</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="ox_min" class="form-control" aria-label="" placeholder="">
+    <label for="ox_min">Minimum</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" name="" id="odi" class="form-control" aria-label="" placeholder="">
+    <label for="odi">Oxygen Desaturation Index (ODI)</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label for="">Duration oxygen saturation <= 88%</label>
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="od_duration_hr" class="form-control" aria-label="hours spent under 88% oxygen saturation" placeholder="">
+    <label for="od_duration_hr">Hours</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="od_duration_min" class="form-control" aria-label="minutes spent under 88% oxygen saturation" placeholder="">
+    <label for="od_duration_min">Minutes</label>
+  </div>
+  <span class="input-group-text">/</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" name="" id="od_percent" class="form-control" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="">
+    <label for="od_percent">% OMT</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<label for="">Heart rate</label>
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="pulse_min" class="form-control" aria-label="" placeholder="">
+    <label for="pulse_min">Minimum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="pulse_avg" class="form-control" aria-label="" placeholder="">
+    <label for="pulse_avg">Average</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="pulse_max" class="form-control" aria-label="" placeholder="">
+    <label for="pulse_max">Maximum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+</div>
+
+<div class="form-floating">
+  <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="snores" class="form-control" aria-label="Number of snores" placeholder="">
+  <label for="snores">Snores</label>
+</div>

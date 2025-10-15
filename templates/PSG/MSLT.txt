@@ -1,0 +1,45 @@
+POLYSOMNOGRAPHY SUMMARY REPORT FOR MULTIPLE SLEEP LATENCY TEST
+Date of study: ${date}
+Referring provider: ${referring}
+Sleep provider: ${provider}
+Interpreting Sleep Physician: []
+CLINICAL SUMMARY: []
+Medications: []
+Restless legs symptoms: []
+Sleep behaviors: []
+Cataplexy/hypnagogic hallucinations/sleep paralysis: []
+Caffeine: [], Alcohol: [], Tobacco: [], Recreational Drugs: []
+ESS:[]
+BMI: []
+PSG from preceding night findings: AHI [] events per hour, TST: [] Minutes, SLEEP EFFICIENCY: [] %, Sleep Onset Latency: [] Minutes, REM Latency: [] Minutes
+SLEEP DIARY: []
+FINDINGS:
+NAP 1: Time of nap: [], Sleep latency: [], REM latency: []
+NAP 2: Time of nap: [], Sleep latency: [], REM latency: []
+NAP 3: Time of nap: [], Sleep latency: [], REM latency: []
+NAP 4: Time of nap: [], Sleep latency: [], REM latency: []
+NAP 5: Time of nap: [], Sleep latency: [], REM latency: []
+AVERAGE SLEEP LATENCY: []
+SLEEP ONSET REM PERIODS: []
+IMPRESSIONS:
+1. [] Average sleep onset latency of [] which is [] with hypersomnia.
+2. [] sleep onset REM periods.
+3. Diagnostic polysomnography performed the night prior to this study showed no evidence of clinically significant obstructive sleep apnea and found a REM sleep latency of [].
+4. This MSLT data [] suggestive of a diagnosis of narcolepsy.
+The differential diagnosis for hypersomnia without obstructive sleep apnea and without the presence of 2 or more sleep onset REM periods on the MSLT proceeding PSG includes idiopathic hypersomnia, insufficient sleep syndrome, hypersomnolence due to a medical disorder, hypersomnolence due to a psychiatric disorder such as depression, circadian rhythm disorders, RLS/PLMD, neuro degenerative disorders, genetic disorders, psychogenic sleepiness, and hypersomnolence due to medication or substance use.
+Of note, the diagnosis of idiopathic hypersomnia according to ICSD-3-TR:
+All of the following:
+1. Daily periods of irrepressible need to sleep or daytime lapses into drowsiness or sleep that occurred for at least 3 months
+2. Cataplexy not present
+3. PSG and MSLT findings not supportive of a diagnosis of narcolepsy type 1 or 2
+4. Presence of at least 1 of the following:
+-MSLT with mean sleep latency of less than or equal to 8 minutes
+-total 24 hours sleep time greater than/equal to 660 minutes(typically 12-14 hours) as measured by either 24 hour polysomnography or by wrist actigraphy in association with a sleep log average over at least 7 days with unrestricted sleep
+-insufficient sleep syndrome is ruled out by failure of sleepiness to improve after an adequate trial of increased nocturnal time in bed preferably documented on at least 1 week of actigraphy
+-no better explanation for signs and symptoms is provided by another sleep disorder, circadian rhythm sleep-awake disorder, medical disorder, mental disorder, or medication/substance use or withdrawal.
+PLAN:
+1. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.
+2. Use of sleep diaries, actigraphy, review of medication/substance use, and other medical concerns may be helpful to evaluate hypersomnia further.
+3. Recommend patient follow up with their sleep provider or primary care provider as indicated.
+This patient has been seen in consultation with [] and will be advised of the study results.
+Thank you for your kind referral.
