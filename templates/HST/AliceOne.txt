@@ -9,16 +9,16 @@ Epworth Sleepiness Scale: []
 STOPBANG: []
 BMI: []
 RESULTS: This was an unattended overnight portable home sleep study performed by Aspen Sleep Centers using an Alice NightOne Type III device. The following physiologic parameters were recorded: Airflow at the nose, chest and abdominal movements, and pulse oximetry. The waveforms were reviewed and were technically adequate. Hypopneas were scored using 4% oxygen desaturation.
-Recording: Started: [], Ended: []
-1. DURATION OF EVALUATION: []
-2. RESPIRATORY EVENTS: AHI: []/hr
-Apnea Index: []/hr, Hypopnea Index: []/hr
+Recording: Started: ${start}, Ended: ${end}
+1. DURATION OF EVALUATION: ${duration}
+2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
+Apnea Index: ${ai}/hr, Hypopnea Index: ${hi}/hr
 The patient's respiratory events were primarily obstructive.
-3. OXYGEN SATURATION: Average: []%, Minimum: []%
-Oxygen Desaturation Index: [] Events per hour
-Duration of study with oxygen saturation <89%: []
-4. HEART RATE: Minimum: [] BPM, Average: [] BPM, Maximum: [] BPM
-5. SNORING EVENTS: []
+3. OXYGEN SATURATION: Average: ${ox_avg}%, Minimum: ${ox_min}%
+Oxygen Desaturation Index: ${odi} Events per hour
+Duration of study with oxygen saturation <89%: ${od_duration}
+4. HEART RATE: Minimum: ${pulse_min} BPM, Average: ${pulse_avg} BPM, Maximum: ${pulse_max} BPM
+5. SNORING EVENTS: ${snores}
 IMPRESSIONS:
 1. Abnormal portable sleep study consistent with [] Obstructive Sleep Apnea [] significant oxygen desaturations.
 []. Excessive daytime sleepiness with high ESS score.
