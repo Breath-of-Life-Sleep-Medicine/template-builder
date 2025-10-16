@@ -54,21 +54,28 @@ function get_duration(start_dt, end_dt) {
   return {h, m};
 }
 
-// {4, 0} -> 4 hours 0 minutes
-// {0, 0} -> 0 minutes
-// {1, 1} -> 1 hour 1 minute
-function duration_str(h, m) {
-  let s = "";
-  if (h > 0) {
-    s += `${h} hour${(h!=1)?"s":""} `;
+// {h:4, m:0} -> 4 hours 0 minutes
+// {h:0, m:0} -> 0 minutes
+// {h:1, m:1} -> 1 hour 1 minute
+function duration_str({h, m, s}) {
+  let str = [];
+  if (h > 0 || (m === undefined && s === undefined)) {
+    str.push(`${h} hour${(h!=1)?"s":""}`);
   }
-  s += `${m} minute${(m!=1)?"s":""}`;
-  return s;
+  if (m > 0 || s === undefined) {
+    str.push(`${m} minute${(m!=1)?"s":""}`);
+  }
+  if (s !== undefined) {
+    str.push(`${s} second${(s!=1)?"s":""}`);
+  }
+  return str.join(" ");
 }
 
-// convert {h, m} object into h...:mm format string
-function duration_short_str(h, m) {
-  return `${h}:${zero_pad(m,2)}`;
+// converts {h, m} object into ...h:mm format string
+// converts {m, s} object into ...m:ss format string
+// converts {h, m, s} object into ...h:mm:ss format string
+function duration_short_str(v1, v2, v3=null) {
+  return (v3 === null) ? `${v1}:${zero_pad(v2,2)}` : `${v1}:${zero_pad(v2,2)}:${zero_pad(v3,2)}`;
 }
 
 function load_form(event) {

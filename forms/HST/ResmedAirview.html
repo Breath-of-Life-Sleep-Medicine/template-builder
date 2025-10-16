@@ -7,7 +7,7 @@
 
   function get_map() {
     let [start, end] = get_dt(date.value, time_started.value, time_ended.value);
-    let duration = duration_str(...Object.values((duration2.checked ? duration2_value : duration1_value)));
+    let duration = duration_str((duration2.checked ? duration2_value : duration1_value));
 
     let map = {
       "scored_at": clip_percent(scored_at.value,0,3,4),
@@ -18,13 +18,13 @@
       "ai": clip_index(ai.value),
       "hi": clip_index(hi.value),
       "s_ahi": clip_index(s_ahi.value),
-      "s_duration": duration_str(clip_number(s_duration_hr.value,0,0), clip_number(s_duration_min.value,0,0,59)),
+      "s_duration": duration_str({h:clip_number(s_duration_hr.value,0,0), m:clip_number(s_duration_min.value,0,0,59)}),
       "s_percent": clip_percent(s_percent.value, 1),
       "ox_base": clip_percent(ox_base.value, 0),
       "ox_avg": clip_percent(ox_avg.value, 0),
       "ox_min": clip_percent(ox_min.value, 0),
       "odi": clip_index(odi.value),
-      "od_duration": duration_str(clip_number(od_duration_hr.value,0,0), clip_number(od_duration_min.value,0,0,59)),
+      "od_duration": duration_str({h:clip_number(od_duration_hr.value,0,0), m:clip_number(od_duration_min.value,0,0,59)}),
       "od_percent": clip_percent(od_percent.value,0),
       "pulse_min": clip_number(pulse_min.value,0,0),
       "pulse_avg": clip_number(pulse_avg.value,0,0),
