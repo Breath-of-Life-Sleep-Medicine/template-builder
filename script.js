@@ -122,7 +122,7 @@ Output: returns the times as an array of Date objects (datetimes)
 Assumes:
 - less than 24 hours passing between any 2 adjacent times
 ******************************************************************************/
-function get_dt(start_date=null, ...times) {
+function get_dt(start_date, ...times) {
   if (!start_date) start_date = "2025-01-01"; // this will give inaccurate dates, but accurate times
   let dts = [];
   if (times.length == 0) {return dts;}

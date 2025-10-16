@@ -11,14 +11,14 @@ Cataplexy/hypnagogic hallucinations/sleep paralysis: []
 Caffeine: [], Alcohol: [], Tobacco: [], Recreational Drugs: []
 ESS:[]
 BMI: []
-PSG from preceding night findings: AHI [] events per hour, TST: [] Minutes, SLEEP EFFICIENCY: [] %, Sleep Onset Latency: [] Minutes, REM Latency: [] Minutes
+PSG from preceding night findings: AHI ${prev_ahi} events per hour, TST: ${prev_tst} Minutes, SLEEP EFFICIENCY: ${prev_eff} %, Sleep Onset Latency: ${prev_lat} Minutes, REM Latency: ${prev_r_lat}
 SLEEP DIARY: []
 FINDINGS:
-NAP 1: Time of nap: [], Sleep latency: [], REM latency: []
-NAP 2: Time of nap: [], Sleep latency: [], REM latency: []
-NAP 3: Time of nap: [], Sleep latency: [], REM latency: []
-NAP 4: Time of nap: [], Sleep latency: [], REM latency: []
-NAP 5: Time of nap: [], Sleep latency: [], REM latency: []
+NAP 1: Time of nap: ${nap1_start}, Sleep latency: ${nap1_lat}, REM latency: ${nap1_r_lat}
+NAP 2: Time of nap: ${nap2_start}, Sleep latency: ${nap2_lat}, REM latency: ${nap2_r_lat}
+NAP 3: Time of nap: ${nap3_start}, Sleep latency: ${nap3_lat}, REM latency: ${nap3_r_lat}
+NAP 4: Time of nap: ${nap4_start}, Sleep latency: ${nap4_lat}, REM latency: ${nap4_r_lat}
+NAP 5: Time of nap: ${nap5_start}, Sleep latency: ${nap5_lat}, REM latency: ${nap5_r_lat}
 AVERAGE SLEEP LATENCY: []
 SLEEP ONSET REM PERIODS: []
 IMPRESSIONS:

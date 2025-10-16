@@ -1,0 +1,266 @@
+<script>
+  initialize()
+  // TODO: once sessionStorage is in use, use it to load in data from the previous diagnostic PSG to fill in the diagnostic part
+
+  function get_map() {
+    return {
+      // stats from the diagnostic study
+      "prev_ahi":   clip_index(prev_ahi.value),   // AHI (events/hr)
+      "prev_tst":   clip_minutes(prev_tst.value), // total sleep time (minutes)
+      "prev_eff":   clip_percent(prev_eff.value), // sleep efficiency (%)
+      "prev_lat":   clip_minutes(prev_lat.value), // sleep onset latency (minutes)
+       // rem latency - less wake time (minutes)
+      "prev_r_lat": prev_r_na.checked ? "N/A" : clip_minutes(prev_r_lat.value) + " Minutes",
+
+      // MSLT naps
+      // start, sleep latency, REM latency
+      // note: REM latency can be N/A
+      "nap1_start": time_str(...get_dt(null, nap1_start.value)),
+      "nap1_lat": duration_str(clip_number(nap1_lat_min.value,0,0), clip_number(nap1_lat_sec.value,0,0,59)),
+      "nap1_r_lat": nap1_r_na.checked ? "N/A" : duration_str(clip_number(nap1_r_lat_min.value,0,0), clip_number(nap1_r_lat_sec.value,0,0,59)),
+
+      "nap2_start": time_str(...get_dt(null, nap2_start.value)),
+      "nap2_lat": duration_str(clip_number(nap2_lat_min.value,0,0), clip_number(nap2_lat_sec.value,0,0,59)),
+      "nap2_r_lat": nap2_r_na.checked ? "N/A" : duration_str(clip_number(nap2_r_lat_min.value,0,0), clip_number(nap2_r_lat_sec.value,0,0,59)),
+
+      "nap3_start": time_str(...get_dt(null, nap3_start.value)),
+      "nap3_lat": duration_str(clip_number(nap3_lat_min.value,0,0), clip_number(nap3_lat_sec.value,0,0,59)),
+      "nap3_r_lat": nap3_r_na.checked ? "N/A" : duration_str(clip_number(nap3_r_lat_min.value,0,0), clip_number(nap3_r_lat_sec.value,0,0,59)),
+
+      "nap4_start": time_str(...get_dt(null, nap4_start.value)),
+      "nap4_lat": duration_str(clip_number(nap4_lat_min.value,0,0), clip_number(nap4_lat_sec.value,0,0,59)),
+      "nap4_r_lat": nap4_r_na.checked ? "N/A" : duration_str(clip_number(nap4_r_lat_min.value,0,0), clip_number(nap4_r_lat_sec.value,0,0,59)),
+
+      "nap5_start": time_str(...get_dt(null, nap5_start.value)),
+      "nap5_lat": duration_str(clip_number(nap5_lat_min.value,0,0), clip_number(nap5_lat_sec.value,0,0,59)),
+      "nap5_r_lat": nap5_r_na.checked ? "N/A" : duration_str(clip_number(nap5_r_lat_min.value,0,0), clip_number(nap5_r_lat_sec.value,0,0,59)),
+    };
+  }
+
+  function toggle(toggle_class) {
+    elements = document.getElementsByClassName(toggle_class);
+    for (let element of elements) {
+      element.hidden = !element.hidden;
+    }
+  }
+
+</script>
+
+<!-- MSLT form -->
+
+<!-- Diagnostic PSG Portion -->
+<h2>Diagnostic Polysomnogram</h2>
+
+<div class="input-group">
+  <!-- prev: AHI -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="prev_ahi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="prev_ahi">AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<div class="input-group">
+  <!-- prev: total sleep time -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="prev_tst" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="prev_tst">Total sleep time</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- prev: sleep efficiency -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="prev_eff" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="prev_eff">Sleep efficiency</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<div class="input-group">
+  <!-- prev: sleep latency -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="prev_lat" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="prev_lat">Sleep latency</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- prev: REM latency - less wake -->
+  <input type="checkbox" class="btn-check" id="prev_r_na" autocomplete="on" onchange="toggle('prev_r_lat_visibility')">
+  <label class="btn btn-secondary" for="prev_r_na">N/A</label>
+  <div class="form-floating requires_rem prev_r_lat_visibility">
+    <input type="text" inputmode="numeric" id="prev_r_lat" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="prev_r_lat">REM latency (less wake time)</label>
+  </div>
+  <span class="input-group-text requires_rem prev_r_lat_visibility">min</span>
+</div>
+
+<!-- MSLT Portion -->
+<h2>MSLT</h2>
+
+<!-- nap 1 -->
+<label for="">Nap 1</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="nap1_start" class="form-control">
+    <label for="nap1_start">Started</label>
+  </div>
+  <!-- sleep latency -->
+  <span class="input-group-text">sleep latency</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap1_lat_min" class="form-control" placeholder="">
+    <label for="nap1_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap1_lat_sec" class="form-control" placeholder="">
+    <label for="nap1_lat_sec">Seconds</label>
+  </div>
+  <!-- rem latency -->
+  <span class="input-group-text">REM latency</span>
+  <input type="checkbox" class="btn-check" id="nap1_r_na" autocomplete="on" onchange="toggle('nap1_visibility')">
+  <label class="btn btn-secondary" for="nap1_r_na">N/A</label>
+  <div class="form-floating nap1_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap1_r_lat_min" class="form-control" placeholder="">
+    <label for="nap1_r_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text nap1_visibility">:</span>
+  <div class="form-floating nap1_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap1_r_lat_sec" class="form-control" placeholder="">
+    <label for="nap1_r_lat_sec">Seconds</label>
+  </div>
+</div>
+
+<!-- nap 2 -->
+<label for="">Nap 2</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="nap2_start" class="form-control">
+    <label for="nap2_start">Started</label>
+  </div>
+  <!-- sleep latency -->
+  <span class="input-group-text">sleep latency</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap2_lat_min" class="form-control" placeholder="">
+    <label for="nap2_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap2_lat_sec" class="form-control" placeholder="">
+    <label for="nap2_lat_sec">Seconds</label>
+  </div>
+  <!-- rem latency -->
+  <span class="input-group-text">REM latency</span>
+  <input type="checkbox" class="btn-check" id="nap2_r_na" autocomplete="off" onchange="toggle('nap2_visibility')">
+  <label class="btn btn-secondary" for="nap2_r_na">N/A</label>
+  <div class="form-floating nap2_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap2_r_lat_min" class="form-control" placeholder="">
+    <label for="nap2_r_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text nap2_visibility">:</span>
+  <div class="form-floating nap2_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap2_r_lat_sec" class="form-control" placeholder="">
+    <label for="nap2_r_lat_sec">Seconds</label>
+  </div>
+</div>
+
+<!-- nap 3 -->
+<label for="">Nap 3</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="nap3_start" class="form-control">
+    <label for="nap3_start">Started</label>
+  </div>
+  <!-- sleep latency -->
+  <span class="input-group-text">sleep latency</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap3_lat_min" class="form-control" placeholder="">
+    <label for="nap3_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap3_lat_sec" class="form-control" placeholder="">
+    <label for="nap3_lat_sec">Seconds</label>
+  </div>
+  <!-- rem latency -->
+  <span class="input-group-text">REM latency</span>
+  <input type="checkbox" class="btn-check" id="nap3_r_na" autocomplete="off" onchange="toggle('nap3_visibility')">
+  <label class="btn btn-secondary" for="nap3_r_na">N/A</label>
+  <div class="form-floating nap3_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap3_r_lat_min" class="form-control" placeholder="">
+    <label for="nap3_r_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text nap3_visibility">:</span>
+  <div class="form-floating nap3_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap3_r_lat_sec" class="form-control" placeholder="">
+    <label for="nap3_r_lat_sec">Seconds</label>
+  </div>
+</div>
+
+<!-- nap 4 -->
+<label for="">Nap 4</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="nap4_start" class="form-control">
+    <label for="nap4_start">Started</label>
+  </div>
+  <!-- sleep latency -->
+  <span class="input-group-text">sleep latency</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap4_lat_min" class="form-control" placeholder="">
+    <label for="nap4_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap4_lat_sec" class="form-control" placeholder="">
+    <label for="nap4_lat_sec">Seconds</label>
+  </div>
+  <!-- rem latency -->
+  <span class="input-group-text">REM latency</span>
+  <input type="checkbox" class="btn-check" id="nap4_r_na" autocomplete="off" onchange="toggle('nap4_visibility')">
+  <label class="btn btn-secondary" for="nap4_r_na">N/A</label>
+  <div class="form-floating nap4_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap4_r_lat_min" class="form-control" placeholder="">
+    <label for="nap4_r_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text nap4_visibility">:</span>
+  <div class="form-floating nap4_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap4_r_lat_sec" class="form-control" placeholder="">
+    <label for="nap4_r_lat_sec">Seconds</label>
+  </div>
+</div>
+
+<!-- nap 5 -->
+<label for="">Nap 5</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="nap5_start" class="form-control">
+    <label for="nap5_start">Started</label>
+  </div>
+  <!-- sleep latency -->
+  <span class="input-group-text">sleep latency</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap5_lat_min" class="form-control" placeholder="">
+    <label for="nap5_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text">:</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap5_lat_sec" class="form-control" placeholder="">
+    <label for="nap5_lat_sec">Seconds</label>
+  </div>
+  <!-- rem latency -->
+  <span class="input-group-text">REM latency</span>
+  <input type="checkbox" class="btn-check" id="nap5_r_na" autocomplete="off" onchange="toggle('nap5_visibility')">
+  <label class="btn btn-secondary" for="nap5_r_na">N/A</label>
+  <div class="form-floating nap5_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="nap5_r_lat_min" class="form-control" placeholder="">
+    <label for="nap5_r_lat_min">Minutes</label>
+  </div>
+  <span class="input-group-text nap5_visibility">:</span>
+  <div class="form-floating nap5_visibility">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="nap5_r_lat_sec" class="form-control" placeholder="">
+    <label for="nap5_r_lat_sec">Seconds</label>
+  </div>
+</div>
