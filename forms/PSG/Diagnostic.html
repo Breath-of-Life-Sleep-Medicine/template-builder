@@ -79,9 +79,9 @@
   function update_index(event, result, dur_min, ...evts) {
     sum = 0;
     for (let evt of evts) {
-      sum += evt.value;
+      sum += Number(evt.value);
     }
-    result.value = sum / dur_min.value * 60; // convert dur from minutes to hours
+    result.value = sum / Number(dur_min.value) * 60; // convert dur from minutes to hours
     result.dispatchEvent(new Event("change"));
   }
 
