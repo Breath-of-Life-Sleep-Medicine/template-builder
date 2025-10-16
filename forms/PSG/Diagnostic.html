@@ -1,0 +1,422 @@
+<script>
+
+  initialize();
+
+  // current values
+  var RDI = {
+    "supine": 0,
+    "prone": 0,
+    "left": 0,
+    "right": 0,
+  };
+  
+  function get_map() {
+    let [start_dt, end_dt] = get_dt(date.value, start.value, end.value);
+
+    let rdi_positions = [];
+    let check = [left.value, right.value, supine.value, prone.value];
+    let value = [rdi_l.value, rdi_r.value, rdi_s.value, rdi_p.value];
+    let label = ["Left Side", "Right Side", "Supine", "Prone"];
+
+    for (let i = 0; i < 4; ++i) {
+      if (clip_percent(check[i]) != 0) {
+        rdi_positions.push(`${label[i]} RDI: ${value[i]}`);
+      }
+    }
+
+    // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
+
+    return {
+      "start": time_str(start_dt), // start time, ex: "10:00 PM"
+      "end": time_str(end_dt), // end time, ex: "1:00 AM"
+      "trt": clip_minutes(trt.value), // total recording time (minutes)
+      "tst": clip_minutes(tst.value), // total sleep time (minutes)
+      "efficiency": clip_percent(efficiency.value), // sleep efficiency (%)
+      "latency": clip_minutes(latency.value), //sleep latency (minutes)
+      "waso": clip_minutes(waso.value), // wake after sleep onset (minutes)
+      "r_latency": (rem.value != 0) ? clip_minutes(r_latency.value) + " minutes" : "N/A", // REM latency - less wake (minutes)
+      "n1": clip_percent(n1.value), // N1 (% TST)
+      "n2": clip_percent(n2.value), // N2 (% TST)
+      "n3": clip_percent(n3.value), // N3 (% TST)
+      "rem": clip_percent(rem.value), // REM (% TST)
+      "ahi": clip_index(ahi.value), // apnea + hypopnea index (events/hour)
+      "rdi": clip_index(rdi.value), // (events/hour)
+      "a_cc": clip_count(a_cc.value), // central apnea count
+      "a_oc": clip_count(a_oc.value), // obstructive apnea count
+      "a_mc": clip_count(a_mc.value), // mixed apnea count
+      "h_c": clip_count(h_c.value), // total hypopnea count
+      "rera": clip_count(rera.value), // RERA count
+      "arem_ahi": (rem.value != 0) ? clip_index(arem_ahi.value) : clip_index(ahi.value), // non-rem ahi (events/hour)
+      "rem_ahi": (rem.value != 0) ? `${clip_index(rem_ahi.value)}/hr` : "N/A", // rem ahi (events/hour)
+      "supine": clip_percent(supine.value), // (% TST)
+      "prone": clip_percent(prone.value), // (% TST)
+      "left": clip_percent(left.value), // (% TST)
+      "right": clip_percent(right.value), // (% TST)
+      "rdi_positions": rdi_positions.join(", "), // (events/hour)
+      "arousals": clip_count(arousals.value), // total arousals
+      "arousals_sai": clip_index(arousals_sai.value), // spontaneous arousal index (events/hour)
+      "arousals_rai": clip_index(arousals_rai.value), // respiratory arousal index (events/hour)
+      "limb": clip_count(limb.value), // total limb movement count
+      "limb_ai": clip_index(limb_ai.value), // limb movement with arousal index (events/hour)
+      "limb_plmi": clip_index(limb_plmi.value), // limb movement plm index (events/hour)
+      "ox_w_avg": clip_percent(ox_w_avg.value), // oxygen saturation: wake average (%)
+      "ox_tst_avg": clip_percent(ox_tst_avg.value), // oxygen saturation: sleep average (%)
+      "ox_tst_min": clip_percent(ox_tst_min.value), //oxygen saturation: sleep minimum (%)
+      "od_duration": clip_minutes(od_duration.value), // time spent <= 88% oxygen saturation (minutes)
+      "pulse_min": clip_index(pulse_min.value), // minimum heart rate (bpm)
+      "pulse_avg": clip_index(pulse_avg.value), // average heart rate (bpm)
+      "pulse_max": clip_index(pulse_max.value), // maximum heart rate (bpm)
+    };
+  }
+
+  // store into result the percentage of a to b
+  function update_percentage(event, a, b, result) {
+    result.value = (100 * a.value / b.value).toFixed(1);
+    result.dispatchEvent(new Event("change"));
+  }
+
+  // calculate end time from start time & total record time
+  function update_end (event) {
+    if (start.value != "" && trt.value != "") {
+      end.value = new Date(new Date("2025-01-01 " + start.value).getTime() + trt.value*60*1000).toTimeString().slice(0,5);
+      end.dispatchEvent(new Event("change"));
+    }
+  }
+
+  // show/hide positional rdi based on which positions are set
+  function update_rdi (event) {
+    let value = parseFloat(event.value);
+    if ((RDI[event.id] === 0 && value !== 0) || (RDI[event.id] !== 0 && value === 0)) {
+      let elems = document.getElementsByClassName(event.id + "_visibility");
+      for (let elem of elems) {
+        elem.hidden = !elem.hidden;
+      }
+    }
+    RDI[event.id] = value;
+    // if none of RDI are active hide div & label, else don't hide them
+    rdi_pos_div.hidden = rdi_pos_label.hidden = !(RDI["supine"] | RDI["prone"] | RDI["left"] | RDI["right"] !== 0 );
+  }
+
+  // hide elems if rem is 0, otherwise show them
+  function update_rem (event, rem, cls) {
+    // console.log(event);
+    elems = document.getElementsByClassName(cls);
+    for (let elem of elems) {
+      elem.hidden = rem.value == 0;
+    }
+  }
+
+  // if rem latency is set to "N/A", then set rem to 0
+  function rem_check(event) {
+    let val = r_latency.value.toUpperCase();
+    let check = new Set(["N/A", "NA"]);
+
+    if (check.has(val)) {
+      rem.value = 0;
+      rem.dispatchEvent(new Event('change'));
+    }
+  }
+
+</script>
+
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="start" class="form-control" onchange="update_end(event);">
+    <label for="start">Lights out</label>
+  </div>
+  <!-- end -->
+  <div class="form-floating">
+    <input type="time" id="end" class="form-control calculated">
+    <label for="end">Lights on</label>
+  </div>
+  <!-- total recording time -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="trt" class="form-control" onchange="validate.call(this, event, 1, 0); update_percentage(event, tst, trt, efficiency); update_end(event);" placeholder="">
+    <label for="trt">Total recording time</label>
+  </div>
+  <span class="input-group-text">min</span>
+</div>
+
+<div class="input-group">
+  <!-- total sleep time -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="tst" class="form-control" onchange="validate.call(this, event, 1, 0); update_percentage(event, tst, trt, efficiency);" placeholder="">
+    <label for="tst">Total sleep time</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- sleep efficiency -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="efficiency" class="form-control calculated" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="efficiency">Sleep efficiency</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<div class="input-group">
+  <!-- sleep latency -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="latency" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="latency">Sleep latency</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- wake after sleep onset -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="waso" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="waso">WASO (wake after sleep onset)</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- REM latency - less wake -->
+  <div class="form-floating requires_rem">
+    <input type="text" inputmode="numeric" id="r_latency" class="form-control" onchange="rem_check.call(this, event); validate.call(this, event, 1, 0);" placeholder="">
+    <label for="r_latency">REM latency (less wake time)</label>
+  </div>
+  <span class="input-group-text requires_rem">min</span>
+</div>
+
+
+<hr> <!-- next page -->
+
+<div class="input-group">
+  <!-- N1 (% TST) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="n1" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="n1">N1</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- N2 (% TST) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="n2" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="n2">N2</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- N3 (% TST) -->
+     <div class="form-floating">
+    <input type="text" inputmode="numeric" id="n3" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="n3">N3</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- REM (% TST) -->
+     <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rem" class="form-control" onchange="validate.call(this, event, 1, 0, 100); update_rem(event, this, 'requires_rem');" placeholder="">
+    <label for="rem">REM</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<label for="">Indices</label>
+<div class="input-group">
+  <!-- ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="ahi">AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- rdi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rdi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="rdi">RDI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+<div class="input-group requires_rem" hidden>
+  <!-- non-rem ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="arem_ahi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="arem_ahi">Non-REM AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- rem ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rem_ahi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="rem_ahi">REM AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label for="">Counts</label>
+<div class="input-group">
+  <!-- central apnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_cc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="a_cc">Central apneas</label>
+  </div>
+  <!-- obstructive apnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_oc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="a_oc">Obstructive apneas</label>
+  </div>
+  <!-- mixed apnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_mc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="a_mc">Mixed apneas</label>
+  </div>
+  <!-- hypopnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="h_c" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="h_c">Hypopneas</label>
+  </div>
+  <!-- RERA count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rera" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="rera">RERA</label>
+  </div>
+</div>
+
+<hr> <!-- next page -->
+
+<label for="positions">Positions</label>
+<div class="input-group">
+  <!-- supine -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="supine" class="form-control" onchange="validate.call(this, event, 1, 0, 100); update_rdi(this, event);" placeholder="">
+    <label for="supine">Supine</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- prone -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="prone" class="form-control" onchange="validate.call(this, event, 1, 0, 100); update_rdi(this, event);" placeholder="">
+    <label for="prone">Prone</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- left -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="left" class="form-control" onchange="validate.call(this, event, 1, 0, 100); update_rdi(this, event);" placeholder="">
+    <label for="left">Left</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- right -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="right" class="form-control" onchange="validate.call(this, event, 1, 0, 100); update_rdi(this, event);" placeholder="">
+    <label for="right">Right</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<!-- rdi positions : fields made visible from other positions being non-zero -->
+<label for="rdi_pos" id="rdi_pos_label" hidden>RDI</label>
+<div id="rdi_pos_div" class="input-group" hidden>
+  <!-- supine -->
+  <div class="form-floating supine_visibility" hidden>
+    <input type="text" inputmode="numeric" id="rdi_s" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="rdi_s">Supine</label>
+  </div>
+  <span class="input-group-text supine_visibility" hidden>evt/hr</span>
+  <!-- prone -->
+  <div class="form-floating prone_visibility" hidden>
+    <input type="text" inputmode="numeric" id="rdi_p" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="rdi_p">Prone</label>
+  </div>
+  <span class="input-group-text prone_visibility" hidden>evt/hr</span>
+  <!-- left -->
+  <div class="form-floating left_visibility" hidden>
+    <input type="text" inputmode="numeric" id="rdi_l" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="rdi_l">Left</label>
+  </div>
+  <span class="input-group-text left_visibility" hidden>evt/hr</span>
+  <!-- right -->
+  <div class="form-floating right_visibility" hidden>
+    <input type="text" inputmode="numeric" id="rdi_r" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="rdi_r">Right</label>
+  </div>
+  <span class="input-group-text right_visibility" hidden>evt/hr</span>
+</div>
+
+<hr> <!-- next page -->
+
+<label for="arousals">Arousals</label>
+<div class="input-group">
+  <!-- total arousals -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="arousals" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="arousals">Total count</label>
+  </div>
+  <!-- spontaneous arousal index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="arousals_sai" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="arousals_sai">Spontaneous index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- respiratory arousal index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="arousals_rai" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="arousals_rai">Respiratory index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label for="limb_movements">Limb movements</label>
+<div class="input-group">
+  <!-- total limb movement count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="limb" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="limb">Total count</label>
+  </div>
+  <!-- limb movement with arousal index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="limb_ai" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="limb_ai">W/ arousal index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- limb movement plm index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="limb_plmi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="limb_plmi">PLM index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<hr> <!-- next page -->
+
+<label for="oximetry">Oxygen saturation</label>
+<div class="input-group" id="oximetry">
+  <!-- wake average (%) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_w_avg" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="ox_w_avg">Wake average</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- sleep average (%) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_tst_avg" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="ox_tst_avg">Sleep average</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- sleep minimum (%) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_tst_min" class="form-control" onchange="validate.call(this, event, 1, 0, 100)" placeholder="">
+    <label for="ox_tst_min">Sleep minimum</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<!-- time spent <= 88% oxygen saturation (minutes) -->
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="od_duration" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="od_duration">Duration with oxygen saturation <=88%</label>
+  </div>
+  <span class="input-group-text">min</span>
+</div>
+
+<label for="pulse">Sleep pulse rate</label>
+<div class="input-group" id="pulse">
+  <!-- pulse_min -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_min" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="pulse_min">Minimum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <!-- pulse_avg -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_avg" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="pulse_avg">Average</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <!-- pulse_max -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_max" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="pulse_max">Maximum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+</div>

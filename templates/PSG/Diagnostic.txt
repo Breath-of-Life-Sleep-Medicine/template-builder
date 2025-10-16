@@ -9,25 +9,25 @@ ESS: []
 STOPBANG: []
 BMI: []
 SUMMARY OF REPORT: This was an attended overnight DIAGNOSTIC polysomnogram performed at Aspen Sleep Centers monitoring the following physiologic parameters: EEG 4 channels, EOG 2 channels, airflow at the nose and mouth, chin EMG, tibialis EMG, chest and abdominal movements, EKG with surface electrodes, pulse oximetry, and body position. The patient was prepared for the study without difficulty. The waveforms were reviewed and were technically adequate.
-Lights out occurred at []. Study ended at [].
-1. SLEEP STAGES: Total Recording Time: [] minutes, Total Sleep Time: [] minutes,
-Sleep Efficiency: []%.
-Sleep Latency: [] minutes, Wake After Sleep Onset: [] minutes, REM Latency: [] minutes
-Sleep architecture: Stage N1: []%, Stage N2: []%, Stage N3: []%, Stage R: []%.
+Lights out occurred at ${start}. Study ended at ${end}.
+1. SLEEP STAGES: Total Recording Time: ${trt} minutes, Total Sleep Time: ${tst} minutes,
+Sleep Efficiency: ${efficiency}%.
+Sleep Latency: ${latency} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_latency}
+Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
-AHI: []/hr, RDI: []/hr.
-CENTRAL APNEAS: [], OBSTRUCTIVE APNEAS: [], MIXED APNEAS: [], HYPOPNEAS: [], RERA: []
-Non-REM AHI: []/hr, REM AHI: []/hr
+AHI: ${ahi}/hr, RDI: ${rdi}/hr.
+CENTRAL APNEAS: ${a_cc}, OBSTRUCTIVE APNEAS: ${a_oc}, MIXED APNEAS: ${a_mc}, HYPOPNEAS: ${h_c}, RERA: ${rera}
+Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}/hr
 Snoring was [].
-3. BODY POSITION: Supine: []% TST, Prone: []% TST, Left Side: []% TST, Right Side: []% TST
-Left Side RDI: []/hr, Right Side RDI: []/hr, Supine RDI: []/hr.
-4. AROUSALS: Total arousals: [], Spontaneous arousal index: []/hr,
-Respiratory arousal index: []/hr
-5. EMG: Total Limb Movements: [], LMAI: []/hr, PLM index: []/hr
-6. OXYGEN SATURATION on room air: Wake Average: []%
-Sleep: Average: []%, Minimum: []%, Time spent <= 88%: [] minutes
-7. HEART RATE during sleep: Minimum: [] bpm, Average: [] bpm, Maximum: [] bpm
+3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
+${rdi_positions}.
+4. AROUSALS: Total arousals: ${arousals}, Spontaneous arousal index: ${arousals_sai}/hr,
+Respiratory arousal index: ${arousals_rai}/hr
+5. EMG: Total Limb Movements: ${limb}, LMAI: ${limb_ai}/hr, PLM index: ${limb_plmi}/hr
+6. OXYGEN SATURATION on room air: Wake Average: ${ox_w_avg}%
+Sleep: Average: ${ox_tst_avg}%, Minimum: ${ox_tst_min}%, Time spent <= 88%: ${od_duration} minutes
+7. HEART RATE during sleep: Minimum: ${pulse_min} bpm, Average: ${pulse_avg} bpm, Maximum: ${pulse_max} bpm
 No significant cardiac arrhythmias were identified.
 IMPRESSIONS:
 1. [] Obstructive sleep apnea [] significant oxygen desaturations.

@@ -61,7 +61,7 @@
       "ox_w_avg": clip_percent(ox_w_avg.value), // oxygen saturation: wake average (%)
       "ox_tst_avg": clip_percent(ox_tst_avg.value), // oxygen saturation: sleep average (%)
       "ox_tst_min": clip_percent(ox_tst_min.value), //oxygen saturation: sleep minimum (%)
-      "od_duration": clip_percent(od_duration.value), // time spent <= 88% oxygen saturation (minutes)
+      "od_duration": clip_minutes(od_duration.value), // time spent <= 88% oxygen saturation (minutes)
       "pulse_min": clip_index(pulse_min.value), // minimum heart rate (bpm)
       "pulse_avg": clip_index(pulse_avg.value), // average heart rate (bpm)
       "pulse_max": clip_index(pulse_max.value), // maximum heart rate (bpm)
