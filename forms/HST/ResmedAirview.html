@@ -18,8 +18,8 @@
       "ai": clip_index(ai.value),
       "hi": clip_index(hi.value),
       "s_ahi": clip_index(s_ahi.value),
-      "s_duration": duration_str(clip_number(s_duration_hr.value,0,0), clip_number(s_duration_min.value,1,0,59)),
-      "s_percent": clip_percent(s_percent.value, 0),
+      "s_duration": duration_str(clip_number(s_duration_hr.value,0,0), clip_number(s_duration_min.value,0,0,59)),
+      "s_percent": clip_percent(s_percent.value, 1),
       "ox_base": clip_percent(ox_base.value, 0),
       "ox_avg": clip_percent(ox_avg.value, 0),
       "ox_min": clip_percent(ox_min.value, 0),
@@ -178,7 +178,7 @@
   </div>
   <span class="input-group-text">/</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" name="" id="od_percent" class="form-control" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="">
+    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="od_percent" class="form-control" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="">
     <label for="od_percent">% OMT</label>
   </div>
   <span class="input-group-text">%</span>
