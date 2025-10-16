@@ -22,7 +22,7 @@ Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}.
 Snoring was [].
 3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
 ${rdi_positions}.
-4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index: ${arousals_sai}/hr, Respiratory Arousal Index: ${asousals_rai}/hr.
+4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index: ${arousals_sai}/hr, Respiratory Arousal Index: ${arousals_rai}/hr.
 5. EMG: Total Limb Movements: ${limb}, Limb Movement Arousal Index: ${limb_ai}/hr. PLM index: ${limb_plmi}/hr.
 6. OXYGEN SATURATION on room air: Wake Average: ${ox_w_avg}%, Sleep: Average: ${ox_tst_avg}%, Minimum: ${ox_tst_min}%, Time spent <= 88%: ${od_duration} minutes
 7. HEART RATE during sleep: Minimum: ${pulse_min} bpm, Average: ${pulse_avg} bpm, Maximum: ${pulse_max} bpm. No significant cardiac arrhythmias were identified.
