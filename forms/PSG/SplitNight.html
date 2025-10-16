@@ -19,7 +19,7 @@
     let label = ["Left Side", "Right Side", "Supine", "Prone"];
 
     for (let i = 0; i < 4; ++i) {
-      if (check[i]) {
+      if (clip_percent(check[i]) != 0) {
         rdi_positions.push(`${label[i]} RDI: ${value[i]}`);
       }
     }
