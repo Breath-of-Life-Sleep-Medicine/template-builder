@@ -76,6 +76,16 @@
     result.dispatchEvent(new Event("change"));
   }
 
+  // calculate index (ex: central apnea index = central apnea count / total sleep time)
+  function update_index(event, result, dur_min, ...evts) {
+    sum = 0;
+    for (let evt of evts) {
+      sum += evt.value;
+    }
+    result.value = sum / dur_min.value * 60; // convert dur from minutes to hours
+    result.dispatchEvent(new Event("change"));
+  }
+
   // calculate end time from start time & total record time
   function update_end (event) {
     if (start.value != "" && trt.value != "") {
@@ -142,7 +152,7 @@
 <div class="input-group">
   <!-- total sleep time -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="tst" class="form-control" onchange="validate.call(this, event, 1, 0); update_percentage(event, tst, trt, efficiency);" placeholder="">
+    <input type="text" inputmode="numeric" id="tst" class="form-control" onchange="validate.call(this, event, 1, 0); update_percentage(event, tst, trt, efficiency); update_index(event, ahi, tst, a_cc, a_oc, a_mc, h_c); update_index(event, a_ci, tst, a_cc);" placeholder="">
     <label for="tst">Total sleep time</label>
   </div>
   <span class="input-group-text">min</span>
@@ -174,7 +184,6 @@
   </div>
   <span class="input-group-text requires_rem">min</span>
 </div>
-
 
 <hr> <!-- next page -->
 
@@ -209,22 +218,22 @@
 <div class="input-group">
   <!-- central apnea count -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_cc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="a_cc" class="form-control" onchange="validate.call(this, event, 0, 0); update_index(event, ahi, tst, a_cc, a_oc, a_mc, h_c); update_index(event, a_ci, tst, a_cc);" placeholder="">
     <label for="a_cc">Central apneas</label>
   </div>
   <!-- obstructive apnea count -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_oc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="a_oc" class="form-control" onchange="validate.call(this, event, 0, 0); update_index(event, ahi, tst, a_cc, a_oc, a_mc, h_c);" placeholder="">
     <label for="a_oc">Obstructive apneas</label>
   </div>
   <!-- mixed apnea count -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_mc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="a_mc" class="form-control" onchange="validate.call(this, event, 0, 0); update_index(event, ahi, tst, a_cc, a_oc, a_mc, h_c);" placeholder="">
     <label for="a_mc">Mixed apneas</label>
   </div>
   <!-- hypopnea count -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="h_c" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="h_c" class="form-control" onchange="validate.call(this, event, 0, 0); update_index(event, ahi, tst, a_cc, a_oc, a_mc, h_c);" placeholder="">
     <label for="h_c">Hypopneas</label>
   </div>
   <!-- RERA count -->
@@ -238,19 +247,19 @@
 <div class="input-group">
   <!-- ahi -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="ahi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control calculated" onchange="validate.call(this, event, 1, 0); rdi.value=ahi.value; rdi.dispatchEvent(new Event('change'));" placeholder="">
     <label for="ahi">AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
   <!-- rdi -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="rdi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="rdi" class="form-control calculated" onchange="validate.call(this, event, 1, 0)" placeholder="">
     <label for="rdi">RDI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
   <!-- cai -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_ci" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <input type="text" inputmode="numeric" id="a_ci" class="form-control calculated" onchange="validate.call(this, event, 1, 0)" placeholder="">
     <label for="a_ci">Central apnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
