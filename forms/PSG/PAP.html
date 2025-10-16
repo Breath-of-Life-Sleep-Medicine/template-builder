@@ -205,6 +205,35 @@
   <span class="input-group-text">%</span>
 </div>
 
+<label for="">Counts</label>
+<div class="input-group">
+  <!-- central apnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_cc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="a_cc">Central apneas</label>
+  </div>
+  <!-- obstructive apnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_oc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="a_oc">Obstructive apneas</label>
+  </div>
+  <!-- mixed apnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_mc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="a_mc">Mixed apneas</label>
+  </div>
+  <!-- hypopnea count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="h_c" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="h_c">Hypopneas</label>
+  </div>
+  <!-- RERA count -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rera" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
+    <label for="rera">RERA</label>
+  </div>
+</div>
+
 <label for="">Indices</label>
 <div class="input-group">
   <!-- ahi -->
@@ -239,35 +268,6 @@
     <label for="rem_ahi">REM AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
-</div>
-
-<label for="">Counts</label>
-<div class="input-group">
-  <!-- central apnea count -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_cc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
-    <label for="a_cc">Central apneas</label>
-  </div>
-  <!-- obstructive apnea count -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_oc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
-    <label for="a_oc">Obstructive apneas</label>
-  </div>
-  <!-- mixed apnea count -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_mc" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
-    <label for="a_mc">Mixed apneas</label>
-  </div>
-  <!-- hypopnea count -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="h_c" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
-    <label for="h_c">Hypopneas</label>
-  </div>
-  <!-- RERA count -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="rera" class="form-control" onchange="validate.call(this, event, 0, 0)" placeholder="">
-    <label for="rera">RERA</label>
-  </div>
 </div>
 
 <hr> <!-- next page -->
