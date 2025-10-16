@@ -18,7 +18,7 @@ Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS DURING PAP TITRATION: Utilizing 4% deoxygenation CMS criteria,
 AHI: ${ahi} EVENTS PER HOUR, RDI: ${rdi} EVENTS PER HOUR.
 Central Apneas: ${a_cc}, Obstructive Apneas: ${a_oc}, Mixed Apneas: ${a_mc}, Hypopneas: ${h_c}, RERA: ${rera}.
-Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}/hr, CAI: ${a_ci}/hr
+Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}, CAI: ${a_ci}/hr
 3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
 ${rdi_positions}.
 4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index: ${arousals_sai}/hr, Respiratory Arousal Index: ${arousals_rai}/hr

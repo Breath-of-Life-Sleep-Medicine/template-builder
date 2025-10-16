@@ -48,6 +48,7 @@
       "rera": clip_count(rera.value), // RERA count
       "arem_ahi": (rem.value != 0) ? clip_index(arem_ahi.value) : clip_index(ahi.value), // non-rem ahi (events/hour)
       "rem_ahi": (rem.value != 0) ? `${clip_index(rem_ahi.value)}/hr` : "N/A", // rem ahi (events/hour)
+      "a_ci": clip_index(a_ci.value), // central apnea index evt/hr
       "supine": clip_percent(supine.value), // (% TST)
       "prone": clip_percent(prone.value), // (% TST)
       "left": clip_percent(left.value), // (% TST)
@@ -216,6 +217,12 @@
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="rdi" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
     <label for="rdi">RDI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- cai -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_ci" class="form-control" onchange="validate.call(this, event, 1, 0)" placeholder="">
+    <label for="a_ci">Central apnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
 </div>
