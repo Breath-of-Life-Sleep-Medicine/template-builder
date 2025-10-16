@@ -11,8 +11,8 @@ BMI: []
 SUMMARY OF REPORT: This was an attended overnight DIAGNOSTIC polysomnogram performed at Aspen Sleep Centers monitoring the following physiologic parameters: EEG 4 channels, EOG 2 channels, airflow at the nose and mouth, chin EMG, tibialis EMG, chest and abdominal movements, EKG with surface electrodes, pulse oximetry, and body position. The patient was prepared for the study without difficulty. The waveforms were reviewed and were technically adequate.
 Lights out occurred at ${start}. Study ended at ${end}.
 1. SLEEP STAGES: Total Recording Time: ${trt} minutes, Total Sleep Time: ${tst} minutes,
-Sleep Efficiency: ${efficiency}%.
-Sleep Latency: ${latency} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_latency}
+Sleep Efficiency: ${eff}%.
+Sleep Latency: ${lat} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_lat}
 Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,

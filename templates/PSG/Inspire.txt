@@ -13,8 +13,8 @@ BMI: []
 SUMMARY OF REPORT: This was an attended overnight HYPOGLOSSAL NERVE STIMULATOR TITRATION polysomnogram performed at Aspen Sleep Centers monitoring the following physiologic parameters: EEG 4 channels, EOG 2 channels, airflow at the nose and mouth, chin EMG, tibialis EMG, chest and abdominal movements, EKG with surface electrodes, pulse oximetry, and body position. The patient was prepared for the study without difficulty. The waveforms were reviewed and were technically adequate.
 Lights out occurred at ${start}.
 Study ended at ${end}.
-1. SLEEP STAGES: Total Recording Time: ${trt} minutes, Total Sleep Time: ${tst} minutes, Sleep Efficiency: ${efficiency}%.
-Sleep Latency: ${latency} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_latency}
+1. SLEEP STAGES: Total Recording Time: ${trt} minutes, Total Sleep Time: ${tst} minutes, Sleep Efficiency: ${eff}%.
+Sleep Latency: ${lat} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_lat}
 Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS DURING HGNS TITRATION: Utilizing 4% deoxygenation CMS criteria,
@@ -23,7 +23,7 @@ Central Apneas: ${a_cc}, Obstructive Apneas: ${a_oc}, Mixed Apneas: ${a_mc}, Hyp
 Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}/hr, CAI: ${a_ci}/hr
 3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
 ${rdi_positions}.
-4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index:${arousals_sai}/hr, Respiratory Arousal Index: ${asousals_rai}/hr
+4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index:${arousals_sai}/hr, Respiratory Arousal Index: ${arousals_rai}/hr
 5. EMG: Limb movements: Total: ${limb}, LMAI: ${limb_ai}/hr. PLMI: ${limb_plmi}/hr.
 6. OXYGEN SATURATION on room air: WAKE Average: ${ox_w_avg}% SLEEP: Average: ${ox_tst_avg}%, Minimum: ${ox_tst_min}%, Time spent <= 88%: ${od_duration} minutes
 7. HEART RATE during sleep: Minimum: ${pulse_min} bpm, Average: ${pulse_avg} bpm, Maximum: ${pulse_max} bpm

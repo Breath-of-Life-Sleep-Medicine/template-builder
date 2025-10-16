@@ -31,10 +31,10 @@
       "end": time_str(end_dt), // end time, ex: "1:00 AM"
       "trt": clip_minutes(trt.value), // total recording time (minutes)
       "tst": clip_minutes(tst.value), // total sleep time (minutes)
-      "efficiency": clip_percent(efficiency.value), // sleep efficiency (%)
-      "latency": clip_minutes(latency.value), //sleep latency (minutes)
+      "eff": clip_percent(efficiency.value), // sleep efficiency (%)
+      "lat": clip_minutes(latency.value), //sleep latency (minutes)
       "waso": clip_minutes(waso.value), // wake after sleep onset (minutes)
-      "r_latency": (rem.value != 0) ? clip_minutes(r_latency.value) + " minutes" : "N/A", // REM latency - less wake (minutes)
+      "r_lat": (rem.value != 0) ? clip_minutes(r_latency.value) + " minutes" : "N/A", // REM latency - less wake (minutes)
       "n1": clip_percent(n1.value), // N1 (% TST)
       "n2": clip_percent(n2.value), // N2 (% TST)
       "n3": clip_percent(n3.value), // N3 (% TST)
