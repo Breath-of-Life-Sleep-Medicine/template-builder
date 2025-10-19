@@ -165,7 +165,16 @@ function find_replace(str) {
   str = str.replace(pattern, function(_,key){return map[key];});
   console.log(str);
 
+  if (is_windows()) {
+    str = str.replace(/\n/gm, "\r\n");
+  }
+
   return str;
+}
+
+// return true if OS is windows, o/w false
+function is_windows() {
+  return (navigator.userAgent.indexOf("Win") !== -1);
 }
 
 function submit_copy(event) {
