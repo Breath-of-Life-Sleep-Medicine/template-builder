@@ -3,9 +3,6 @@ $(function(){
   load_form();
 });
 
-// let get_map = function(){ return {}; }; // error: read only
-
-
 let data = {};
 
 function get_map() {
@@ -16,21 +13,27 @@ function get_map() {
 formID.addEventListener("submit", submit_copy);
 template.addEventListener("change", load_form);
 
+// document.addEventListener("DOMContentLoaded", initialize);
+
+// mutation observer - detect changes to the DOM
+const targetNode = document.getElementById("form_container");
+const config = {attributes: false, childList: true, subtree: false};
+const observer = new MutationObserver(initialize);
+observer.observe(targetNode, config);
+// to stop observing
+//observer.disconnect();
+
 function initialize() {
-  console.log("INITIALIZE");
-  const CalculatedElements = document.querySelectorAll(".calculated");
-  console.log(CalculatedElements);
-  CalculatedElements.forEach(element => {
-    element.value = "777";
-    element.disabled = true;
-    element.addEventListener('mouseover', function(){
-      element.disabled = false;
-    });
-    element.addEventListener('mouseout', function() {
-      element.disabled = true;
-    });
-  });
-  console.log(CalculatedElements);
+  let cls = document.getElementsByClassName("calculated");
+  for (let elem of cls) {
+    elem.disabled = true;
+    elem.addEventListener('mouseover', function(){
+      elem.disabled = false;
+    })
+    elem.addEventListener('mouseout', function(){
+      elem.disabled = true;
+    })
+  }
 }
 
 const zero_pad = (num, places) => String(num).padStart(places, '0');
@@ -99,8 +102,26 @@ function duration_short_str(v1, v2, v3=null) {
 }
 
 function load_form() {
-  $("#form_container").load("forms/"+template.value+".html");
-  initialize();
+  let path = "forms/"+template.value+".html";
+  let id = "form_container";
+  fetch(path)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error. status: ${response.status}`);
+    }
+    return response.text();
+  })
+  .then(data => {
+    const elem = document.getElementById(id);
+    if (elem) {
+      elem.innerHTML = data;
+    } else {
+      console.error(`Element with ID ${id} not found.`);
+    }
+  })
+  .catch(error => {
+    console.error("error with fetch operation:", error);
+  });
 }
 
 function clip_number(number, precision = null, min = null, max = null) {
@@ -164,8 +185,6 @@ function get_dt(start_date, ...times) {
   }
   return dts;
 }
-
-// console.log(get_datetimes("2025-05-20", "21:30"))
 
 function find_replace(str) {
   let map = {
