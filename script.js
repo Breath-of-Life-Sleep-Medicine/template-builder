@@ -3,10 +3,18 @@ $(function(){
   load_form();
 });
 
+console.log("script.js");
+
 let data = {};
 
 function get_map() {
   return data[data["key"]]["clean"];
+}
+
+// get current data key from metadata
+function key() {
+  const meta = document.querySelector('meta[name="key"]');
+  return meta ? meta.content : undefined;
 }
 
 // event listeners
@@ -24,6 +32,7 @@ observer.observe(targetNode, config);
 //observer.disconnect();
 
 function initialize() {
+  data["key"] = key();
   let cls = document.getElementsByClassName("calculated");
   for (let elem of cls) {
     elem.disabled = true;
@@ -118,6 +127,14 @@ function load_form() {
     } else {
       console.error(`Element with ID ${id} not found.`);
     }
+
+    // TODO: figure out how to best attach/detach scripts
+    // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
+
+    const script = document.createElement('script');
+    script.src = "modules/"+template.value+".js";
+    script.type = "module";
+    document.body.appendChild(script);
   })
   .catch(error => {
     console.error("error with fetch operation:", error);
