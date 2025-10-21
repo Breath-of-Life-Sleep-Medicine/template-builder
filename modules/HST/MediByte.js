@@ -1,5 +1,9 @@
 import * as script from "/script.js";
 
+console.log("MediByte.js");
+
+// console.log("key", script.key());
+
 script.data["key"] = "MediByte";
 script.data["MediByte"] = {};
 script.data["MediByte"]["clean"] = {
@@ -20,39 +24,10 @@ script.data["MediByte"]["clean"] = {
   "snores": () => script.clip_number(snores.value, 0, 0),
 };
 
-// script.get_map = function() {
-//   return {
-//     "scored_at": clip_percent(scored_at.value, 0, 3, 4),
-//     "duration": clip_minutes(duration.value),
-//     "ahi": clip_index(ahi.value),
-//     "ai": clip_index(ai.value), // calculate
-//     "hi": clip_index(hi.value),
-//     "s_ahi": clip_index(s_ahi.value),
-//     "s_percent": clip_percent(s_percent.value),
-//     "ox_avg": clip_percent(ox_avg.value),
-//     "ox_min": clip_percent(ox_min.value),
-//     "odi": clip_index(odi.value),
-//     "od_duration": clip_minutes(od_duration.value),
-//     "pulse_min": clip_number(pulse_min.value, 1, 0),
-//     "pulse_avg": clip_number(pulse_avg.value, 1, 0),
-//     "pulse_max": clip_number(pulse_max.value, 1, 0),
-//     "snores": clip_number(snores.value, 0, 0),
-//   };
-// }
-
 function update_ai(ahi, ai, hi) {
   ai.value = ahi.value - hi.value;
   ai.dispatchEvent(new Event('change'));
 }
-
-// update = {
-//   "duration": () => {duration.value = clip_minutes(duration.value)},
-//   "ahi": () => {
-//     ahi.value = clip_index(ahi.value);
-//     update_ai(ahi, ai, hi);
-//   },
-//   "ai": () => {},
-// }
 
 script.data["MediByte"]["update"] = {
   "duration": () => duration.value = script.clip_minutes(duration.value),
@@ -77,31 +52,6 @@ script.data["MediByte"]["update"] = {
   "snores": () => snores.value = script.clip_number(snores.value, 0, 0),
 };
 
-// script.data["MediByte"]["update"].forEach((v, i) => {
-//   console.log(i, v);
-// });
-
 for (const id in script.data["MediByte"]["update"]) {
   document.getElementById(id).addEventListener("change", script.data["MediByte"]["update"][id]);
 }
-
-// duration.addEventListener("change", script.validate.call(this, event, 1, 0));
-// ahi.addEventListener("change", () => {
-//   script.validate.call(this, event, 1, 0);
-//   update_ai(ahi, ai, hi);
-// });
-// ai.addEventListener("change", script.validate.call(this, event, 1, 0));
-// hi.addEventListener("change", () => {
-//   script.validate.call(this, event, 1, 0);
-//   update_ai(ahi, ai, hi);
-// });
-// s_ahi.addEventListener("change", script.validate.call(this, event, 1, 0));
-// s_percent.addEventListener("change", script.validate.call(this, event, 1, 0, 100));
-// ox_avg.addEventListener("change", script.validate.call(this, event, 1, 0, 100));
-// ox_min.addEventListener("change", script.validate.call(this, event, 1, 0, 100));
-// odi.addEventListener("change", script.validate.call(this, event, 1, 0));
-// od_duration.addEventListener("change", script.validate.call(this, event, 1, 0));
-// pulse_min.addEventListener("change", script.validate.call(this, event, 1, 0));
-// pulse_avg.addEventListener("change", script.validate.call(this, event, 1, 0));
-// pulse_max.addEventListener("change", script.validate.call(this, event, 1, 0));
-// snores.addEventListener("change", script.validate.call(this, event, 0, 0));
