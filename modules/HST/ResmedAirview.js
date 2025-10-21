@@ -1,7 +1,5 @@
 import * as script from "/script.js";
 
-script.initialize();
-
 // keep updated duration value objects here b/c input.value can't store objects, only string
 var duration1_value = {"h":0, "m":0};
 var duration2_value = {"h":0, "m":0};
