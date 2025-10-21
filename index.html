@@ -4,20 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Template builder</title>
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
   <!-- jQuery from google CDN -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-  <script>
-    // document ready function (short version)
-    $(function(){
-      load_form(template, null);
-    });
-  </script>
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <div class="container">
@@ -93,7 +83,7 @@
       </div>
 
       <div class="form-floating">
-        <select name="" id="template" placeholder="" aria-label="Template" class="form-control" onchange="load_form.call(this, event)">
+        <select name="" id="template" placeholder="" aria-label="Template" class="form-control">
           <optgroup label="HST (home sleep study)">
             <option value="HST/ResmedAirview">Resmed Airview</option>
             <option value="HST/MediByte">MediByte</option>
@@ -122,7 +112,7 @@
     
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="./script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
