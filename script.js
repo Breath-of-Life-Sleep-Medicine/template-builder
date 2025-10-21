@@ -5,23 +5,22 @@ $(function(){
 
 console.log("script.js");
 
+let key = null;
 let data = {};
 
 function get_map() {
-  return data[data["key"]]["clean"];
+  return Object.fromEntries(Object.entries(data[key]["clean"]).map(([k,v])=>[k, v()]));
 }
 
-// get current data key from metadata
-function key() {
-  const meta = document.querySelector('meta[name="key"]');
+// get data from metadata
+function metadata(name) {
+  const meta = document.querySelector('meta[name="'+name+'"]');
   return meta ? meta.content : undefined;
 }
 
 // event listeners
 formID.addEventListener("submit", submit_copy);
 template.addEventListener("change", load_form);
-
-// document.addEventListener("DOMContentLoaded", initialize);
 
 // mutation observer - detect changes to the DOM
 const targetNode = document.getElementById("form_container");
@@ -32,7 +31,6 @@ observer.observe(targetNode, config);
 //observer.disconnect();
 
 function initialize() {
-  data["key"] = key();
   let cls = document.getElementsByClassName("calculated");
   for (let elem of cls) {
     elem.disabled = true;
@@ -111,7 +109,8 @@ function duration_short_str(v1, v2, v3=null) {
 }
 
 function load_form() {
-  let path = "forms/"+template.value+".html";
+  key = template.value;
+  let path = "forms/"+key+".html";
   let id = "form_container";
   fetch(path)
   .then(response => {
@@ -120,10 +119,10 @@ function load_form() {
     }
     return response.text();
   })
-  .then(data => {
+  .then(form => {
     const elem = document.getElementById(id);
     if (elem) {
-      elem.innerHTML = data;
+      elem.innerHTML = form;
     } else {
       console.error(`Element with ID ${id} not found.`);
     }
@@ -132,8 +131,14 @@ function load_form() {
     // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
 
     const script = document.createElement('script');
-    script.src = "modules/"+template.value+".js";
+    script.src = "modules/"+key+".js";
     script.type = "module";
+    script.onload = () => {
+      // add event listeners
+      for (const id in data[key]["update"]) {
+        document.getElementById(id).addEventListener("change", data[key]["update"][id]);
+      }
+    };
     document.body.appendChild(script);
   })
   .catch(error => {
@@ -260,6 +265,7 @@ async function load_txt_file(file_path) {
 
 export {
   data,
+  key,
   initialize,
   submit_copy,
   load_form,

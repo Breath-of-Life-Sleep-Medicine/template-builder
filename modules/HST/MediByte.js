@@ -2,11 +2,10 @@ import * as script from "/script.js";
 
 console.log("MediByte.js");
 
-// console.log("key", script.key());
+script.data[script.key] = {};
 
-script.data["key"] = "MediByte";
-script.data["MediByte"] = {};
-script.data["MediByte"]["clean"] = {
+// callback fn when data is extracted from a field (no changes)
+script.data[script.key]["clean"] = {
   "scored_at": () => script.clip_percent(scored_at.value, 0, 3, 4),
   "duration": () => script.clip_minutes(duration.value),
   "ahi": () => script.clip_index(ahi.value),
@@ -24,12 +23,8 @@ script.data["MediByte"]["clean"] = {
   "snores": () => script.clip_number(snores.value, 0, 0),
 };
 
-function update_ai(ahi, ai, hi) {
-  ai.value = ahi.value - hi.value;
-  ai.dispatchEvent(new Event('change'));
-}
-
-script.data["MediByte"]["update"] = {
+// onchange callback fn
+script.data[script.key]["update"] = {
   "duration": () => duration.value = script.clip_minutes(duration.value),
   "ahi": () => {
     ahi.value = script.clip_index(ahi.value);
@@ -52,6 +47,7 @@ script.data["MediByte"]["update"] = {
   "snores": () => snores.value = script.clip_number(snores.value, 0, 0),
 };
 
-for (const id in script.data["MediByte"]["update"]) {
-  document.getElementById(id).addEventListener("change", script.data["MediByte"]["update"][id]);
+function update_ai(ahi, ai, hi) {
+  ai.value = ahi.value - hi.value;
+  ai.dispatchEvent(new Event('change'));
 }
