@@ -1,19 +1,39 @@
-document.getElementById("formID").addEventListener("submit", submit_copy);
+// document ready function (short version)
+$(function(){
+  load_form();
+});
 
-const zero_pad = (num, places) => String(num).padStart(places, '0');
+// let get_map = function(){ return {}; }; // error: read only
+
+
+let data = {};
+
+function get_map() {
+  return data[data["key"]]["clean"];
+}
+
+// event listeners
+formID.addEventListener("submit", submit_copy);
+template.addEventListener("change", load_form);
 
 function initialize() {
+  console.log("INITIALIZE");
   const CalculatedElements = document.querySelectorAll(".calculated");
-  CalculatedElements.forEach(element =>{
+  console.log(CalculatedElements);
+  CalculatedElements.forEach(element => {
+    element.value = "777";
     element.disabled = true;
-    element.addEventListener('mouseover', function(event){
+    element.addEventListener('mouseover', function(){
       element.disabled = false;
     });
-    element.addEventListener('mouseout', function(event) {
+    element.addEventListener('mouseout', function() {
       element.disabled = true;
     });
   });
+  console.log(CalculatedElements);
 }
+
+const zero_pad = (num, places) => String(num).padStart(places, '0');
 
 function save(data) {
   sessionStorage.setItem("data", JSON.stringify(data));
@@ -78,8 +98,9 @@ function duration_short_str(v1, v2, v3=null) {
   return (v3 === null) ? `${v1}:${zero_pad(v2,2)}` : `${v1}:${zero_pad(v2,2)}:${zero_pad(v3,2)}`;
 }
 
-function load_form(event) {
+function load_form() {
   $("#form_container").load("forms/"+template.value+".html");
+  initialize();
 }
 
 function clip_number(number, precision = null, min = null, max = null) {
@@ -200,3 +221,25 @@ async function load_txt_file(file_path) {
   const txt = await response.text();
   return txt;
 }
+
+export {
+  data,
+  initialize,
+  submit_copy,
+  load_form,
+  // cleaning
+  validate,
+  clip_number,
+  clip_index,
+  clip_minutes,
+  clip_percent,
+  clip_count,
+  // date / time
+  get_dt,
+  date_str,
+  time_str,
+  time_24_to_12,
+  get_duration,
+  duration_str,
+  duration_short_str,
+};
