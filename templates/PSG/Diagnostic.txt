@@ -18,7 +18,7 @@ Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
 AHI: ${ahi}/hr, RDI: ${rdi}/hr.
 CENTRAL APNEAS: ${a_cc}, OBSTRUCTIVE APNEAS: ${a_oc}, MIXED APNEAS: ${a_mc}, HYPOPNEAS: ${h_c}, RERA: ${rera}
-Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}/hr
+Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}
 Snoring was [].
 3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
 ${rdi_positions}.
