@@ -4,7 +4,7 @@ console.log("MediByte.js");
 
 script.data[script.key] = {};
 
-// ids that have no onchange callback fn
+// ids that have no onchange callback fn; can still trigger update w/o clean
 script.data[script.key].no_change = [
   "scored_at",
 ];
