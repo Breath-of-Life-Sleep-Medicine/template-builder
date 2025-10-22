@@ -3,16 +3,15 @@
 <div class="input-group">
   <!-- start -->
   <div class="form-floating">
-    <input type="time" id="time_started" class="form-control" onchange="update_duration.call(this, event)">
-    <label for="time_started">Started</label>
+    <input type="time" id="start" class="form-control">
+    <label for="start">Started</label>
   </div>
   <!-- end -->
   <div class="form-floating">
-    <input type="time" id="time_ended" class="form-control" onchange="update_duration.call(this, event)">
-    <label for="time_ended">Ended</label>
+    <input type="time" id="end" class="form-control">
+    <label for="end">Ended</label>
   </div>
 </div>
-
 
 <!-- duration: semi-calculation - choose between calculation - 1 and calculation-->
 
@@ -29,23 +28,22 @@
   </div>
 </div>
 
-
 <div class="input-group">
   <!-- ahi -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0); update_hi(event, ahi, ai, hi);" id="ahi" class="form-control" aria-label="AHI" placeholder="AHI">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control" aria-label="AHI" placeholder="AHI">
     <label for="ahi">AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
   <!-- apnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0); update_hi(event, ahi, ai, hi);" id="ai" class="form-control" aria-label="Apnea index" placeholder="Apnea index">
+    <input type="text" inputmode="numeric" id="ai" class="form-control" aria-label="Apnea index" placeholder="Apnea index">
     <label for="ai">Apnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
   <!-- hypopnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" id="hi" class="form-control calculated" aria-label="Apnea index" placeholder="Apnea index">
+    <input type="text" inputmode="numeric" id="hi" class="form-control calculated" aria-label="Apnea index" placeholder="Apnea index">
     <label for="hi">Hypopnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
@@ -54,7 +52,7 @@
 <!-- supine ahi -->
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" id="s_ahi" class="form-control" aria-label="Supine AHI" placeholder="Supine AHI">
+    <input type="text" inputmode="numeric" id="s_ahi" class="form-control" aria-label="Supine AHI" placeholder="Supine AHI">
     <label for="s_ahi">Supine AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
@@ -63,17 +61,17 @@
 <label for="">Duration supine</label>
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="s_duration_hr" class="form-control" aria-label="hours spent supine" placeholder="">
+    <input type="text" inputmode="numeric" id="s_duration_hr" class="form-control" aria-label="hours spent supine" placeholder="">
     <label for="s_duration_hr">Hours</label>
   </div>
   <span class="input-group-text">:</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="s_duration_min" class="form-control" aria-label="minutes spent supine" placeholder="">
+    <input type="text" inputmode="numeric" id="s_duration_min" class="form-control" aria-label="minutes spent supine" placeholder="">
     <label for="s_duration_min">Minutes</label>
   </div>
   <span class="input-group-text">/</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" name="" id="s_percent" class="form-control" aria-label="percent of flow monitoring time spent supine" placeholder="">
+    <input type="text" inputmode="numeric" id="s_percent" class="form-control" aria-label="percent of flow monitoring time spent supine" placeholder="">
     <label for="s_percent">% FMT</label>
   </div>
   <span class="input-group-text">%</span>
@@ -83,17 +81,17 @@
 
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="ox_base" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="ox_base" class="form-control" aria-label="" placeholder="">
     <label for="ox_base">Baseline</label>
   </div>
   <span class="input-group-text">%</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="ox_avg" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="ox_avg" class="form-control" aria-label="" placeholder="">
     <label for="ox_avg">Average</label>
   </div>
   <span class="input-group-text">%</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="ox_min" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="ox_min" class="form-control" aria-label="" placeholder="">
     <label for="ox_min">Minimum</label>
   </div>
   <span class="input-group-text">%</span>
@@ -101,7 +99,7 @@
 
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 1, 0)" name="" id="odi" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="odi" class="form-control" aria-label="" placeholder="">
     <label for="odi">Oxygen Desaturation Index (ODI)</label>
   </div>
   <span class="input-group-text">evt/hr</span>
@@ -110,17 +108,17 @@
 <label for="">Duration oxygen saturation <= 88%</label>
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="od_duration_hr" class="form-control" aria-label="hours spent under 88% oxygen saturation" placeholder="">
+    <input type="text" inputmode="numeric" id="od_duration_hr" class="form-control" aria-label="hours spent under 88% oxygen saturation" placeholder="">
     <label for="od_duration_hr">Hours</label>
   </div>
   <span class="input-group-text">:</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0, 59)" name="" id="od_duration_min" class="form-control" aria-label="minutes spent under 88% oxygen saturation" placeholder="">
+    <input type="text" inputmode="numeric" id="od_duration_min" class="form-control" aria-label="minutes spent under 88% oxygen saturation" placeholder="">
     <label for="od_duration_min">Minutes</label>
   </div>
   <span class="input-group-text">/</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="od_percent" class="form-control" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="">
+    <input type="text" inputmode="numeric" id="od_percent" class="form-control" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="">
     <label for="od_percent">% OMT</label>
   </div>
   <span class="input-group-text">%</span>
@@ -129,17 +127,17 @@
 <label for="">Heart rate</label>
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="pulse_min" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="pulse_min" class="form-control" aria-label="" placeholder="">
     <label for="pulse_min">Minimum</label>
   </div>
   <span class="input-group-text">bpm</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="pulse_avg" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="pulse_avg" class="form-control" aria-label="" placeholder="">
     <label for="pulse_avg">Average</label>
   </div>
   <span class="input-group-text">bpm</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="pulse_max" class="form-control" aria-label="" placeholder="">
+    <input type="text" inputmode="numeric" id="pulse_max" class="form-control" aria-label="" placeholder="">
     <label for="pulse_max">Maximum</label>
   </div>
   <span class="input-group-text">bpm</span>
@@ -147,14 +145,14 @@
 
 <!-- snores -->
 <div class="form-floating">
-  <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 0)" name="" id="snores" class="form-control" aria-label="Number of snores" placeholder="">
+  <input type="text" inputmode="numeric" id="snores" class="form-control" aria-label="Number of snores" placeholder="">
   <label for="snores">Snores</label>
 </div>
 
 <!-- scored_at -->
 
 <label for="">Analysis guidelines AASM</label>
-<select name="" id="guidelines" class="form-control" onchange="update_scored_at(event, guidelines, scored_at);">
+<select id="guidelines" class="form-control">
   <!-- 2007: 4% -->
   <option value="4" selected>2007</option>
   <!-- 2012: 3% -->
@@ -163,7 +161,7 @@
 
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" onchange="validate.call(this, event, 0, 3, 4)" name="" id="scored_at" class="form-control calculated" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="" value="4">
+    <input type="text" inputmode="numeric" id="scored_at" class="form-control calculated" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="" value="4">
     <label for="scored_at">Hypopneas scored at oxygen desaturation %</label>
   </div>
   <span class="input-group-text">%</span>
