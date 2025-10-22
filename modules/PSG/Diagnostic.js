@@ -1,8 +1,9 @@
 import * as script from "/script.js";
+import * as util from "/modules/util.js";
 
 console.log("Diagnostic.js");
 
-const update_ahi = () => update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
+const update_ahi = () => util.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 
 // current values
 let RDI = {
@@ -76,20 +77,20 @@ script.data[script.key].clean = {
 
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 script.data[script.key].update = {
-  "start": update_end,
+  "start": () => util.update_end(start, end, trt),
   "trt": () => {
-    update_percentage(tst, trt, eff);
-    update_end();
+    util.update_percentage(tst, trt, eff);
+    util.update_end(start, end, trt);
   },
   "tst": () => {
-    update_percentage(tst, trt, eff);
+    util.update_percentage(tst, trt, eff);
     update_ahi();
   },
   "r_lat": () => {
-    rem_check();
+    util.rem_check(rem, r_lat);
     r_lat.value = script.data[script.key].clean.r_lat();
   },
-  "rem": () => update_rem('requires_rem'),
+  "rem": () => util.update_rem(rem, 'requires_rem'),
   "a_cc": update_ahi,
   "a_oc": update_ahi,
   "a_mc": update_ahi,
@@ -98,10 +99,10 @@ script.data[script.key].update = {
     rdi.value = ahi.value;
     rdi.dispatchEvent(new Event('change'));
   },
-  "supine": () => update_rdi(supine),
-  "prone": () => update_rdi(prone),
-  "left": () => update_rdi(left),
-  "right": () => update_rdi(right),
+  "supine": () => util.update_rdi(RDI, supine),
+  "prone": () => util.update_rdi(RDI, prone),
+  "left": () => util.update_rdi(RDI, left),
+  "right": () => util.update_rdi(RDI, right),
 };
 
 // template setters - format for setting into the template
@@ -113,76 +114,5 @@ script.data[script.key].template_set = {
   "arem_ahi": () => (rem.value != 0) ? script.clip_index(arem_ahi.value) : script.clip_index(ahi.value),
   // rem ahi (events/hour)
   "rem_ahi": () => (rem.value != 0) ? `${script.clip_index(rem_ahi.value)}/hr` : "N/A",
-  "rdi_positions": rdi_position_str,
+  "rdi_positions": () => util.rdi_position_str(AHI, supine, prone, left, right),
 };
-
-function rdi_position_str(){
-  let rdi_positions = [];
-  let check = [left.value, right.value, supine.value, prone.value];
-  let value = [rdi_l.value, rdi_r.value, rdi_s.value, rdi_p.value];
-  let label = ["Left Side", "Right Side", "Supine", "Prone"];
-  for (let i = 0; i < 4; ++i) {
-    if (script.clip_percent(check[i]) != 0) {
-      rdi_positions.push(`${label[i]} RDI: ${value[i]}`);
-    }
-  }
-  return rdi_positions.join(", ");
-}
-
-// store into result the percentage of a to b
-function update_percentage(a, b, result) {
-  result.value = (100 * a.value / b.value); //.toFixed(1);
-  result.dispatchEvent(new Event("change"));
-}
-
-// calculate index (ex: central apnea index = central apnea count / total sleep time)
-function update_index(result, dur_min, ...evts) {
-  let sum = 0;
-  for (let evt of evts) {
-    sum += Number(evt.value);
-  }
-  result.value = sum / Number(dur_min.value) * 60; // convert dur from minutes to hours
-  result.dispatchEvent(new Event("change"));
-}
-
-// calculate end time from start time & total record time
-function update_end () {
-  if (start.value != "" && trt.value != "") {
-    end.value = new Date(new Date("2025-01-01 " + start.value).getTime() + trt.value*60*1000).toTimeString().slice(0,5);
-    end.dispatchEvent(new Event("change"));
-  }
-}
-
-// show/hide positional rdi based on which positions are set
-// pos: position duration input element (%)
-function update_rdi (pos) {
-  let value = parseFloat(pos.value);
-  if ((RDI[pos.id] === 0 && value !== 0) || (RDI[pos.id] !== 0 && value === 0)) {
-    let elems = document.getElementsByClassName(pos.id + "_visibility");
-    for (let elem of elems) {
-      elem.hidden = !elem.hidden;
-    }
-  }
-  RDI[pos.id] = value;
-  // if none of RDI are active hide div & label, else don't hide them
-  rdi_pos_div.hidden = rdi_pos_label.hidden = !(RDI["supine"] | RDI["prone"] | RDI["left"] | RDI["right"] !== 0 );
-}
-
-// hide elems if rem is 0, otherwise show them
-function update_rem (cls) {
-  let elems = document.getElementsByClassName(cls);
-  for (let elem of elems) {
-    elem.hidden = rem.value == 0;
-  }
-}
-
-// if rem latency is set to "N/A", then set rem to 0
-function rem_check() {
-  let val = r_lat.value.toUpperCase();
-  let check = new Set(["N/A", "NA"]);
-
-  if (check.has(val)) {
-    rem.value = 0;
-    rem.dispatchEvent(new Event('change'));
-  }
-}
