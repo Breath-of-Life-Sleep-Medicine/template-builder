@@ -5,7 +5,7 @@ console.log("Diagnostic.js");
 const update_ahi = () => update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 
 // current values
-var RDI = {
+let RDI = {
   "supine": 0,
   "prone": 0,
   "left": 0,
