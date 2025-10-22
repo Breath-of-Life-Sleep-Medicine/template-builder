@@ -87,7 +87,7 @@ script.data[script.key].update = {
   },
   "r_lat": () => {
     rem_check();
-    script.data[script.key].clean.r_lat();
+    r_lat.value = script.data[script.key].clean.r_lat();
   },
   "rem": () => update_rem('requires_rem'),
   "a_cc": update_ahi,
