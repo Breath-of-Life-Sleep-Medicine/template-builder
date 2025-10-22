@@ -134,9 +134,25 @@ function load_form() {
     script.src = "modules/"+key+".js";
     script.type = "module";
     script.onload = () => {
-      // add event listeners
-      for (const id in data[key]["update"]) {
-        document.getElementById(id).addEventListener("change", data[key]["update"][id]);
+      if (!(key in data)) { // default empty objects
+        data[key] = {};
+        data[key].clean = {};
+      }
+      // add onchange event listeners (do clean fn, then do update fn)
+      let ids = [];
+      if ("no_change" in data[key]) {
+        ids = Object.keys(data[key].clean).filter(id => !data[key].no_change.includes(id));
+      } else {
+        ids = Object.keys(data[key].clean);
+      }
+      for (const id of ids) {
+        let elem = document.getElementById(id);
+        elem.addEventListener("change", () => {
+          elem.value = data[key].clean[id]();
+          if (id in data[key].update) {
+            data[key].update[id]();
+          }
+        });
       }
     };
     document.body.appendChild(script);
