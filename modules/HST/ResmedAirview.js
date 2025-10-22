@@ -58,7 +58,7 @@ script.data[script.key].update = {
   "ahi": update_hi,
   "ai": update_hi,
   "guidelines": update_scored_at, // has update fn w/o a clean fn
-}
+};
 
 function update_duration() {
   let [s, e] = script.get_dt("01/01/2000", start.value, end.value);

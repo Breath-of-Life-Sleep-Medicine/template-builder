@@ -8,8 +8,18 @@ console.log("script.js");
 let key = null;
 let data = {};
 
+// returns a map of keywords to values for replacing keywords in the template
 function get_map() {
-  return Object.fromEntries(Object.entries(data[key]["clean"]).map(([k,v])=>[k, v()]));
+  // "remove" template_set keys from clean, and convert the remaining to values
+  let rm = Object.keys(data[key].template_set); // keys to remove
+  let clean = Object.entries(data[key].clean).filter(id => !rm.includes(id));
+  clean = Object.fromEntries(clean.map(([k,v])=>[k, v()]));
+  // append the template set value map to the clean value map
+  let template_set = {};
+  if ("template_set" in data[key]) {
+    template_set = Object.fromEntries(Object.entries(data[key].template_set).map(([k,v])=>[k, v()]));
+  }
+  return {...clean, ...template_set};
 }
 
 // get data from metadata
