@@ -108,6 +108,7 @@ function duration_short_str(v1, v2, v3=null) {
   return (v3 === null) ? `${v1}:${zero_pad(v2,2)}` : `${v1}:${zero_pad(v2,2)}:${zero_pad(v3,2)}`;
 }
 
+// onchange callbacks are generated from {clean - no_change}, or {update - clean}
 function load_form() {
   key = template.value;
   let path = "forms/"+key+".html";
@@ -127,7 +128,6 @@ function load_form() {
       console.error(`Element with ID ${id} not found.`);
     }
 
-    // TODO: figure out how to best attach/detach scripts
     // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
 
     const script = document.createElement('script');
@@ -138,22 +138,45 @@ function load_form() {
         data[key] = {};
         data[key].clean = {};
       }
-      // add onchange event listeners (do clean fn, then do update fn)
-      let ids = [];
+      // add onchange event listeners 
+      let ids;
+      const clean = new Set(Object.keys(data[key].clean));
       if ("no_change" in data[key]) {
-        ids = Object.keys(data[key].clean).filter(id => !data[key].no_change.includes(id));
+        // ids = Object.keys(data[key].clean).filter(id => !data[key].no_change.includes(id));
+        const no_change = new Set(data[key].no_change);
+        ids = clean.difference(no_change);
+        
+        // ids = Object.keys(difference(Object.keys(data[key].clean), Object.keys(data[key].no_change)));
       } else {
-        ids = Object.keys(data[key].clean);
+        ids = clean;
       }
+      // onchange: do clean fn, then do update fn
       for (const id of ids) {
         let elem = document.getElementById(id);
-        elem.addEventListener("change", () => {
-          elem.value = data[key].clean[id]();
-          if (id in data[key].update) {
-            data[key].update[id]();
-          }
-        });
+        // if (elem === null) {console.error(`element with id "${id}" is null, but attempting to attach onchange event listener`)}
+
+        if (elem) {
+          elem.addEventListener("change", () => {
+            elem.value = data[key].clean[id]();
+            if (id in data[key].update) {
+              data[key].update[id]();
+            }
+          });
+        }
       }
+      // onchange: only do update fn (no clean fn)
+      if ("update" in data[key]) {
+        //let clean = new Set(Object.keys(data[key].clean));
+        let update = new Set(Object.keys(data[key].update));
+        ids = update.difference(clean);
+        for (const id of ids) {
+          let elem = document.getElementById(id);
+          if (elem) {
+            elem.addEventListener("change", () => {data[key].update[id]()});
+          }
+        }
+      }
+      
     };
     document.body.appendChild(script);
   })
