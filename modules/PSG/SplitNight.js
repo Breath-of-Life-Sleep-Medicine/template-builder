@@ -107,9 +107,9 @@ script.data[script.key].update = {
   "right":  () => util.update_rdi(RDI, right),
 
   // titration portion
-  "ti_start": update_ti_end,
+  "ti_start": () => util.update_end(ti_start, ti_end, ti_trt),
   "ti_trt": () => {
-    update_ti_end();
+    util.update_end(ti_start, ti_end, ti_trt);
     util.update_percentage(ti_tst, ti_trt, ti_eff);
   },
   "ti_tst": () => {
@@ -133,29 +133,9 @@ script.data[script.key].template_set = {
   // rem ahi (events/hour)
   "rem_ahi": () => (rem.value != 0) ? `${script.clip_index(rem_ahi.value)}/hr` : "N/A",
   // rdi - supine, prone, left, & right (events/hour)
-  "rdi_positions": rdi_position_str,
+  "rdi_positions": () => util.rdi_position_str(RDI, supine, prone, left, right),
 
   // titration portion
   "ti_start": () => script.time_24_to_12(ti_start.value), // start time
   "ti_end":   () => script.time_24_to_12(ti_end.value),   // end time
 };
-
-function rdi_position_str(){
-  let rdi_positions = [];
-  let check = [left.value, right.value, supine.value, prone.value];
-  let value = [rdi_l.value, rdi_r.value, rdi_s.value, rdi_p.value];
-  let label = ["Left Side", "Right Side", "Supine", "Prone"];
-  for (let i = 0; i < 4; ++i) {
-    if (script.clip_percent(check[i]) != 0) {
-      rdi_positions.push(`${label[i]} RDI: ${value[i]}`);
-    }
-  }
-  return rdi_positions.join(", ");
-}
-
-// calculate titration end time from start time & total record time
-function update_ti_end () {
-  if (ti_start.value != "" && ti_trt.value != "") {
-    ti_end.value = new Date(new Date("2025-01-01 " + ti_start.value).getTime() + ti_trt.value*60*1000).toTimeString().slice(0,5);
-  }
-}
