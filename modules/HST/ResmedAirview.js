@@ -8,8 +8,10 @@ let duration2_value = {"h":0, "m":0};
 
 script.data[script.key] = {};
 
-// ids that have no onchange callback fn
+// ids that have no onchange callback fn; can still trigger update w/o clean
 script.data[script.key].no_change = [
+  "start",
+  "end",
 ];
 
 // template keywords and form ids both use the clean
@@ -59,9 +61,9 @@ script.data[script.key].update = {
 }
 
 function update_duration() {
-  let [start, end] = get_dt("01/01/2000", start.value, end.value);
-  let d1 = script.get_duration(start, new Date(end.getTime() - 1000 * 60));
-  let d2 = script.get_duration(start, end);
+  let [s, e] = script.get_dt("01/01/2000", start.value, end.value);
+  let d1 = script.get_duration(s, new Date(e.getTime() - 1000 * 60));
+  let d2 = script.get_duration(s, e);
   duration1_label.textContent = script.duration_short_str(...Object.values(d1));
   duration2_label.textContent = script.duration_short_str(...Object.values(d2));
   duration1_value = d1;

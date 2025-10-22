@@ -166,9 +166,8 @@ function load_form() {
       }
       // onchange: only do update fn (no clean fn)
       if ("update" in data[key]) {
-        //let clean = new Set(Object.keys(data[key].clean));
         let update = new Set(Object.keys(data[key].update));
-        ids = update.difference(clean);
+        ids = update.difference(ids);
         for (const id of ids) {
           let elem = document.getElementById(id);
           if (elem) {
