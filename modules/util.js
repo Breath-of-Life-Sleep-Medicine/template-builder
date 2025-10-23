@@ -1,3 +1,5 @@
+import * as script from "/script.js";
+
 // store into result the percentage of a to b
 function update_percentage(a, b, result) {
   result.value = (100 * a.value / b.value); //.toFixed(1);
