@@ -8,5 +8,10 @@
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "jest": {
+    "projects": [
+      "<rootDir>/tests/jest.config.js"
+    ]
   }
 }
