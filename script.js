@@ -5,6 +5,11 @@ $(function(){
 
 console.log("script.js");
 
+// document ready w/o jquery
+// document.addEventListener("DOMContentLoaded", function(){
+//   load_form();
+// });
+
 let key = null;
 let data = {};
 
