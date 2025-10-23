@@ -1,6 +1,18 @@
 // document ready function (short version)
 $(function(){
   load_form();
+
+  // event listeners
+  formID.addEventListener("submit", submit_copy);
+  template.addEventListener("change", load_form);
+
+  // mutation observer - detect changes to the DOM
+  const targetNode = document.getElementById("form_container");
+  const config = {attributes: false, childList: true, subtree: false};
+  const observer = new MutationObserver(initialize);
+  observer.observe(targetNode, config);
+  // to stop observing
+  //observer.disconnect();
 });
 
 console.log("script.js");
@@ -32,18 +44,6 @@ function metadata(name) {
   const meta = document.querySelector('meta[name="'+name+'"]');
   return meta ? meta.content : undefined;
 }
-
-// event listeners
-formID.addEventListener("submit", submit_copy);
-template.addEventListener("change", load_form);
-
-// mutation observer - detect changes to the DOM
-const targetNode = document.getElementById("form_container");
-const config = {attributes: false, childList: true, subtree: false};
-const observer = new MutationObserver(initialize);
-observer.observe(targetNode, config);
-// to stop observing
-//observer.disconnect();
 
 function initialize() {
   let cls = document.getElementsByClassName("calculated");
