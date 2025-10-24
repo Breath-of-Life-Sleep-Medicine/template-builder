@@ -266,7 +266,7 @@ function find_replace(str) {
     "date": date_str(date.value),
     "referring": referring.value,
     "provider": provider.value,
-    ...get_map() // form html needs to define get_map()
+    ...get_map()
   }; 
 
   // regex literal: /pattern/flags
@@ -337,4 +337,6 @@ export {
   get_duration,
   duration_str,
   duration_short_str,
+  // for testing
+  find_replace,
 };
