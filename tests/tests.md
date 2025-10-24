@@ -1,17 +1,27 @@
 # Tests
 
-to run tests
+## To set up node_modules
+
+```
+npm install
+```
+
+## To run tests
 
 ```
 npm test
 ```
+
+## Design
+
+### Structure
 
 - jest config file: `jest.config.js`
 - jest setup file: `jest.setup.js`
   - list jest setup file in jest config
 - tests: `__tests__/*`
 
-## How tests are set up
+### How tests are set up
 
 - [Jest](https://jestjs.io/)
   - `npm install --save-dev jest`
