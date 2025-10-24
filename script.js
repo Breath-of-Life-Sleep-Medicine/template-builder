@@ -85,7 +85,7 @@ function time_24_to_12 (time) {
   let hours = parseInt(time.slice(0, 2));
   let suffix = hours < 12 ? " AM": " PM";
   hours = (hours + 11) % 12 + 1;
-  return zero_pad(hours, 2) + time.slice(2) + suffix;
+  return hours + time.slice(2) + suffix;
 }
 
 // start is a dt
