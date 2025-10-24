@@ -1,6 +1,9 @@
 import * as script from "/script.js";
 import {readFileSync} from "fs";
 
+// function that does nothing :)
+const nop = (...args) => {};
+
 // call find_replace given path to a template file
 function find_replace(path) {
   return script.find_replace(get_file_str(path));
@@ -28,6 +31,7 @@ function build_form(data) {
   Object.entries(data).map(([key, value]) => {
     global[key] = {};
     global[key].value = value;
+    global[key].dispatchEvent = nop;
   });
 }
 
