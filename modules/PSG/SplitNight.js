@@ -5,8 +5,8 @@ console.log("SplitNight.js");
 
 const update_ahi = () => util.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 
-// current values
-let RDI = {
+// position duration %
+let POS = {
   "supine": 0,
   "prone": 0,
   "left": 0,
@@ -101,10 +101,10 @@ script.data[script.key].update = {
     rdi.value = ahi.value;
     rdi.dispatchEvent(new Event('change'));
   },
-  "supine": () => util.update_rdi(RDI, supine),
-  "prone":  () => util.update_rdi(RDI, prone),
-  "left":   () => util.update_rdi(RDI, left),
-  "right":  () => util.update_rdi(RDI, right),
+  "supine": () => util.update_rdi(POS, supine),
+  "prone": () => util.update_rdi(POS, prone),
+  "left": () => util.update_rdi(POS, left),
+  "right": () => util.update_rdi(POS, right),
 
   // titration portion
   "ti_start": () => util.update_end(ti_start, ti_end, ti_trt),
@@ -133,7 +133,7 @@ script.data[script.key].template_set = {
   // rem ahi (events/hour)
   "rem_ahi": () => (rem.value != 0) ? `${script.clip_index(rem_ahi.value)}/hr` : "N/A",
   // rdi - supine, prone, left, & right (events/hour)
-  "rdi_positions": () => util.rdi_position_str(RDI, supine, prone, left, right),
+  "rdi_positions": () => util.rdi_position_str(POS, rdi_s, rdi_p, rdi_l, rdi_r),
 
   // titration portion
   "ti_start": () => script.time_24_to_12(ti_start.value), // start time
