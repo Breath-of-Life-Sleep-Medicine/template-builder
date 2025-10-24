@@ -36,6 +36,7 @@ function build_form(data) {
 }
 
 export {
+  nop,
   find_replace,
   get_file_str,
   get_lines,
