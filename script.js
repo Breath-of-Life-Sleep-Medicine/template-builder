@@ -76,7 +76,7 @@ function date_str(s) {
 
 // convert dt into hh:mm format string
 function time_str(dt) {
-  return dt.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+  return dt.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
 }
 
 // convert 24 hour formatted time string to 12 hour time string
@@ -233,9 +233,9 @@ function clip_percent(number, precision=1, min=0, max=100) {
   return clip_number(number, precision, min, max);
 }
 
-function validate(event, precision = null, min = null, max = null) {
-  this.value = clip_number(this.value, precision, min, max);
-}
+// function validate(event, precision = null, min = null, max = null) {
+//   this.value = clip_number(this.value, precision, min, max);
+// }
 
 /******************************************************************************
 Desc: convert a series of time strings into Date objects (datetime)
@@ -323,7 +323,7 @@ export {
   submit_copy,
   load_form,
   // cleaning
-  validate,
+  // validate,
   clip_number,
   clip_index,
   clip_minutes,
