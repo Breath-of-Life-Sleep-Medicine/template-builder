@@ -25,32 +25,33 @@ function update_end (start, end, trt) {
 }
 
 // show/hide positional rdi based on which positions are set
-// rdi: object to update
-// pos: position duration input element (%)
-//      note: the class for toggling visibility are id + _visibility (ex: "supine_visibility")
-function update_rdi (rdi, pos) {
-  let value = parseFloat(pos.value);
-  if ((rdi[pos.id] === 0 && value !== 0) || (rdi[pos.id] !== 0 && value === 0)) {
-    let elems = document.getElementsByClassName(pos.id + "_visibility");
+// POS:      stored positional durations (to be updated)
+// pos_elem: position duration input element (%)
+//           note: the class for toggling visibility are id + _visibility (ex: "supine_visibility")
+function update_rdi (POS, pos_elem) {
+  let value = parseFloat(pos_elem.value);
+  if ((POS[pos_elem.id] === 0 && value !== 0) || (POS[pos_elem.id] !== 0 && value === 0)) {
+    let elems = document.getElementsByClassName(pos_elem.id + "_visibility");
     for (let elem of elems) {
       elem.hidden = !elem.hidden;
     }
   }
-  rdi[pos.id] = value;
+  POS[pos_elem.id] = value;
   // if none of RDI are active hide div & label, else don't hide them
-  rdi_pos_div.hidden = rdi_pos_label.hidden = !(rdi["supine"] | rdi["prone"] | rdi["left"] | rdi["right"] !== 0 );
+  rdi_pos_div.hidden = rdi_pos_label.hidden = !(POS["supine"] | POS["prone"] | POS["left"] | POS["right"] !== 0 );
 }
 
 // get rdi position string (for the template)
-// supine, prone, left, and right are duration in positions (%)
-function rdi_position_str(RDI, supine, prone, left, right){
+// POS is the position durations (%)
+// supine, prone, left, and right are the positional RDI (evt/hr)
+function rdi_position_str(POS, supine, prone, left, right){
   let rdi_positions = [];
-  let check = [left.value, right.value, supine.value, prone.value];
-  let value = [RDI.left, RDI.right, RDI.supine, RDI.prone];
+  let value = [left.value, right.value, supine.value, prone.value];
+  let check = [POS.left, POS.right, POS.supine, POS.prone];
   let label = ["Left Side", "Right Side", "Supine", "Prone"];
   for (let i = 0; i < 4; ++i) {
     if (script.clip_percent(check[i]) != 0) {
-      rdi_positions.push(`${label[i]} RDI: ${value[i]}`);
+      rdi_positions.push(`${label[i]} RDI: ${value[i]}/hr`);
     }
   }
   return rdi_positions.join(", ");

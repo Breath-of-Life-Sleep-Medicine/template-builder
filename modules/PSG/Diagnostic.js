@@ -5,8 +5,8 @@ console.log("Diagnostic.js");
 
 const update_ahi = () => util.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 
-// current values
-let RDI = {
+// position duration %
+let POS = {
   "supine": 0,
   "prone": 0,
   "left": 0,
@@ -99,10 +99,10 @@ script.data[script.key].update = {
     rdi.value = ahi.value;
     rdi.dispatchEvent(new Event('change'));
   },
-  "supine": () => util.update_rdi(RDI, supine),
-  "prone": () => util.update_rdi(RDI, prone),
-  "left": () => util.update_rdi(RDI, left),
-  "right": () => util.update_rdi(RDI, right),
+  "supine": () => util.update_rdi(POS, supine),
+  "prone": () => util.update_rdi(POS, prone),
+  "left": () => util.update_rdi(POS, left),
+  "right": () => util.update_rdi(POS, right),
 };
 
 // template setters - format for setting into the template
@@ -114,5 +114,5 @@ script.data[script.key].template_set = {
   "arem_ahi": () => (rem.value != 0) ? script.clip_index(arem_ahi.value) : script.clip_index(ahi.value),
   // rem ahi (events/hour)
   "rem_ahi": () => (rem.value != 0) ? `${script.clip_index(rem_ahi.value)}/hr` : "N/A",
-  "rdi_positions": () => util.rdi_position_str(AHI, supine, prone, left, right),
+  "rdi_positions": () => util.rdi_position_str(POS, rdi_s, rdi_p, rdi_l, rdi_r),
 };
