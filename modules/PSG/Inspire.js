@@ -12,8 +12,6 @@ let POS = {
   "right": 0,
 };
 
-script.data[script.key] = {};
-
 // ids that have no onchange callback fn; can still trigger update w/o clean
 script.data[script.key].no_change = [
   "start", // don't clean time fields

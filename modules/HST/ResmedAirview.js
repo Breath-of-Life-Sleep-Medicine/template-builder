@@ -4,8 +4,6 @@ import * as script from "/script.js";
 let duration1_value = {"h":0, "m":0};
 let duration2_value = {"h":0, "m":0};
 
-script.data[script.key] = {};
-
 // ids that have no onchange callback fn; can still trigger update w/o clean
 script.data[script.key].no_change = [
   "start",
