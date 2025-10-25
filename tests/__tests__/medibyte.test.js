@@ -3,15 +3,18 @@
  */
 
 import * as script from "/script.js";
-import * as data from "/modules/HST/MediByte.js"; // sets data callback functions
-import {get_paths, get_lines, find_replace, get_file_str, build_form} from "/tests/util.js";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+
+// sets data callback functions
+beforeAll(async () => {
+  init_data();
+  await import("/modules/HST/MediByte.js");
+});
 
 // medibyte test
 test("medibyte find_replace", () => {
   let path = "HST/MediByte";
   let {template, expected} = get_paths(path);
-
-  script.data[script.key].template_set = {};
 
   build_form({
     date: "2025-01-01",

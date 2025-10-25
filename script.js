@@ -24,10 +24,7 @@ function get_map() {
   let clean = Object.entries(data[key].clean).filter(id => !rm.includes(id));
   clean = Object.fromEntries(clean.map(([k,v])=>[k, v()]));
   // append the template set value map to the clean value map
-  let template_set = {};
-  if ("template_set" in data[key]) {
-    template_set = Object.fromEntries(Object.entries(data[key].template_set).map(([k,v])=>[k, v()]));
-  }
+  let template_set = Object.fromEntries(Object.entries(data[key].template_set).map(([k,v])=>[k, v()]));
   return {...clean, ...template_set};
 }
 
@@ -118,6 +115,16 @@ function duration_short_str(v1, v2, v3=null) {
 // onchange callbacks are generated from {clean - no_change}, or {update - clean}
 function load_form() {
   key = template.value;
+
+  // create empty data object for this template key
+  if (!(key in data)) {
+    data[key] = {};
+    data[key].no_change = [];
+    data[key].clean = {};
+    data[key].update = {};
+    data[key].template_set = {};
+  }
+
   let path = "forms/"+key+".html";
   let id = "form_container";
   fetch(path)
@@ -141,27 +148,15 @@ function load_form() {
     script.src = "modules/"+key+".js";
     script.type = "module";
     script.onload = () => {
-      if (!(key in data)) { // default empty objects
-        data[key] = {};
-        data[key].clean = {};
-      }
       // add onchange event listeners 
       let ids;
       const clean = new Set(Object.keys(data[key].clean));
-      if ("no_change" in data[key]) {
-        // ids = Object.keys(data[key].clean).filter(id => !data[key].no_change.includes(id));
-        const no_change = new Set(data[key].no_change);
-        ids = clean.difference(no_change);
-        
-        // ids = Object.keys(difference(Object.keys(data[key].clean), Object.keys(data[key].no_change)));
-      } else {
-        ids = clean;
-      }
+      const no_change = new Set(data[key].no_change);
+      ids = clean.difference(no_change);
       // onchange: do clean fn, then do update fn
       for (const id of ids) {
         let elem = document.getElementById(id);
         // if (elem === null) {console.error(`element with id "${id}" is null, but attempting to attach onchange event listener`)}
-
         if (elem) {
           elem.addEventListener("change", () => {
             elem.value = data[key].clean[id]();
@@ -172,14 +167,12 @@ function load_form() {
         }
       }
       // onchange: only do update fn (no clean fn)
-      if ("update" in data[key]) {
-        let update = new Set(Object.keys(data[key].update));
-        ids = update.difference(ids);
-        for (const id of ids) {
-          let elem = document.getElementById(id);
-          if (elem) {
-            elem.addEventListener("change", () => {data[key].update[id]()});
-          }
+      let update = new Set(Object.keys(data[key].update));
+      ids = update.difference(ids);
+      for (const id of ids) {
+        let elem = document.getElementById(id);
+        if (elem) {
+          elem.addEventListener("change", () => {data[key].update[id]()});
         }
       }
     };

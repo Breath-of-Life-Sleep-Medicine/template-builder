@@ -3,13 +3,14 @@
  */
 
 import * as script from "/script.js";
-import * as data from "/modules/PSG/Inspire.js"; // sets data callback functions
-import {get_paths, get_lines, find_replace, get_file_str, build_form} from "/tests/util.js";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
-beforeAll(() => {
-  global.rdi_pos_div = {};
-  global.rdi_pos_label = {};
-  global.rdi_pos_div.hidden = global.rdi_pos_label.hidden = true;
+// sets data callback functions
+beforeAll(async () => {
+  init_data();
+  await import("/modules/PSG/Inspire.js");
+  global.rdi_pos_div = {hidden: true};
+  global.rdi_pos_label = {hidden: true};
 });
 
 beforeEach(() => {

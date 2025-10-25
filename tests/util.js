@@ -29,10 +29,18 @@ function get_paths(path) {
 
 function build_form(data) {
   Object.entries(data).map(([key, value]) => {
-    global[key] = {};
-    global[key].value = value;
-    global[key].dispatchEvent = nop;
+    global[key] = {value: value, dispatchEvent: nop};
   });
+}
+
+// has to happen before the module file gets loaded
+function init_data() {
+  script.data[script.key] = {
+    no_change: [],
+    clean: {},
+    update: {},
+    template_set: {},
+  };
 }
 
 export {
@@ -42,4 +50,5 @@ export {
   get_lines,
   get_paths,
   build_form,
-}
+  init_data,
+};

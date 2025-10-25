@@ -3,8 +3,13 @@
  */
 
 import * as script from "/script.js";
-import * as data from "/modules/HST/ResmedAirview.js"; // sets data callback functions
-import {get_paths, get_lines, find_replace, get_file_str, build_form} from "/tests/util.js";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+
+// sets data callback functions
+beforeAll(async () => {
+  init_data();
+  await import("/modules/HST/ResmedAirview.js");
+});
 
 // resmed airview test
 test("resmed airview find_replace", () => {
