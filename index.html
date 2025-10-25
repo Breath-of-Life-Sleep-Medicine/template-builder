@@ -59,21 +59,22 @@
 
     <br>
 
-    <!-- form -->
-
     <form id="formID">
-      <!-- general -->
       <div class="form-floating">
         <input type="date" id="date" class="form-control">
         <label for="date">Date of study</label>
       </div>
+
+      <!-- referring -->
       <div class="form-floating">
         <input type="text" id="referring" placeholder="" aria-label="Referring provider" class="form-control">
         <label for="referring">Referring provider</label>
       </div>
+
+      <!-- provider list -->
       <div class="form-floating">
         <input list="provider_options" id="provider" placeholder="" aria-label="Sleep provider" class="form-control">
-        <datalist name="" id="provider_options">
+        <datalist id="provider_options">
           <option value="Mary-Alice Jaeger MD">Mary-Alice Jaeger MD</option>
           <option value="Lisa Williams FNP">Lisa Williams FNP</option>
           <option value="Ryan Smith PAC">Ryan Smith PAC</option>
@@ -82,8 +83,9 @@
         <label for="provider">Sleep provider</label>
       </div>
 
+      <!-- template select -->
       <div class="form-floating">
-        <select name="" id="template" placeholder="" aria-label="Template" class="form-control">
+        <select id="template" placeholder="" aria-label="Template" class="form-control">
           <optgroup label="HST (home sleep study)">
             <option value="HST/ResmedAirview">Resmed Airview</option>
             <option value="HST/MediByte">MediByte</option>
