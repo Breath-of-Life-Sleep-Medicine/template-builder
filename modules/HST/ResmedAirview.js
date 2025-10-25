@@ -1,7 +1,5 @@
 import * as script from "/script.js";
 
-console.log("ResmedAirview.js");
-
 // keep updated duration value objects here b/c input.value can't store objects, only string
 let duration1_value = {"h":0, "m":0};
 let duration2_value = {"h":0, "m":0};

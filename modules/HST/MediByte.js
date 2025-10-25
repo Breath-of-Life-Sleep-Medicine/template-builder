@@ -1,7 +1,5 @@
 import * as script from "/script.js";
 
-console.log("MediByte.js");
-
 script.data[script.key] = {};
 
 // ids that have no onchange callback fn; can still trigger update w/o clean

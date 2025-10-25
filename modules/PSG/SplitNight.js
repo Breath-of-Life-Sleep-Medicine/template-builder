@@ -1,8 +1,6 @@
 import * as script from "/script.js";
 import * as util from "/modules/util.js";
 
-console.log("SplitNight.js");
-
 const update_ahi = () => util.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 
 // position duration %

@@ -7,20 +7,12 @@ $(function(){
   template.addEventListener("change", load_form);
 
   // mutation observer - detect changes to the DOM
-  const targetNode = document.getElementById("form_container");
   const config = {attributes: false, childList: true, subtree: false};
   const observer = new MutationObserver(initialize);
-  observer.observe(targetNode, config);
+  observer.observe(form_container, config);
   // to stop observing
   //observer.disconnect();
 });
-
-console.log("script.js");
-
-// document ready w/o jquery
-// document.addEventListener("DOMContentLoaded", function(){
-//   load_form();
-// });
 
 let key = null;
 let data = {};
@@ -190,7 +182,6 @@ function load_form() {
           }
         }
       }
-      
     };
     document.body.appendChild(script);
   })
@@ -232,10 +223,6 @@ function clip_minutes(number, precision = 1, min = 0, max = null) {
 function clip_percent(number, precision=1, min=0, max=100) {
   return clip_number(number, precision, min, max);
 }
-
-// function validate(event, precision = null, min = null, max = null) {
-//   this.value = clip_number(this.value, precision, min, max);
-// }
 
 /******************************************************************************
 Desc: convert a series of time strings into Date objects (datetime)
@@ -323,7 +310,6 @@ export {
   submit_copy,
   load_form,
   // cleaning
-  // validate,
   clip_number,
   clip_index,
   clip_minutes,
