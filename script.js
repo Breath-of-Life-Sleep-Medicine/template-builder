@@ -260,8 +260,11 @@ function find_replace(str) {
   str = str.replace(pattern, function(_,key){return map[key];});
   console.log(str);
 
+  // file may be lf or crlf
   if (is_windows()) {
-    str = str.replace(/\n/gm, "\r\n");
+    str = str.replace(/\r\n|\n/gm, "\r\n");
+  } else {
+    str = str.replace(/\r\n|\n/gm, "\n");
   }
 
   return str;
