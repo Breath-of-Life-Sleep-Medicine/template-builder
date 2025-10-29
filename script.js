@@ -125,7 +125,7 @@ function load_form() {
     data[key].template_set = {};
   }
 
-  let path = "/forms/"+key+".html";
+  let path = "forms/"+key+".html";
   let id = "form_container";
   fetch(path)
   .then(response => {
