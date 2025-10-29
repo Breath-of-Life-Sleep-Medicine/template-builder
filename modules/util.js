@@ -1,4 +1,4 @@
-import * as script from "/script.js";
+import * as script from "../script.js";
 
 // store into result the percentage of a to b
 function update_percentage(a, b, result) {

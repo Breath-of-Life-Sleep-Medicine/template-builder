@@ -1,5 +1,5 @@
-import * as script from "/script.js";
-import * as util from "/modules/util.js";
+import * as script from "../../script.js";
+import * as util from "../util.js";
 
 const update_ahi = () => util.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 const update_cai = () => util.update_index(a_ci, tst, a_cc);

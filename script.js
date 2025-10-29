@@ -1,3 +1,7 @@
+let key = null;
+let data = {};
+let path_base;
+
 // document ready function (short version)
 $(function(){
   load_form();
@@ -12,10 +16,12 @@ $(function(){
   observer.observe(form_container, config);
   // to stop observing
   //observer.disconnect();
-});
 
-let key = null;
-let data = {};
+  // URL/index.html to URL
+  path_base = document.location.pathname.split('/');
+  path_base.pop();
+  path_base = path_base.join('/');
+});
 
 // returns a map of keywords to values for replacing keywords in the template
 function get_map() {
@@ -145,7 +151,7 @@ function load_form() {
     // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
 
     const script = document.createElement('script');
-    script.src = "modules/"+key+".js";
+    script.src = path_base + "/modules/"+key+".js";
     script.type = "module";
     script.onload = () => {
       // add onchange event listeners 
@@ -276,7 +282,7 @@ function is_windows() {
 }
 
 function submit_copy(event) {
-  load_txt_file("templates/"+template.value+".txt")
+  load_txt_file(path_base + "/templates/"+template.value+".txt")
     .then(content => copy_to_clipboard(find_replace(content)))
     .catch(error => console.error("error loading file: ", error));
   // do not clear the form
