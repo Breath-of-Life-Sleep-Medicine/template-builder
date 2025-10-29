@@ -1,19 +1,53 @@
-document.getElementById("formID").addEventListener("submit", submit_copy);
+// document ready function (short version)
+$(function(){
+  load_form();
 
-const zero_pad = (num, places) => String(num).padStart(places, '0');
+  // event listeners
+  formID.addEventListener("submit", submit_copy);
+  template.addEventListener("change", load_form);
+
+  // mutation observer - detect changes to the DOM
+  const config = {attributes: false, childList: true, subtree: false};
+  const observer = new MutationObserver(initialize);
+  observer.observe(form_container, config);
+  // to stop observing
+  //observer.disconnect();
+});
+
+let key = null;
+let data = {};
+
+// returns a map of keywords to values for replacing keywords in the template
+function get_map() {
+  // "remove" template_set keys from clean, and convert the remaining to values
+  let rm = Object.keys(data[key].template_set); // keys to remove
+  let clean = Object.entries(data[key].clean).filter(id => !rm.includes(id));
+  clean = Object.fromEntries(clean.map(([k,v])=>[k, v()]));
+  // append the template set value map to the clean value map
+  let template_set = Object.fromEntries(Object.entries(data[key].template_set).map(([k,v])=>[k, v()]));
+  return {...clean, ...template_set};
+}
+
+// get data from metadata
+function metadata(name) {
+  const meta = document.querySelector('meta[name="'+name+'"]');
+  return meta ? meta.content : undefined;
+}
 
 function initialize() {
-  const CalculatedElements = document.querySelectorAll(".calculated");
-  CalculatedElements.forEach(element =>{
-    element.disabled = true;
-    element.addEventListener('mouseover', function(event){
-      element.disabled = false;
-    });
-    element.addEventListener('mouseout', function(event) {
-      element.disabled = true;
-    });
-  });
+  let cls = document.getElementsByClassName("calculated");
+  for (let elem of cls) {
+    elem.disabled = true;
+    elem.addEventListener('mouseover', function(){
+      elem.disabled = false;
+    })
+    elem.addEventListener('mouseout', function(){
+      elem.disabled = true;
+    })
+  }
 }
+
+const zero_pad = (num, places) => String(num).padStart(places, '0');
 
 function save(data) {
   sessionStorage.setItem("data", JSON.stringify(data));
@@ -31,7 +65,7 @@ function date_str(s) {
 
 // convert dt into hh:mm format string
 function time_str(dt) {
-  return dt.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+  return dt.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
 }
 
 // convert 24 hour formatted time string to 12 hour time string
@@ -40,7 +74,7 @@ function time_24_to_12 (time) {
   let hours = parseInt(time.slice(0, 2));
   let suffix = hours < 12 ? " AM": " PM";
   hours = (hours + 11) % 12 + 1;
-  return zero_pad(hours, 2) + time.slice(2) + suffix;
+  return hours + time.slice(2) + suffix;
 }
 
 // start is a dt
@@ -78,8 +112,75 @@ function duration_short_str(v1, v2, v3=null) {
   return (v3 === null) ? `${v1}:${zero_pad(v2,2)}` : `${v1}:${zero_pad(v2,2)}:${zero_pad(v3,2)}`;
 }
 
-function load_form(event) {
-  $("#form_container").load("forms/"+template.value+".html");
+// onchange callbacks are generated from {clean - no_change}, or {update - clean}
+function load_form() {
+  key = template.value;
+
+  // create empty data object for this template key
+  if (!(key in data)) {
+    data[key] = {};
+    data[key].no_change = [];
+    data[key].clean = {};
+    data[key].update = {};
+    data[key].template_set = {};
+  }
+
+  let path = "forms/"+key+".html";
+  let id = "form_container";
+  fetch(path)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error. status: ${response.status}`);
+    }
+    return response.text();
+  })
+  .then(form => {
+    const elem = document.getElementById(id);
+    if (elem) {
+      elem.innerHTML = form;
+    } else {
+      console.error(`Element with ID ${id} not found.`);
+    }
+
+    // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
+
+    const script = document.createElement('script');
+    script.src = "modules/"+key+".js";
+    script.type = "module";
+    script.onload = () => {
+      // add onchange event listeners 
+      let ids;
+      const clean = new Set(Object.keys(data[key].clean));
+      const no_change = new Set(data[key].no_change);
+      ids = clean.difference(no_change);
+      // onchange: do clean fn, then do update fn
+      for (const id of ids) {
+        let elem = document.getElementById(id);
+        // if (elem === null) {console.error(`element with id "${id}" is null, but attempting to attach onchange event listener`)}
+        if (elem) {
+          elem.addEventListener("change", () => {
+            elem.value = data[key].clean[id]();
+            if (id in data[key].update) {
+              data[key].update[id]();
+            }
+          });
+        }
+      }
+      // onchange: only do update fn (no clean fn)
+      let update = new Set(Object.keys(data[key].update));
+      ids = update.difference(ids);
+      for (const id of ids) {
+        let elem = document.getElementById(id);
+        if (elem) {
+          elem.addEventListener("change", () => {data[key].update[id]()});
+        }
+      }
+    };
+    document.body.appendChild(script);
+  })
+  .catch(error => {
+    console.error("error with fetch operation:", error);
+  });
 }
 
 function clip_number(number, precision = null, min = null, max = null) {
@@ -116,10 +217,6 @@ function clip_percent(number, precision=1, min=0, max=100) {
   return clip_number(number, precision, min, max);
 }
 
-function validate(event, precision = null, min = null, max = null) {
-  this.value = clip_number(this.value, precision, min, max);
-}
-
 /******************************************************************************
 Desc: convert a series of time strings into Date objects (datetime)
 Input:
@@ -144,14 +241,12 @@ function get_dt(start_date, ...times) {
   return dts;
 }
 
-// console.log(get_datetimes("2025-05-20", "21:30"))
-
 function find_replace(str) {
   let map = {
     "date": date_str(date.value),
     "referring": referring.value,
     "provider": provider.value,
-    ...get_map() // form html needs to define get_map()
+    ...get_map()
   }; 
 
   // regex literal: /pattern/flags
@@ -165,8 +260,11 @@ function find_replace(str) {
   str = str.replace(pattern, function(_,key){return map[key];});
   console.log(str);
 
+  // file may be lf or crlf
   if (is_windows()) {
-    str = str.replace(/\n/gm, "\r\n");
+    str = str.replace(/\r\n|\n/gm, "\r\n");
+  } else {
+    str = str.replace(/\r\n|\n/gm, "\n");
   }
 
   return str;
@@ -200,3 +298,27 @@ async function load_txt_file(file_path) {
   const txt = await response.text();
   return txt;
 }
+
+export {
+  data,
+  key,
+  initialize,
+  submit_copy,
+  load_form,
+  // cleaning
+  clip_number,
+  clip_index,
+  clip_minutes,
+  clip_percent,
+  clip_count,
+  // date / time
+  get_dt,
+  date_str,
+  time_str,
+  time_24_to_12,
+  get_duration,
+  duration_str,
+  duration_short_str,
+  // for testing
+  find_replace,
+};
