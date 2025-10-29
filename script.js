@@ -145,7 +145,7 @@ function load_form() {
     // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
 
     const script = document.createElement('script');
-    script.src = "/modules/"+key+".js";
+    script.src = "modules/"+key+".js";
     script.type = "module";
     script.onload = () => {
       // add onchange event listeners 
