@@ -57,8 +57,10 @@ Place keywords to replace inside `${}`.
 
 ## .js file
 
+Example snippet
+
 ```js
-script.data[script.key] = {};
+import * as script from "/script.js";
 
 // ids to not clean on change
 // - clean function will not run when item is changed in the form
