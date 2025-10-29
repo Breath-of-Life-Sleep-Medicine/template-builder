@@ -1,4 +1,4 @@
-import * as script from "/script.js";
+import * as script from "../../script.js";
 
 // TODO: once sessionStorage is in use, use it to load in data from the previous diagnostic PSG to fill in the diagnostic part
 

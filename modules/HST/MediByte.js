@@ -1,4 +1,4 @@
-import * as script from "/script.js";
+import * as script from "../../script.js";
 
 // ids that have no onchange callback fn; can still trigger update w/o clean
 script.data[script.key].no_change = [
