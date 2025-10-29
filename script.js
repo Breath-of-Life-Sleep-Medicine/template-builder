@@ -125,7 +125,7 @@ function load_form() {
     data[key].template_set = {};
   }
 
-  let path = "/forms/"+key+".html";
+  let path = "forms/"+key+".html";
   let id = "form_container";
   fetch(path)
   .then(response => {
@@ -145,7 +145,7 @@ function load_form() {
     // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
 
     const script = document.createElement('script');
-    script.src = "/modules/"+key+".js";
+    script.src = "modules/"+key+".js";
     script.type = "module";
     script.onload = () => {
       // add onchange event listeners 
@@ -276,7 +276,7 @@ function is_windows() {
 }
 
 function submit_copy(event) {
-  load_txt_file("/templates/"+template.value+".txt")
+  load_txt_file("templates/"+template.value+".txt")
     .then(content => copy_to_clipboard(find_replace(content)))
     .catch(error => console.error("error loading file: ", error));
   // do not clear the form
