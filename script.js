@@ -276,7 +276,7 @@ function is_windows() {
 }
 
 function submit_copy(event) {
-  load_txt_file("/templates/"+template.value+".txt")
+  load_txt_file("templates/"+template.value+".txt")
     .then(content => copy_to_clipboard(find_replace(content)))
     .catch(error => console.error("error loading file: ", error));
   // do not clear the form
