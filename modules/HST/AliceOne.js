@@ -6,13 +6,13 @@ script.data[script.key].clean = {
   "ahi": () => script.clip_index(ahi.value),
   "ai": () => script.clip_index(ai.value), // calculate
   "hi": () => script.clip_index(hi.value),
-  "ox_avg": () => script.clip_percent(ox_avg.value),
-  "ox_min": () => script.clip_percent(ox_min.value),
+  "ox_avg": () => script.clip_percent(ox_avg.value, 0),
+  "ox_min": () => script.clip_percent(ox_min.value, 0),
   "odi": () => script.clip_index(odi.value),
   "od_duration": () => script.clip_minutes(od_duration.value),
-  "pulse_min": () => script.clip_number(pulse_min.value, 1, 0),
+  "pulse_min": () => script.clip_number(pulse_min.value, 0, 0),
   "pulse_avg": () => script.clip_number(pulse_avg.value, 1, 0),
-  "pulse_max": () => script.clip_number(pulse_max.value, 1, 0),
+  "pulse_max": () => script.clip_number(pulse_max.value, 0, 0),
   "snores": () => script.clip_number(snores.value, 0, 0),
 };
 
