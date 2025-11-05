@@ -10,7 +10,7 @@ STOPBANG: []
 BMI: []
 RESULTS: This was an unattended overnight portable home sleep study performed by Aspen Sleep Centers using an Alice NightOne Type III device. The following physiologic parameters were recorded: Airflow at the nose, chest and abdominal movements, and pulse oximetry. The waveforms were reviewed and were technically adequate. Hypopneas were scored using 4% oxygen desaturation.
 Recording: Started: ${start}, Ended: ${end}
-1. DURATION OF EVALUATION: ${duration}
+1. DURATION OF EVALUATION: ${trt}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
 Apnea Index: ${ai}/hr, Hypopnea Index: ${hi}/hr
 The patient's respiratory events were primarily obstructive.
