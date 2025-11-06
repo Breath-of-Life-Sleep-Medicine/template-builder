@@ -1,5 +1,11 @@
 import * as script from "../script.js";
 
+// convert % to label text
+const RDI_LABEL = {
+  3: "(3%, AASM)",
+  4: "(4%, CMS)",
+};
+
 // store into result the percentage of a to b
 function update_percentage(a, b, result) {
   result.value = (100 * a.value / b.value); //.toFixed(1);
@@ -78,6 +84,7 @@ function rem_check(rem, r_lat) {
 }
 
 export {
+  RDI_LABEL,
   update_percentage,
   update_index,
   update_end,

@@ -11,6 +11,15 @@ let POS = {
   "right": 0,
 };
 
+// initialization function
+script.data[script.key].init = () => {
+  rdi_pos_label.textContent = "RDI " + util.RDI_LABEL[script.data[script.key].data.scored_at];
+}
+
+script.data[script.key].data = {
+  "scored_at": 4, // %
+}
+
 // ids that have no onchange callback fn; can still trigger update w/o clean
 // don't clean time fields: put them in here or move them from clean to template_set
 script.data[script.key].no_change = [

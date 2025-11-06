@@ -125,6 +125,8 @@ function load_form() {
   // create empty data object for this template key
   if (!(key in data)) {
     data[key] = {};
+    data[key].init = () => {};
+    data[key].data = {};
     data[key].no_change = [];
     data[key].clean = {};
     data[key].update = {};
@@ -154,7 +156,8 @@ function load_form() {
     script.src = path_base + "/modules/"+key+".js";
     script.type = "module";
     script.onload = () => {
-      // add onchange event listeners 
+      data[key].init();
+      // add onchange event listeners
       let ids;
       const clean = new Set(Object.keys(data[key].clean));
       const no_change = new Set(data[key].no_change);
