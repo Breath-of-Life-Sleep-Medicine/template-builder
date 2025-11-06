@@ -11,7 +11,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>Template builder</h1>
+    <header class="d-flex flex-wrap justify-content-left my-2">
+      <img src="/assets/logo.svg" alt="Breath of life logo" height="32">
+      <span class="fs-4 px-2">Template Builder</span>
+      <!-- <span class="fs-4" style="background:red">Template Builder</span> -->
+    </header>
+    <div></div>
+    
+    <!-- <h1>Template builder</h1> -->
 
     <!-- shortcuts -->
 
@@ -108,9 +115,13 @@
 
       <hr>
 
-      <input type="submit" value="copy template to clipboard">
+      <button type="submit" class="form-control btn btn-dark">copy template to clipboard</button>
     </form>
-    
+
+    <!-- footer -->
+    <footer class="d-flex flex-wrap justify-content-end align-items-right my-2">
+      <div><span class="text-body-secondary">Updated 2025-11-06</span></div>
+    </footer>
   </div>
 
   <script type="module" src="./script.js"></script>
