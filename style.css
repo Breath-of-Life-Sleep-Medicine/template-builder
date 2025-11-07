@@ -38,6 +38,11 @@ form > div + div,
   margin-top: 0px;
 }
 
+#form_container > .form-text {
+  margin-top: 2px;
+  color: rgb(155, 155, 155);
+}
+
 .alert > .btn-close {
   height: 24px;
   padding: 0.25rem; /* same as p-1 */

@@ -327,12 +327,20 @@ async function load_txt_file(file_path) {
   return txt;
 }
 
+// given a number as a string
+// return the number of decimal places
+function decimal_places(number_str) {
+  let decimal_places = number_str.indexOf('.');
+  return (decimal_places >= 0) ? number_str.length - decimal_places - 1 : 0;
+}
+
 export {
   data,
   key,
   initialize,
   submit_copy,
   load_form,
+  decimal_places,
   // cleaning
   clip_number,
   clip_index,

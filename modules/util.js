@@ -12,6 +12,13 @@ function update_percentage(a, b, result) {
   result.dispatchEvent(new Event("change"));
 }
 
+// sum is static html text
+// vals are form inputs
+function update_sum(sum, ...vals) {
+  let v = vals.reduce((acc, val) => acc + Number(val.value), 0.0);
+  sum.textContent = v.toFixed(script.decimal_places(vals[0].value));
+}
+
 // calculate index (ex: central apnea index = central apnea count / total sleep time)
 function update_index(result, dur_min, ...evts) {
   let sum = 0;
@@ -92,4 +99,5 @@ export {
   rdi_position_str,
   update_rem,
   rem_check,
+  update_sum,
 };
