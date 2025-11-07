@@ -43,10 +43,12 @@ test("resmed airview find_replace", () => {
     od_duration_min: "4",
     od_percent: "1",
     // calculated
-    scored_at: "", // 3
     duration: "", // 6 hours 0 minutes
     hi: "", // 20.0
   });
+
+  global.scored_at = {textContent: ""}; // 3
+  global.hi.step = "0.1";
 
   // checkboxes
   global.duration1 = global.duration2 = global.duration1_label = global.duration2_label = {};

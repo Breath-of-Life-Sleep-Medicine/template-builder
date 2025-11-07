@@ -22,13 +22,13 @@ script.data[script.key].no_change = [
 // guidelines: form id - does not exist in template
 
 script.data[script.key].clean = {
-  "scored_at": () => script.clip_percent(scored_at.value,0,3,4),
+  "scored_at": () => script.clip_percent(scored_at.textContent,0,3,4),
   "start": () => script.time_24_to_12(start.value),
   "end": () => script.time_24_to_12(end.value),
   "duration": () => script.duration_str((duration2.checked ? duration2_value : duration1_value)),
   "ahi": () => script.clip_index(ahi.value),
   "ai": () => script.clip_index(ai.value),
-  "hi": () => script.clip_index(hi.value),
+  "hi": () => script.clip_index(hi.value, 1, hi.min, hi.max),
   "s_ahi": () => script.clip_index(s_ahi.value),
   "s_duration": () => script.duration_str({h:script.data[script.key].clean.s_duration_hr(), m:script.data[script.key].clean.s_duration_min()}),
   "s_duration_hr": () => script.clip_number(s_duration_hr.value,0,0),
@@ -68,9 +68,11 @@ function update_duration() {
 
 function update_hi() {
   hi.value = ahi.value - ai.value;
+  hi.min = Number(hi.value) - Number(hi.step);
+  hi.max = Number(hi.value) + Number(hi.step);
   hi.dispatchEvent(new Event('change'));
 }
 
 function update_scored_at() {
-  scored_at.value = guidelines.value;
+  scored_at.textContent = guidelines.value;
 }

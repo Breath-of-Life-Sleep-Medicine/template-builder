@@ -61,13 +61,7 @@ function metadata(name) {
 function initialize() {
   let cls = document.getElementsByClassName("calculated");
   for (let elem of cls) {
-    elem.disabled = true;
-    elem.addEventListener('mouseover', function(){
-      elem.disabled = false;
-    })
-    elem.addEventListener('mouseout', function(){
-      elem.disabled = true;
-    })
+    elem.style="background: rgba(235, 235, 235, 1)";
   }
 }
 

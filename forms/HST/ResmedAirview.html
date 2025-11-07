@@ -43,7 +43,7 @@
   <span class="input-group-text">evt/hr</span>
   <!-- hypopnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="hi" class="form-control calculated" aria-label="Apnea index" placeholder="Apnea index">
+    <input type="number" id="hi" step="0.1" class="form-control calculated" aria-label="Hypopnea index" placeholder="Hypopnea index">
     <label for="hi">Hypopnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
@@ -149,8 +149,7 @@
   <label for="snores">Snores</label>
 </div>
 
-<!-- scored_at -->
-
+<!-- guidelines -->
 <label for="">Analysis guidelines</label>
 <select id="guidelines" class="form-control">
   <!-- 2007: 4% -->
@@ -159,10 +158,7 @@
   <option value="3">2012</option>
 </select>
 
-<div class="input-group">
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="scored_at" class="form-control calculated" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="" value="4">
-    <label for="scored_at">Hypopneas scored at oxygen desaturation %</label>
-  </div>
-  <span class="input-group-text">%</span>
+<!-- scored_at -->
+<div class="form-text text-end">
+  Hypopneas scored at oxygen desaturation <span id="scored_at">4</span>%
 </div>

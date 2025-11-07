@@ -72,7 +72,6 @@ function rdi_position_str(POS, supine, prone, left, right){
 
 // hide elems if rem is 0, otherwise show them
 function update_rem (rem, cls) {
-  // console.log(event);
   let elems = document.getElementsByClassName(cls);
   for (let elem of elems) {
     elem.hidden = rem.value == 0;
