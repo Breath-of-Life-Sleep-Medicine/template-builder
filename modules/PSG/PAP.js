@@ -103,10 +103,26 @@ script.data[script.key].update = {
     rdi.value = ahi.value;
     rdi.dispatchEvent(new Event('change'));
   },
-  "supine": () => util.update_rdi(POS, supine),
-  "prone": () => util.update_rdi(POS, prone),
-  "left": () => util.update_rdi(POS, left),
-  "right": () => util.update_rdi(POS, right),
+  "supine": () => {
+    util.update_rdi(POS, supine)
+    util.update_sum(sum_pos, supine, prone, left, right);
+  },
+  "prone": () => {
+    util.update_rdi(POS, prone);
+    util.update_sum(sum_pos, supine, prone, left, right);
+  },
+  "left": () => {
+    util.update_rdi(POS, left);
+    util.update_sum(sum_pos, supine, prone, left, right);
+  },
+  "right": () => {
+    util.update_rdi(POS, right);
+    util.update_sum(sum_pos, supine, prone, left, right);
+  },
+  "n1": () => util.update_sum(sum_phase, n1, n2, n3, rem),
+  "n2": () => util.update_sum(sum_phase, n1, n2, n3, rem),
+  "n3": () => util.update_sum(sum_phase, n1, n2, n3, rem),
+  "rem": () => util.update_sum(sum_phase, n1, n2, n3, rem),
 };
 
 // template setters - format for setting into the template
