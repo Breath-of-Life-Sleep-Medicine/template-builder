@@ -23,6 +23,24 @@ $(function(){
   path_base = path_base.join('/');
 });
 
+// https://getbootstrap.com/docs/5.3/components/alerts/
+function append_alert (msg, type="secondary") {
+  let time = (new Date()).toLocaleTimeString([], {hour12: false}); //([], {hour: "2-digit", minute: "2-digit"});
+  console.log(time);
+  // const time = Date.now().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"})
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible p-1 d-flex align-items-center" role="alert">`,
+    `  <div class="d-flex">`,
+    `    <div>${time}</div>`,
+    `    <div>${msg}</div>`,
+    `  </div>`,
+    '  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('');
+  submit_alert.append(wrapper);
+}
+
 // returns a map of keywords to values for replacing keywords in the template
 function get_map() {
   // "remove" template_set keys from clean, and convert the remaining to values
@@ -290,6 +308,7 @@ function submit_copy(event) {
     .catch(error => console.error("error loading file: ", error));
   // do not clear the form
   event.preventDefault();
+  append_alert("Copied template to clipboard.", "success");
   return false;
 }
 
