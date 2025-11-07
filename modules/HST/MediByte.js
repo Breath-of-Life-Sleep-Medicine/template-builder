@@ -26,11 +26,18 @@ script.data[script.key].clean = {
 
 // update function that is called after clean in onchange callback fn
 script.data[script.key].update = {
+  "scored_at": update_scored_at,
   "ahi": () => {update_ai(ahi, ai, hi);},
   "hi": () => {update_ai(ahi, ai, hi);},
 };
 
 function update_ai(ahi, ai, hi) {
   ai.value = ahi.value - hi.value;
+  ai.min = Number(ai.value) - Number(ai.step);
+  ai.max = Number(ai.value) + Number(ai.step);
   ai.dispatchEvent(new Event('change'));
+}
+
+function update_scored_at() {
+  label_scored_at.textContent = scored_at.value;
 }
