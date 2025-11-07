@@ -77,6 +77,9 @@ beforeEach(() => {
     ti_supine: "", // 55.0%
   });
 
+  global.sum_phase = {textContent:""};
+  global.sum_pos = {textContent:""};
+
   // ids
   global.supine.id = "supine";
   global.prone.id = "prone";

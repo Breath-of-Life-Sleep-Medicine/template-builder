@@ -64,6 +64,9 @@ beforeEach(() => {
     rdi: "", // 4.9
   });
 
+  global.sum_phase = {textContent:""};
+  global.sum_pos = {textContent:""};
+
   // ids
   global.supine.id = "supine";
   global.prone.id = "prone";
