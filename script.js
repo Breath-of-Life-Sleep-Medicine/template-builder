@@ -61,7 +61,6 @@ function metadata(name) {
 function initialize() {
   let cls = document.getElementsByClassName("calculated");
   for (let elem of cls) {
-    elem.style="background: rgba(235, 235, 235, 1)";
     if (elem.type == "text" && elem.inputMode == "numeric") {
       elem.type = "number";
       // TODO: make a precision associated with the input field in the js files; luckily or not, all the calculated fields atm are 0.1 precision

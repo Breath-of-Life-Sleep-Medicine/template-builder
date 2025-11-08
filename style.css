@@ -53,3 +53,7 @@ form > div + div,
   color: rgba(0, 0, 0, 0.4);
   margin-right: 0.25rem;
 }
+
+.calculated {
+  background: rgb(236, 235, 240);
+}
