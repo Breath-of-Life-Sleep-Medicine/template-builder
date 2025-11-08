@@ -25,9 +25,7 @@ $(function(){
 
 // https://getbootstrap.com/docs/5.3/components/alerts/
 function append_alert (msg, type="secondary") {
-  let time = (new Date()).toLocaleTimeString([], {hour12: false}); //([], {hour: "2-digit", minute: "2-digit"});
-  console.log(time);
-  // const time = Date.now().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"})
+  let time = (new Date()).toLocaleTimeString([], {hour12: false});
   const wrapper = document.createElement('div');
   wrapper.innerHTML = [
     `<div class="alert alert-${type} alert-dismissible p-1 d-flex align-items-center" role="alert">`,
@@ -99,7 +97,6 @@ function round(value, precision = 0, func = Math.round) {
     var multiplier = Math.pow(10, precision || 0);
     return func(value * multiplier) / multiplier;
 }
-
 
 function save(data) {
   sessionStorage.setItem("data", JSON.stringify(data));
@@ -313,7 +310,7 @@ function find_replace(str) {
   let pattern = /\${(\S+?)}/gm
   // console.log(str.match(pattern)); // see all keys in template
   str = str.replace(pattern, function(_,key){return map[key];});
-  console.log(str);
+  // console.log(str);
 
   // file may be lf or crlf
   if (is_windows()) {
@@ -343,7 +340,6 @@ function submit_copy(event) {
 async function copy_to_clipboard(txt) {
   try {
     await navigator.clipboard.writeText(txt);
-    console.log('Text successfully copied to clipboard');
   } catch (err) {
     console.error('Failed to copy text: ', err);
   }
