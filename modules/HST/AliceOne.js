@@ -30,5 +30,5 @@ script.data[script.key].template_set = {
 
 function update_ai(ahi, ai, hi) {
   ai.value = ahi.value - hi.value;
-  ai.dispatchEvent(new Event('change'));
+  ai.dispatchEvent(new Event('calculated'));
 }

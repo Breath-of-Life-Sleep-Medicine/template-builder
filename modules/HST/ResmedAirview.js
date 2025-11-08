@@ -68,9 +68,7 @@ function update_duration() {
 
 function update_hi() {
   hi.value = ahi.value - ai.value;
-  hi.min = Number(hi.value) - Number(hi.step);
-  hi.max = Number(hi.value) + Number(hi.step);
-  hi.dispatchEvent(new Event('change'));
+  hi.dispatchEvent(new Event('calculated'));
 }
 
 function update_scored_at() {

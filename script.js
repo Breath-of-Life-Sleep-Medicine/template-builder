@@ -62,10 +62,45 @@ function initialize() {
   let cls = document.getElementsByClassName("calculated");
   for (let elem of cls) {
     elem.style="background: rgba(235, 235, 235, 1)";
+    if (elem.type == "text" && elem.inputMode == "numeric") {
+      elem.type = "number";
+      // TODO: make a precision associated with the input field in the js files; luckily or not, all the calculated fields atm are 0.1 precision
+      elem.step = "0.1";
+      elem.addEventListener("calculated", () => {
+        // clipped to hard min/max in change event
+        elem.value = round(Number(elem.value), decimal_places(elem.step), Math.floor);
+        elem.min = Number(elem.value) - Number(elem.step);
+        elem.max = Number(elem.value) + Number(elem.step);
+        elem.dispatchEvent(new Event("change"));
+      });
+    } else if (elem.type == "time") {
+      elem.addEventListener("change", () => {
+        // clip calculated time changes to their set max and min
+        // what if max or min aren't set?
+        let v = new Date("2025-01-01 " + elem.value).getTime();
+        let min = new Date("2025-01-01 " + elem.min).getTime();
+        let max = new Date("2025-01-01 " + elem.max).getTime();
+        elem.value = new Date (Number(clip_count(v, 0, min, max))).toTimeString().slice(0,5);
+      });
+      elem.addEventListener("calculated", () => {
+        let v = new Date("2025-01-01 " + elem.value).getTime();
+        elem.min = new Date(v - 1000*60).toTimeString().slice(0,5);
+        elem.max = new Date(v + 1000*60).toTimeString().slice(0,5);
+      });
+    }
   }
 }
 
 const zero_pad = (num, places) => String(num).padStart(places, '0');
+
+// Source - https://stackoverflow.com/a
+// Posted by Billy Moon, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-11-07, License - CC BY-SA 4.0
+function round(value, precision = 0, func = Math.round) {
+    var multiplier = Math.pow(10, precision || 0);
+    return func(value * multiplier) / multiplier;
+}
+
 
 function save(data) {
   sessionStorage.setItem("data", JSON.stringify(data));
@@ -335,6 +370,7 @@ export {
   submit_copy,
   load_form,
   decimal_places,
+  round,
   // cleaning
   clip_number,
   clip_index,

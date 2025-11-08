@@ -6,17 +6,17 @@
     <input type="time" id="start" class="form-control">
     <label for="start">Lights off</label>
   </div>
-  <!-- end: calculated -->
-  <div class="form-floating">
-    <input type="time" id="end" class="form-control calculated">
-    <label for="end">Lights on</label>
-  </div>
   <!-- trt -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="trt" class="form-control" placeholder="">
     <label for="trt">Total recording time</label>
   </div>
   <span class="input-group-text">min</span>
+  <!-- end: calculated -->
+  <div class="form-floating">
+    <input type="time" id="end" class="form-control calculated">
+    <label for="end">Lights on</label>
+  </div>
 </div>
 
 <div class="input-group">
@@ -26,16 +26,16 @@
     <label for="ahi">AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
-  <!-- ai: calculate ai from ahi & hi -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="ai" class="form-control calculated" placeholder="">
-    <label for="ai">Apnea index</label>
-  </div>
-  <span class="input-group-text">evt/hr</span>
   <!-- hi -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="hi" class="form-control" placeholder="">
     <label for="hi">Hypopnea index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- ai: calculate ai from ahi & hi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ai" class="form-control calculated" placeholder="">
+    <label for="ai">Apnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
 </div>

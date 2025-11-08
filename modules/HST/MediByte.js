@@ -33,9 +33,7 @@ script.data[script.key].update = {
 
 function update_ai(ahi, ai, hi) {
   ai.value = ahi.value - hi.value;
-  ai.min = Number(ai.value) - Number(ai.step);
-  ai.max = Number(ai.value) + Number(ai.step);
-  ai.dispatchEvent(new Event('change'));
+  ai.dispatchEvent(new Event('calculated'));
 }
 
 function update_scored_at() {

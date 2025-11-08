@@ -9,7 +9,7 @@ const RDI_LABEL = {
 // store into result the percentage of a to b
 function update_percentage(a, b, result) {
   result.value = (100 * a.value / b.value); //.toFixed(1);
-  result.dispatchEvent(new Event("change"));
+  result.dispatchEvent(new Event("calculated"));
 }
 
 // sum is static html text
@@ -26,14 +26,14 @@ function update_index(result, dur_min, ...evts) {
     sum += Number(evt.value);
   }
   result.value = 60 * sum / Number(dur_min.value); // convert dur from minutes to hours
-  result.dispatchEvent(new Event("change"));
+  result.dispatchEvent(new Event("calculated"));
 }
 
 // calculate end time from start time & total record time (minutes)
 function update_end (start, end, trt) {
   if (start.value != "" && trt.value != "") {
     end.value = new Date(new Date("2025-01-01 " + start.value).getTime() + trt.value*60*1000).toTimeString().slice(0,5);
-    end.dispatchEvent(new Event("change"));
+    end.dispatchEvent(new Event("calculated"));
   }
 }
 
@@ -79,6 +79,7 @@ function update_rem (rem, cls) {
 }
 
 // if rem latency is set to "N/A", then set rem to 0
+// rem is not a calculated field
 function rem_check(rem, r_lat) {
   let val = r_lat.value.toUpperCase();
   let check = new Set(["N/A", "NA"]);
