@@ -65,9 +65,11 @@ function initialize() {
       elem.step = "0.1";
       elem.addEventListener("calculated", () => {
         // clipped to hard min/max in change event
-        elem.value = round(Number(elem.value), decimal_places(elem.step), Math.floor);
-        elem.min = Number(elem.value) - Number(elem.step);
-        elem.max = Number(elem.value) + Number(elem.step);
+        let v = Number(elem.value);
+        let precision = decimal_places(elem.step);
+        elem.value = v.toFixed(precision);
+        elem.min = (v - Number(elem.step)).toFixed(precision);
+        elem.max = (v + Number(elem.step)).toFixed(precision);
         elem.dispatchEvent(new Event("change"));
       });
     } else if (elem.type == "time") {
@@ -94,8 +96,8 @@ const zero_pad = (num, places) => String(num).padStart(places, '0');
 // Posted by Billy Moon, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-11-07, License - CC BY-SA 4.0
 function round(value, precision = 0, func = Math.round) {
-    var multiplier = Math.pow(10, precision || 0);
-    return func(value * multiplier) / multiplier;
+  let multiplier = Math.pow(10, precision || 0);
+  return func(value * multiplier) / multiplier;
 }
 
 function save(data) {
