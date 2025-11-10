@@ -95,7 +95,6 @@ script.data[script.key].update = {
     util.rem_check(rem, r_lat);
     r_lat.value = script.data[script.key].clean.r_lat();
   },
-  "rem": () => util.update_rem(rem, 'requires_rem'),
   "a_cc": update_ahi,
   "a_oc": update_ahi,
   "a_mc": update_ahi,
@@ -123,7 +122,10 @@ script.data[script.key].update = {
   "n1": () => util.update_sum(sum_phase, n1, n2, n3, rem),
   "n2": () => util.update_sum(sum_phase, n1, n2, n3, rem),
   "n3": () => util.update_sum(sum_phase, n1, n2, n3, rem),
-  "rem": () => util.update_sum(sum_phase, n1, n2, n3, rem),
+  "rem": () => {
+    util.update_sum(sum_phase, n1, n2, n3, rem);
+    util.update_rem(rem, 'requires_rem');
+  },
 };
 
 // template setters - format for setting into the template
