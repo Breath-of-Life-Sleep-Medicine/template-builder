@@ -1,15 +1,28 @@
 import * as script from "../script.js";
 
 // convert % to label text
+// const RDI_LABEL = {
+//   3: "(3%, AASM)",
+//   4: "(4%, CMS)",
+// };
+
 const RDI_LABEL = {
-  3: "(3%, AASM)",
-  4: "(4%, CMS)",
+  3: "AASM",
+  4: "CMS",
 };
 
 // store into result the percentage of a to b
 function update_percentage(a, b, result) {
   result.value = (100 * a.value / b.value); //.toFixed(1);
   result.dispatchEvent(new Event("calculated"));
+}
+
+// set the textContent of all elements with class cls_str to txt_str
+function set_class_text(cls_str, txt_str) {
+  let elems = document.getElementsByClassName(cls_str);
+  for (let elem of elems) {
+    elem.textContent = txt_str;
+  }
 }
 
 // sum is static html text
@@ -90,6 +103,11 @@ function rem_check(rem, r_lat) {
   }
 }
 
+function update_scored_at() {
+  set_class_text("scored_at", `(${script.data[script.key].data.scored_at}%, ${RDI_LABEL[script.data[script.key].data.scored_at]})`);
+  label_scored_at.textContent = script.data[script.key].data.scored_at;
+}
+
 export {
   RDI_LABEL,
   update_percentage,
@@ -100,4 +118,6 @@ export {
   update_rem,
   rem_check,
   update_sum,
+  set_class_text,
+  update_scored_at,
 };

@@ -15,7 +15,7 @@ DIAGNOSTIC PORTION OF STUDY:
 Sleep Latency: ${lat} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_lat}
 Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
 Sleep architecture distribution is [].
-2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
+2. RESPIRATORY EVENTS: Utilizing ${scored_at}% deoxygenation ${scored_at_label} criteria,
 AHI: ${ahi} EVENTS PER HOUR, RDI: ${rdi} EVENTS PER HOUR.
 CENTRAL APNEAS: ${a_cc}, OBSTRUCTIVE APNEAS: ${a_oc}, MIXED APNEAS: ${a_mc}, HYPOPNEAS: ${h_c}, RERA: ${rera}
 Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}.

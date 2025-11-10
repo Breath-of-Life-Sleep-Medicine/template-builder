@@ -23,6 +23,20 @@ $(function(){
   path_base = path_base.join('/');
 });
 
+// create empty data object for this template key
+// assumes key is already set
+data.init = () => {
+  if (!(key in data)) {
+    data[key] = {};
+    data[key].init = () => {};
+    data[key].data = {};
+    data[key].no_change = [];
+    data[key].clean = {};
+    data[key].update = {};
+    data[key].template_set = {};
+  }
+}
+
 // https://getbootstrap.com/docs/5.3/components/alerts/
 function append_alert (msg, type="secondary") {
   let time = (new Date()).toLocaleTimeString([], {hour12: false});
@@ -41,13 +55,13 @@ function append_alert (msg, type="secondary") {
 
 // returns a map of keywords to values for replacing keywords in the template
 function get_map() {
-  // "remove" template_set keys from clean, and convert the remaining to values
-  let rm = Object.keys(data[key].template_set); // keys to remove
-  let clean = Object.entries(data[key].clean).filter(id => !rm.includes(id));
-  clean = Object.fromEntries(clean.map(([k,v])=>[k, v()]));
-  // append the template set value map to the clean value map
+  // priority: data > template_set > clean
+  // where template_set and clean are functions and data is a value
+  // no need to remove values, last defined will be set
+  let clean = Object.fromEntries(Object.entries(data[key].clean).map(([k,v])=>[k, v()]));
   let template_set = Object.fromEntries(Object.entries(data[key].template_set).map(([k,v])=>[k, v()]));
-  return {...clean, ...template_set};
+  let d = data[key].data;
+  return {...clean, ...template_set, ...d};
 }
 
 // get data from metadata
@@ -166,18 +180,7 @@ function duration_short_str(v1, v2, v3=null) {
 // onchange callbacks are generated from {clean - no_change}, or {update - clean}
 function load_form() {
   key = template.value;
-
-  // create empty data object for this template key
-  if (!(key in data)) {
-    data[key] = {};
-    data[key].init = () => {};
-    data[key].data = {};
-    data[key].no_change = [];
-    data[key].clean = {};
-    data[key].update = {};
-    data[key].template_set = {};
-  }
-
+  data.init();
   let path = "forms/"+key+".html";
   let id = "form_container";
   fetch(path)
@@ -363,11 +366,9 @@ function decimal_places(number_str) {
 export {
   data,
   key,
-  initialize,
   submit_copy,
   load_form,
   decimal_places,
-  round,
   // cleaning
   clip_number,
   clip_index,
