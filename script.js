@@ -147,6 +147,7 @@ data.clean = (id, k=key) => {
         let v = value.split(":");
         d.value.setHours(v[0]);
         d.value.setMinutes(v[1]);
+        console.log("setting time data", v, d);
       };
     case Type.DURATION:
       return ({h=null, m=null, s=null}) => {d.value.set({h,m,s});};
@@ -169,7 +170,9 @@ data.value = (id, k=key) => {
         return `${zero_pad(d.value.getFullYear(), 4)}-${zero_pad(d.value.getMonth() + 1, 2)}-${zero_pad(d.value.getDate(), 2)}`;
       };
     case Type.TIME:
-      return () => `${d.value.getHours()}:${d.value.getMinutes()}`;
+      return () => {
+        return `${zero_pad(d.value.getHours(),2)}:${zero_pad(d.value.getMinutes(),2)}`;
+      };
     case Type.DURATION:
       return () => ({h: d.value.h, m: d.value.m, s: s.value.s});
     default: // number
