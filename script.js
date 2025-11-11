@@ -156,10 +156,11 @@ data.clean = (id, k=key) => {
   }
 }
 
-data.value = (id, k=key) => {
+// data > form generic convert
+data.form_value = (id, k=key) => {
   let d = data[k]?.data[id];
   if (d === undefined) {
-    console.error(`cannot get value of undefined data[${k}].data[${id}]`);
+    console.error(`cannot get form value of undefined data[${k}].data[${id}]`);
     return;
   }
   switch(data.typeof(id, k)) {
@@ -174,7 +175,30 @@ data.value = (id, k=key) => {
         return `${zero_pad(d.value.getHours(),2)}:${zero_pad(d.value.getMinutes(),2)}`;
       };
     case Type.DURATION:
-      return () => ({h: d.value.h, m: d.value.m, s: s.value.s});
+      return () => ({h: d.value.h, m: d.value.m, s: d.value.s});
+    default: // number
+      return () => Number(d.value).toFixed(d.precision);
+  }
+}
+
+// data > template generic convert
+data.template_value = (id, k=key) => {
+  let d = data[k]?.data[id];
+  if (d === undefined) {
+    console.error(`cannot get template value of undefined data[${k}].data[${id}]`);
+    return;
+  }
+  switch(data.typeof(id, k)) {
+    case Type.STRING:
+      return () => d.value;
+    case Type.DATE:
+      return () => {
+        return `${d.value.getMonth() + 1}/${d.value.getDate()}/${d.value.getFullYear()}`;
+      };
+    case Type.TIME:
+      return () => time_str(d.value);
+    case Type.DURATION:
+      return () => d.value.toStr();
     default: // number
       return () => Number(d.value).toFixed(d.precision);
   }
@@ -201,10 +225,11 @@ function get_map(k=key) {
   // priority: data > template_set > clean
   // where template_set and clean are functions and data is a value
   // no need to remove values, last defined will be set
-  let clean = Object.fromEntries(Object.entries(data[k].clean).map(([k,v])=>[k, v()]));
+  // let clean = Object.fromEntries(Object.entries(data[k].clean).map(([k,v])=>[k, v()]));
   let template_set = Object.fromEntries(Object.entries(data[k].template_set).map(([k,v])=>[k, v()]));
-  let d = data[k].data;
-  return {...clean, ...template_set, ...d};
+  let d = Object.fromEntries(Object.entries(data[k].data).map(([id,v])=>[id, data.template_value(id, k)()]));
+  console.log(d);
+  return {...template_set, ...d};
 }
 
 // get data from metadata
@@ -333,7 +358,7 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
           console.log("change!", elem);
           data.clean(id,k)(elem.value);
           // console.log("id", id, "k", k);
-          elem.value = data.value(id,k)();
+          elem.value = data.form_value(id,k)();
           console.log("data", data);
         }
         if (id in data[k].update) {
@@ -500,7 +525,7 @@ function find_replace(str) {
   let pattern = /\${(\S+?)}/gm
   // console.log(str.match(pattern)); // see all keys in template
   str = str.replace(pattern, function(_,key){return map[key];});
-  // console.log(str);
+  console.log(str);
 
   // file may be lf or crlf
   if (is_windows()) {

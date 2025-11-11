@@ -34,10 +34,10 @@ script.data[script.key].data = {
 // }
 
 // ids that have no onchange callback fn; can still trigger update w/o clean
-script.data[script.key].no_change = [
-  "start",
-  "end",
-];
+// script.data[script.key].no_change = [
+//   "start",
+//   "end",
+// ];
 
 // template keywords and form ids both use the clean
 
