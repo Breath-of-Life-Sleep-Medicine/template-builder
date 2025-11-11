@@ -4,6 +4,35 @@ import * as script from "../../script.js";
 let duration1_value = {"h":0, "m":0};
 let duration2_value = {"h":0, "m":0};
 
+script.data[script.key].data = {
+  scored_at: script.Defaults.number.percent({value:4, precision:0, min:3, max:4}),
+  start: script.Defaults.time(),
+  end: script.Defaults.time(),
+  duration: script.Defaults.duration({h:0, m:0}),
+  ahi: script.Defaults.number.index(),
+  ai: script.Defaults.number.index(),
+  hi: script.Defaults.number.index(),
+  s_ahi: script.Defaults.number.index(),
+  s_duration: script.Defaults.duration({h:0, m:0}),
+  s_percent: script.Defaults.number.percent(),
+  ox_base: script.Defaults.number.percent({precision: 0}),
+  ox_avg: script.Defaults.number.percent({precision: 0}),
+  ox_min: script.Defaults.number.percent({precision: 0}),
+  odi: script.Defaults.number.index(),
+  od_duration: script.Defaults.duration({h:0, m:0}),
+  od_percent: script.Defaults.number.percent({precision: 0}),
+  pulse_min: script.Defaults.number.pulse({precision: 0}),
+  pulse_avg: script.Defaults.number.pulse({precision: 0}),
+  pulse_max: script.Defaults.number.pulse({precision: 0}),
+  snores: script.Defaults.number.count(),
+}
+
+
+// sanity check
+// for (let id in script.data[script.key].data) {
+//   console.log(id, script.data.typeof(id));
+// }
+
 // ids that have no onchange callback fn; can still trigger update w/o clean
 script.data[script.key].no_change = [
   "start",

@@ -1,10 +1,100 @@
-let key = null;
+let key = null;           // key for active template data
+let key_global = "index"; // key for global data
 let data = {};
 let path_base;
 
+// enum-esque object of types
+const Type = Object.freeze({
+  COUNT: Symbol('count'),
+  INDEX: Symbol('index'),
+  PERCENT: Symbol('percent'),
+  PULSE: Symbol('pulse'),
+  DATE: Symbol('date'),
+  TIME: Symbol('time'),
+  DURATION: Symbol('duration'),
+  STRING: Symbol('string'),
+});
+
+// default values for data objects
+const Defaults = {
+  number: {
+    count: ({value=0, min=0, precision=0}={}) => ({value, min, precision, type:Type.COUNT}),
+    index: ({value=0, min=0, precision=1, unit="evt/hr"}={}) => ({value, min, precision, unit, type:Type.INDEX}),
+    percent: ({value=0, min=0, max=100, precision=1, unit="%"}={}) => ({value, min, max, precision, unit, type:Type.PERCENT}),
+    pulse: ({value=0, min=0, precision=1, unit="bpm"}={}) => ({value, min, precision, unit, type:Type.PULSE}),
+  },
+  date: ({value = new Date(1970,1,1)}={}) => ({value, type:Type.DATE}),
+  time: ({value = new Date(1970,1,1)}={}) => ({value, type:Type.TIME}),
+  duration: ({h=null, m=null, s=null}={}) => ({value: new Duration({h, m, s}), type:Type.DURATION}),
+  string: ({value=""}={}) => ({value, type:Type.STRING}),
+};
+
+class Duration {
+  // - h: hours
+  // - m: minutes
+  // - s: seconds
+  // for h, m, s:
+  // - initialize/set to non-null value (ex: 0) to track
+  // - initialize/set to null to untrack
+  // example: new Duration({h:0, m:0}) will only track hours and minutes, not seconds
+  constructor ({h=null, m=null, s=null}={}) {
+    this.h = h;
+    this.m = m;
+    this.s = s;
+  }
+  set({h=null, m=null, s=null}={}) {
+    let input = {h, m, s};
+    let high_set = false;
+    for (let [k,v] of input.fromEntries()) {
+      if (v === null) {
+        this[k] = null;
+      } else if (high_set) {
+        this[k] = clip_count(v,0,0,59);
+      } else {
+        this[k] = clip_count(v,0,0);
+        high_set = true;
+      }
+    }
+  }
+  set(start_dt, end_dt) {
+    let d = end_dt - start_dt;
+    if (this.h !== null) {
+      this.h = Math.floor(d/1000/60/60);
+    }
+    if (this.m !== null) {
+      this.m = Math.floor(d/1000/60 - this.h*60);
+    }
+    if (this.s !== null) {
+      this.s = Math.floor(d/1000 - this.m*60 - this.h*60*60);
+    }
+  }
+  toStr() {
+    let str = [];
+    if (this.h > 0 || (this.m === null && this.s === null)) {
+      str.push(`${this.h} hour${(this.h!=1)?"s":""}`);
+    }
+    if (this.m > 0 || this.s === null) {
+      str.push(`${this.m} minute${(this.m!=1)?"s":""}`);
+    }
+    if (this.s !== null) {
+      str.push(`${this.s} second${(this.s!=1)?"s":""}`);
+    }
+    return str.join(" ");
+  }
+  toStrShort() {
+    return [this.h, this.m, this.s].filter((v)=>v!==null).map((v) => zero_pad(v,2)).join(":");
+  }
+}
+
 // document ready function (short version)
 $(function(){
-  load_form();
+  // URL/index.html to URL
+  path_base = document.location.pathname.split('/');
+  path_base.pop();
+  path_base = path_base.join('/');
+
+  load_script(key_global); // initialize data for main form
+  load_form();             // load sub-form & initialize its data
 
   // event listeners
   formID.addEventListener("submit", submit_copy);
@@ -16,24 +106,69 @@ $(function(){
   observer.observe(form_container, config);
   // to stop observing
   //observer.disconnect();
-
-  // URL/index.html to URL
-  path_base = document.location.pathname.split('/');
-  path_base.pop();
-  path_base = path_base.join('/');
 });
 
 // create empty data object for this template key
 // assumes key is already set
-data.init = () => {
-  if (!(key in data)) {
-    data[key] = {};
-    data[key].init = () => {};
-    data[key].data = {};
-    data[key].no_change = [];
-    data[key].clean = {};
-    data[key].update = {};
-    data[key].template_set = {};
+data.init = (k=key) => {
+  if (!(k in data)) {
+    data[k] = {};
+    data[k].init = () => {};
+    data[k].data = {};
+    data[k].no_change = [];
+    data[k].clean = {};
+    data[k].update = {};
+    data[k].template_set = {};
+  }
+}
+
+data.typeof = (id, k=key) => {
+  return typeof(data[k]?.data[id]?.type);
+}
+
+// given new input value, clean the input & set the data
+data.clean = (id, k=key) => {
+  let d = data[k]?.data[id];
+  if (d === undefined) {
+    console.error(`cannot clean undefined data data[${k}].data[${id}]`);
+    return;
+  }
+  switch(data.typeof(id, k)) {
+    case Type.STRING:
+      return (value) => { d.value =  value.trim(); };
+    case Type.DATE:
+      return (value) => {
+        let v = value.split("-");
+        d.value.setYear(v[0]);
+        d.value.setMonth(v[1]);
+        d.value.setDate(v[2]);
+      };
+    case Type.TIME:
+      return (value) => {
+        let v = value.split(":");
+        d.value.setHours(v[0]);
+        d.value.setMinutes(v[1]);
+      };
+    case Type.DURATION:
+      return ({h=null, m=null, s=null}) => {d.value.set({h,m,s});};
+    default: // number
+      return (value) => {d.value = clip_number(value, d.precision, d.min, d.max);};
+  }
+}
+
+data.value = (id, k=key) => {
+  let d = data[key]?.data[id];
+  switch(data.typeof(id, k)) {
+    case Type.STRING:
+      return () => d.value;
+    case Type.DATE:
+      return () => `${d.value.getYear()}-${d.value.getMonth()}-${d.value.getDate()}`;
+    case Type.TIME:
+      return () => `${d.value.getHours()}:${d.value.getMinutes()}`;
+    case Type.DURATION:
+      return () => ({h: d.value.h, m: d.value.m, s: s.value.s});
+    default: // number
+      return () => Number(d.value).toFixed(d.precision);
   }
 }
 
@@ -177,10 +312,74 @@ function duration_short_str(v1, v2, v3=null) {
   return (v3 === null) ? `${v1}:${zero_pad(v2,2)}` : `${v1}:${zero_pad(v2,2)}:${zero_pad(v3,2)}`;
 }
 
+// on change:
+// 1. clean input
+// 2. set data & input value
+// 3. call update fn
+function add_onchange_listeners(ids, k=key) {
+  for (const id of ids) {
+    let elem = document.getElementById(id);
+    if (elem) {
+      elem.addEventListener("change", () => {
+        console.log("change!", elem);
+        data.clean(id,k)(elem.value);
+        elem.value = data.value(id,k)();
+        console.log("data", data);
+      });
+    }
+  }
+
+  // if (clean) {
+  //   for (const id of ids) {
+  //     let elem = document.getElementById(id);
+  //     // if (elem === null) {console.error(`element with id "${id}" is null, but attempting to attach onchange event listener`)}
+  //     if (elem) {
+  //       elem.addEventListener("change", () => {
+  //         data[key].data[id].value = elem.value = data[key].clean[id]();
+  //         if (id in data[key].update) {
+  //           data[key].update[id]();
+  //         }
+  //       });
+  //     }
+  //   }
+  // } else {
+  //   for (const id of ids) {
+  //     let elem = document.getElementById(id);
+  //     if (elem) {
+  //       elem.addEventListener("change", () => {data[key].update[id]()});
+  //     }
+  //   }
+  // }
+}
+
+function load_script(k=key) {
+  data.init(k); // create empty data object if necessary
+  const script = document.createElement('script');
+  script.src = path_base + "/modules/"+k+".js";
+  script.type = "module";
+  script.onload = () => {
+    data[k].init();
+    // add onchange event listeners
+    let ids;
+    const d = new Set(Object.keys(data[k].data));
+    add_onchange_listeners(d,k);
+
+    // const clean = new Set(Object.keys(data[key].clean));
+    // const no_change = new Set(data[key].no_change);
+    // ids = clean.difference(no_change);
+    // // onchange: do clean fn, then do update fn
+    // add_onchange_listeners(ids, true);
+    // // onchange: only do update fn (no clean fn)
+    // let update = new Set(Object.keys(data[key].update));
+    // ids = update.difference(ids);
+    // add_onchange_listeners(ids, false);
+  };
+  document.body.appendChild(script);
+}
+
 // onchange callbacks are generated from {clean - no_change}, or {update - clean}
 function load_form() {
   key = template.value;
-  data.init();
   let path = "forms/"+key+".html";
   let id = "form_container";
   fetch(path)
@@ -197,43 +396,8 @@ function load_form() {
     } else {
       console.error(`Element with ID ${id} not found.`);
     }
-
     // script tags cannot be inserted via "innerHTML" to prevent XSS attacks
-
-    const script = document.createElement('script');
-    script.src = path_base + "/modules/"+key+".js";
-    script.type = "module";
-    script.onload = () => {
-      data[key].init();
-      // add onchange event listeners
-      let ids;
-      const clean = new Set(Object.keys(data[key].clean));
-      const no_change = new Set(data[key].no_change);
-      ids = clean.difference(no_change);
-      // onchange: do clean fn, then do update fn
-      for (const id of ids) {
-        let elem = document.getElementById(id);
-        // if (elem === null) {console.error(`element with id "${id}" is null, but attempting to attach onchange event listener`)}
-        if (elem) {
-          elem.addEventListener("change", () => {
-            elem.value = data[key].clean[id]();
-            if (id in data[key].update) {
-              data[key].update[id]();
-            }
-          });
-        }
-      }
-      // onchange: only do update fn (no clean fn)
-      let update = new Set(Object.keys(data[key].update));
-      ids = update.difference(ids);
-      for (const id of ids) {
-        let elem = document.getElementById(id);
-        if (elem) {
-          elem.addEventListener("change", () => {data[key].update[id]()});
-        }
-      }
-    };
-    document.body.appendChild(script);
+    load_script(key);
   })
   .catch(error => {
     console.error("error with fetch operation:", error);
@@ -366,9 +530,13 @@ function decimal_places(number_str) {
 export {
   data,
   key,
+  key_global,
+  Defaults,
+  Duration,
   submit_copy,
   load_form,
   decimal_places,
+  zero_pad,
   // cleaning
   clip_number,
   clip_index,

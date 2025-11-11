@@ -18,7 +18,8 @@
 .form-floating > .form-control:not(:placeholder-shown),
 .form-floating > .form-control:placeholder-shown,
 input[type=text],
-.btn {
+.btn,
+input-duration.form-control {
   padding: 5px;
   height: auto;
   min-height: auto;
@@ -57,3 +58,47 @@ form > div + div,
 .calculated {
   background: rgb(236, 235, 240);
 }
+
+input-duration {
+  /* display: flex; */
+
+  /* border: 1px solid #ccc; */
+  /* border-radius: 4px; */
+  /* padding: 4px; */
+  /* width: min-content; */
+}
+
+.duration-container {
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+  gap: 0px;
+}
+
+input-duration * {
+  padding: 0;
+}
+
+.duration-container input {
+  /* display: inline; */
+  width: 2rem;
+  text-align: right;
+  border: none;
+  padding: 0;
+}
+.duration-container input:nth-child(1) {
+  text-align: right;
+  width: 3ch;
+}
+.duration-container input:nth-child(3) {
+  text-align: center;
+  width: 2ch;
+}
+.duration-container input:nth-child(5) {
+  text-align: left;
+  width: 2ch;
+}
+
+/* .duration-container span {
+  width: min-content;
+} */
