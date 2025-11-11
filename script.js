@@ -98,7 +98,6 @@ $(function(){
 
   // event listeners
   formID.addEventListener("submit", submit_copy);
-  template.addEventListener("change", load_form);
 
   // mutation observer - detect changes to the DOM
   const config = {attributes: false, childList: true, subtree: false};
@@ -123,14 +122,14 @@ data.init = (k=key) => {
 }
 
 data.typeof = (id, k=key) => {
-  return typeof(data[k]?.data[id]?.type);
+  return data[k]?.data[id]?.type;
 }
 
 // given new input value, clean the input & set the data
 data.clean = (id, k=key) => {
   let d = data[k]?.data[id];
   if (d === undefined) {
-    console.error(`cannot clean undefined data data[${k}].data[${id}]`);
+    console.error(`cannot clean undefined data[${k}].data[${id}]`);
     return;
   }
   switch(data.typeof(id, k)) {
@@ -140,7 +139,7 @@ data.clean = (id, k=key) => {
       return (value) => {
         let v = value.split("-");
         d.value.setYear(v[0]);
-        d.value.setMonth(v[1]);
+        d.value.setMonth(v[1]-1);
         d.value.setDate(v[2]);
       };
     case Type.TIME:
@@ -157,12 +156,18 @@ data.clean = (id, k=key) => {
 }
 
 data.value = (id, k=key) => {
-  let d = data[key]?.data[id];
+  let d = data[k]?.data[id];
+  if (d === undefined) {
+    console.error(`cannot get value of undefined data[${k}].data[${id}]`);
+    return;
+  }
   switch(data.typeof(id, k)) {
     case Type.STRING:
       return () => d.value;
     case Type.DATE:
-      return () => `${d.value.getYear()}-${d.value.getMonth()}-${d.value.getDate()}`;
+      return () => {
+        return `${zero_pad(d.value.getFullYear(), 4)}-${zero_pad(d.value.getMonth() + 1, 2)}-${zero_pad(d.value.getDate(), 2)}`;
+      };
     case Type.TIME:
       return () => `${d.value.getHours()}:${d.value.getMinutes()}`;
     case Type.DURATION:
@@ -189,13 +194,13 @@ function append_alert (msg, type="secondary") {
 }
 
 // returns a map of keywords to values for replacing keywords in the template
-function get_map() {
+function get_map(k=key) {
   // priority: data > template_set > clean
   // where template_set and clean are functions and data is a value
   // no need to remove values, last defined will be set
-  let clean = Object.fromEntries(Object.entries(data[key].clean).map(([k,v])=>[k, v()]));
-  let template_set = Object.fromEntries(Object.entries(data[key].template_set).map(([k,v])=>[k, v()]));
-  let d = data[key].data;
+  let clean = Object.fromEntries(Object.entries(data[k].clean).map(([k,v])=>[k, v()]));
+  let template_set = Object.fromEntries(Object.entries(data[k].template_set).map(([k,v])=>[k, v()]));
+  let d = data[k].data;
   return {...clean, ...template_set, ...d};
 }
 
@@ -316,15 +321,21 @@ function duration_short_str(v1, v2, v3=null) {
 // 1. clean input
 // 2. set data & input value
 // 3. call update fn
-function add_onchange_listeners(ids, k=key) {
+function add_onchange_listeners(ids, k=key, update_only = false) {
   for (const id of ids) {
     let elem = document.getElementById(id);
     if (elem) {
       elem.addEventListener("change", () => {
-        console.log("change!", elem);
-        data.clean(id,k)(elem.value);
-        elem.value = data.value(id,k)();
-        console.log("data", data);
+        if (!update_only) {
+          console.log("change!", elem);
+          data.clean(id,k)(elem.value);
+          // console.log("id", id, "k", k);
+          elem.value = data.value(id,k)();
+          console.log("data", data);
+        }
+        if (id in data[k].update) {
+          data[k].update[id]();
+        }
       });
     }
   }
@@ -362,7 +373,13 @@ function load_script(k=key) {
     // add onchange event listeners
     let ids;
     const d = new Set(Object.keys(data[k].data));
-    add_onchange_listeners(d,k);
+    ids = d;
+    // const no_change = new Set(data[key].no_change);
+    // ids = d.difference(no_change);
+    add_onchange_listeners(ids,k);
+    const update = new Set(Object.keys(data[k].update));
+    ids = update.difference(ids);
+    add_onchange_listeners(ids,k,true);
 
     // const clean = new Set(Object.keys(data[key].clean));
     // const no_change = new Set(data[key].no_change);
@@ -464,10 +481,11 @@ function get_dt(start_date, ...times) {
 
 function find_replace(str) {
   let map = {
-    "date": date_str(date.value),
-    "referring": referring.value,
-    "provider": provider.value,
-    ...get_map()
+    // "date": date_str(date.value),
+    // "referring": referring.value,
+    // "provider": provider.value,
+    ...get_map(key_global),
+    ...get_map(key)
   }; 
 
   // regex literal: /pattern/flags
