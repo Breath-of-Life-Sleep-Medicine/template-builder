@@ -147,7 +147,6 @@ data.clean = (id, k=key) => {
         let v = value.split(":");
         d.value.setHours(v[0]);
         d.value.setMinutes(v[1]);
-        console.log("setting time data", v, d);
       };
     case Type.DURATION:
       return ({h=null, m=null, s=null}) => {d.value.set({h,m,s});};
@@ -227,8 +226,7 @@ function get_map(k=key) {
   // no need to remove values, last defined will be set
   // let clean = Object.fromEntries(Object.entries(data[k].clean).map(([k,v])=>[k, v()]));
   let template_set = Object.fromEntries(Object.entries(data[k].template_set).map(([k,v])=>[k, v()]));
-  let d = Object.fromEntries(Object.entries(data[k].data).map(([id,v])=>[id, data.template_value(id, k)()]));
-  console.log(d);
+  let d = Object.fromEntries(Object.keys(data[k].data).map((id)=>[id, data.template_value(id, k)()]));
   return {...template_set, ...d};
 }
 
@@ -355,11 +353,8 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
     if (elem) {
       elem.addEventListener("change", () => {
         if (!update_only) {
-          console.log("change!", elem);
           data.clean(id,k)(elem.value);
-          // console.log("id", id, "k", k);
           elem.value = data.form_value(id,k)();
-          console.log("data", data);
         }
         if (id in data[k].update) {
           data[k].update[id]();
@@ -367,28 +362,6 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
       });
     }
   }
-
-  // if (clean) {
-  //   for (const id of ids) {
-  //     let elem = document.getElementById(id);
-  //     // if (elem === null) {console.error(`element with id "${id}" is null, but attempting to attach onchange event listener`)}
-  //     if (elem) {
-  //       elem.addEventListener("change", () => {
-  //         data[key].data[id].value = elem.value = data[key].clean[id]();
-  //         if (id in data[key].update) {
-  //           data[key].update[id]();
-  //         }
-  //       });
-  //     }
-  //   }
-  // } else {
-  //   for (const id of ids) {
-  //     let elem = document.getElementById(id);
-  //     if (elem) {
-  //       elem.addEventListener("change", () => {data[key].update[id]()});
-  //     }
-  //   }
-  // }
 }
 
 function load_script(k=key) {
@@ -408,16 +381,6 @@ function load_script(k=key) {
     const update = new Set(Object.keys(data[k].update));
     ids = update.difference(ids);
     add_onchange_listeners(ids,k,true);
-
-    // const clean = new Set(Object.keys(data[key].clean));
-    // const no_change = new Set(data[key].no_change);
-    // ids = clean.difference(no_change);
-    // // onchange: do clean fn, then do update fn
-    // add_onchange_listeners(ids, true);
-    // // onchange: only do update fn (no clean fn)
-    // let update = new Set(Object.keys(data[key].update));
-    // ids = update.difference(ids);
-    // add_onchange_listeners(ids, false);
   };
   document.body.appendChild(script);
 }
@@ -509,9 +472,6 @@ function get_dt(start_date, ...times) {
 
 function find_replace(str) {
   let map = {
-    // "date": date_str(date.value),
-    // "referring": referring.value,
-    // "provider": provider.value,
     ...get_map(key_global),
     ...get_map(key)
   }; 

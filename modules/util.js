@@ -1,12 +1,6 @@
 import * as script from "../script.js";
 
-// convert % to label text
-// const RDI_LABEL = {
-//   3: "(3%, AASM)",
-//   4: "(4%, CMS)",
-// };
-
-const RDI_LABEL = {
+const SCORE_LABEL = {
   3: "AASM",
   4: "CMS",
 };
@@ -104,12 +98,12 @@ function rem_check(rem, r_lat) {
 }
 
 function update_scored_at() {
-  set_class_text("scored_at", `(${script.data[script.key].data.scored_at}%, ${RDI_LABEL[script.data[script.key].data.scored_at]})`);
+  set_class_text("scored_at", `(${script.data[script.key].data.scored_at}%, ${SCORE_LABEL[script.data[script.key].data.scored_at]})`);
   label_scored_at.textContent = script.data[script.key].data.scored_at;
 }
 
 export {
-  RDI_LABEL,
+  SCORE_LABEL,
   update_percentage,
   update_index,
   update_end,

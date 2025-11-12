@@ -161,7 +161,7 @@ script.data[script.key].template_set = {
   "rem_ahi": () => (rem.value != 0) ? `${script.clip_index(rem_ahi.value)}/hr` : "N/A",
   // rdi - supine, prone, left, & right (events/hour)
   "rdi_positions": () => util.rdi_position_str(POS, rdi_s, rdi_p, rdi_l, rdi_r),
-  "scored_at_label": () => util.RDI_LABEL[script.data[script.key].data.scored_at],
+  "scored_at_label": () => util.SCORE_LABEL[script.data[script.key].data.scored_at],
 
   // titration portion
   "ti_start": () => script.time_24_to_12(ti_start.value), // start time

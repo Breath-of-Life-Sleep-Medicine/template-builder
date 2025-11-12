@@ -141,5 +141,5 @@ script.data[script.key].template_set = {
   // rem ahi (events/hour)
   "rem_ahi": () => (rem.value != 0) ? `${script.clip_index(rem_ahi.value)}/hr` : "N/A",
   "rdi_positions": () => util.rdi_position_str(POS, rdi_s, rdi_p, rdi_l, rdi_r),
-  "scored_at_label": () => util.RDI_LABEL[script.data[script.key].data.scored_at],
+  "scored_at_label": () => util.SCORE_LABEL[script.data[script.key].data.scored_at],
 };
