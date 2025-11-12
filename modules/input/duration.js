@@ -38,22 +38,16 @@ class InputDurationElement extends HTMLElement {
         ${strs}
       </div>
     `;
-
-    const elems = {
-      h: this._hourInput,
-      m: this._minuteInput,
-      s: this._secondInput,
-    }
     
     for (let cls of cls_found) {
-      elems[cls] = shadowRoot.querySelector(`[part="${cls}"]`);
+      this[cls] = shadowRoot.querySelector(`[part="${cls}"]`);
     }
     for (let cls of cls_found) {
-      elems[cls].addEventListener("change", () => {
+      this[cls].addEventListener("change", () => {
         if (cls !== high_set) {
-          elems[cls].value = script.zero_pad(script.clip_count(parseInt(elems[cls].value) || 0, 0, 0, 59), 2);
+          this[cls].value = script.zero_pad(script.clip_count(parseInt(this[cls].value) || 0, 0, 0, 59), 2);
         } else {
-          elems[cls].value = script.clip_count(parseInt(elems[cls].value) || 0);
+          this[cls].value = script.clip_count(parseInt(this[cls].value) || 0);
         }
         if (cls === last_set) {
           this.dispatchEvent(new Event("change"));
@@ -63,29 +57,26 @@ class InputDurationElement extends HTMLElement {
   }
 
   get value() {
-    let h, m, s;
-    if (this._hourInput === undefined)
-      h = null;
-    else
-      h = parseInt(this._hourInput.value) || 0;
-    if (this._minuteInput === undefined)
-      m = null;
-    else
-      m = parseInt(this._minuteInput.value) || 0;
-    if (this._secondInput === undefined)
-      s = null;
-    else
-      s = parseInt(this._secondInput.value) || 0;
-    return {h,m,s};
+    let ret = {};
+    let classes = ["h", "m", "s"];
+    for (let cls of classes) {
+      ret[cls] = this[cls] ? parseInt(this[cls].value) || 0 : null;
+    }
+    return ret;
   }
 
   set value({h=null,m=null,s=null}) {
-    if (this._hourInput)
-      this._hourInput.value = h;
-    if (this._minuteInput)
-      this._minuteInput.value = m;
-    if (this._secondInput)
-      this._secondInput.value = s;
+    let high_set = false;
+    Object.entries({h, m, s}).map(([cls, val]) => {
+      if (cls in this) {
+        if (high_set) {
+          this[cls].value = script.zero_pad(val, 2);
+        } else {
+          this[cls].value = val;
+          high_set = true;
+        }
+      }
+    });
   }
 }
 

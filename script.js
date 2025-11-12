@@ -43,9 +43,9 @@ class Duration {
     this.s = s;
   }
   set({h=null, m=null, s=null}={}) {
-    let input = {h, m, s};
+    let input = Object.entries({h, m, s});
     let high_set = false;
-    for (let [k,v] of input.fromEntries()) {
+    for (let [k,v] of input) {
       if (v === null) {
         this[k] = null;
       } else if (high_set) {
@@ -56,7 +56,7 @@ class Duration {
       }
     }
   }
-  set(start_dt, end_dt) {
+  set_dt(start_dt, end_dt) {
     let d = end_dt - start_dt;
     if (this.h !== null) {
       this.h = Math.floor(d/1000/60/60);
@@ -123,6 +123,10 @@ data.init = (k=key) => {
 
 data.typeof = (id, k=key) => {
   return data[k]?.data[id]?.type;
+}
+
+data.value = (id, k=key) => {
+  return data[k]?.data[id]?.value;
 }
 
 // given new input value, clean the input & set the data

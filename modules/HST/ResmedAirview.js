@@ -64,5 +64,5 @@ function update_scored_at() {
 }
 
 function set_duration() {
-  script.data[script.key].data.duration = (duration1.checked) ? duration1_value : duration2_value;
+  script.data[script.key].data.duration.value.set((duration1.checked) ? duration1_value : duration2_value);
 }
