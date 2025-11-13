@@ -1,5 +1,6 @@
 // custom input type input-duration
-import * as script from "../../script.js";
+import { zero_pad } from "../util.js";
+import { clip_count } from "../clip.js";
 
 class InputDurationElement extends HTMLElement {
   constructor() {
@@ -45,9 +46,9 @@ class InputDurationElement extends HTMLElement {
     for (let cls of cls_found) {
       this[cls].addEventListener("change", () => {
         if (cls !== high_set) {
-          this[cls].value = script.zero_pad(script.clip_count(parseInt(this[cls].value) || 0, 0, 0, 59), 2);
+          this[cls].value = zero_pad(clip_count(parseInt(this[cls].value) || 0, 0, 0, 59), 2);
         } else {
-          this[cls].value = script.clip_count(parseInt(this[cls].value) || 0);
+          this[cls].value = clip_count(parseInt(this[cls].value) || 0);
         }
         if (cls === last_set) {
           this.dispatchEvent(new Event("change"));
@@ -70,7 +71,7 @@ class InputDurationElement extends HTMLElement {
     Object.entries({h, m, s}).map(([cls, val]) => {
       if (cls in this) {
         if (high_set) {
-          this[cls].value = script.zero_pad(val, 2);
+          this[cls].value = zero_pad(val, 2);
         } else {
           this[cls].value = val;
           high_set = true;

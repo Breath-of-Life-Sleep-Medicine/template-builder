@@ -1,3 +1,7 @@
+import { Duration } from "./modules/duration.js";
+import { clip_number, clip_count } from "./modules/clip.js";
+import { decimal_places, time_str, zero_pad } from "./modules/util.js";
+
 let key = null;           // key for active template data
 let key_global = "index"; // key for global data
 let data = {};
@@ -28,63 +32,6 @@ const Defaults = {
   duration: ({h=null, m=null, s=null}={}) => ({value: new Duration({h, m, s}), type:Type.DURATION}),
   string: ({value=""}={}) => ({value, type:Type.STRING}),
 };
-
-class Duration {
-  // - h: hours
-  // - m: minutes
-  // - s: seconds
-  // for h, m, s:
-  // - initialize/set to non-null value (ex: 0) to track
-  // - initialize/set to null to untrack
-  // example: new Duration({h:0, m:0}) will only track hours and minutes, not seconds
-  constructor ({h=null, m=null, s=null}={}) {
-    this.h = h;
-    this.m = m;
-    this.s = s;
-  }
-  set({h=null, m=null, s=null}={}) {
-    let input = Object.entries({h, m, s});
-    let high_set = false;
-    for (let [k,v] of input) {
-      if (v === null) {
-        this[k] = null;
-      } else if (high_set) {
-        this[k] = clip_count(v,0,0,59);
-      } else {
-        this[k] = clip_count(v,0,0);
-        high_set = true;
-      }
-    }
-  }
-  set_dt(start_dt, end_dt) {
-    let d = end_dt - start_dt;
-    if (this.h !== null) {
-      this.h = Math.floor(d/1000/60/60);
-    }
-    if (this.m !== null) {
-      this.m = Math.floor(d/1000/60 - this.h*60);
-    }
-    if (this.s !== null) {
-      this.s = Math.floor(d/1000 - this.m*60 - this.h*60*60);
-    }
-  }
-  toStr() {
-    let str = [];
-    if (this.h > 0 || (this.m === null && this.s === null)) {
-      str.push(`${this.h} hour${(this.h!=1)?"s":""}`);
-    }
-    if (this.m > 0 || this.s === null) {
-      str.push(`${this.m} minute${(this.m!=1)?"s":""}`);
-    }
-    if (this.s !== null) {
-      str.push(`${this.s} second${(this.s!=1)?"s":""}`);
-    }
-    return str.join(" ");
-  }
-  toStrShort() {
-    return [this.h, this.m, this.s].filter((v)=>v!==null).map((v) => zero_pad(v,2)).join(":");
-  }
-}
 
 // document ready function (short version)
 $(function(){
@@ -274,77 +221,12 @@ function initialize() {
   }
 }
 
-const zero_pad = (num, places) => String(num).padStart(places, '0');
-
-// Source - https://stackoverflow.com/a
-// Posted by Billy Moon, modified by community. See post 'Timeline' for change history
-// Retrieved 2025-11-07, License - CC BY-SA 4.0
-function round(value, precision = 0, func = Math.round) {
-  let multiplier = Math.pow(10, precision || 0);
-  return func(value * multiplier) / multiplier;
-}
-
 function save(data) {
   sessionStorage.setItem("data", JSON.stringify(data));
 }
 
 function load() {
   return JSON.parse(sessionStorage.getItem("data"));
-}
-
-// convert yyyy-mm-dd string to mm/dd/yyyy string
-// ex: 2025-05-20 to 05/20/2025
-function date_str(s) {
-  return s.slice(5).replace(/-/g, "/") + "/" + s.slice(0, 4);
-}
-
-// convert dt into hh:mm format string
-function time_str(dt) {
-  return dt.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
-}
-
-// convert 24 hour formatted time string to 12 hour time string
-// ex: 17:31 to 5:31 PM
-function time_24_to_12 (time) {
-  let hours = parseInt(time.slice(0, 2));
-  let suffix = hours < 12 ? " AM": " PM";
-  hours = (hours + 11) % 12 + 1;
-  return hours + time.slice(2) + suffix;
-}
-
-// start is a dt
-// end is a dt
-// return duration in hours & minutes
-function get_duration(start_dt, end_dt) {
-  let d,h,m;
-  d = end_dt - start_dt;
-  h = Math.floor(d/1000/60/60);
-  m = Math.floor(d/1000/60 - h*60);
-  return {h, m};
-}
-
-// {h:4, m:0} -> 4 hours 0 minutes
-// {h:0, m:0} -> 0 minutes
-// {h:1, m:1} -> 1 hour 1 minute
-function duration_str({h, m, s}) {
-  let str = [];
-  if (h > 0 || (m === undefined && s === undefined)) {
-    str.push(`${h} hour${(h!=1)?"s":""}`);
-  }
-  if (m > 0 || s === undefined) {
-    str.push(`${m} minute${(m!=1)?"s":""}`);
-  }
-  if (s !== undefined) {
-    str.push(`${s} second${(s!=1)?"s":""}`);
-  }
-  return str.join(" ");
-}
-
-// converts {h, m} object into ...h:mm format string
-// converts {m, s} object into ...m:ss format string
-// converts {h, m, s} object into ...h:mm:ss format string
-function duration_short_str(v1, v2, v3=null) {
-  return (v3 === null) ? `${v1}:${zero_pad(v2,2)}` : `${v1}:${zero_pad(v2,2)}:${zero_pad(v3,2)}`;
 }
 
 // on change:
@@ -416,64 +298,6 @@ function load_form() {
   });
 }
 
-function clip_number(number, precision = null, min = null, max = null) {
-  if (number === "" | number === null) {
-    number = 0;
-  }
-  number = parseFloat(number);
-  if (number == "NaN") {
-    number = 0;
-  }
-  if (min != null) {
-    number = Math.max(number, min);
-  }
-  if (max != null) {
-    number = Math.min(number, max);
-  }
-  if (precision != null) {
-    number = number.toFixed(precision);
-  }
-  return number;
-}
-
-const clip_index = clip_minutes;
-
-function clip_count(number, precision = 0, min = 0, max = null) {
-  return clip_number(number, precision, min, max);
-}
-
-function clip_minutes(number, precision = 1, min = 0, max = null) {
-  return clip_number(number, precision, min, max);
-}
-
-function clip_percent(number, precision=1, min=0, max=100) {
-  return clip_number(number, precision, min, max);
-}
-
-/******************************************************************************
-Desc: convert a series of time strings into Date objects (datetime)
-Input:
-- start_date: date of the first time as a string (ex: "2025-05-20")
-- ...times: times to convert to datetimes (in sequential order) (ex: "21:54")
-Output: returns the times as an array of Date objects (datetimes)
-Assumes:
-- less than 24 hours passing between any 2 adjacent times
-******************************************************************************/
-function get_dt(start_date, ...times) {
-  if (!start_date) start_date = "2025-01-01"; // this will give inaccurate dates, but accurate times
-  let dts = [];
-  if (times.length == 0) {return dts;}
-  dts.push(new Date(start_date + " " + times[0]));
-  for (let i = 1; i < times.length; ++i) {
-    let next = new Date(dts.at(-1).toDateString() + " " + times[i]);
-    if (next < dts.at(-1)) {
-      next.setDate(next.getDate() + 1); // increment date by 1 day
-    }
-    dts.push(next);
-  }
-  return dts;
-}
-
 function find_replace(str) {
   let map = {
     ...get_map(key_global),
@@ -530,37 +354,13 @@ async function load_txt_file(file_path) {
   return txt;
 }
 
-// given a number as a string
-// return the number of decimal places
-function decimal_places(number_str) {
-  let decimal_places = number_str.indexOf('.');
-  return (decimal_places >= 0) ? number_str.length - decimal_places - 1 : 0;
-}
-
 export {
   data,
   key,
   key_global,
   Defaults,
-  Duration,
   submit_copy,
   load_form,
-  decimal_places,
-  zero_pad,
-  // cleaning
-  clip_number,
-  clip_index,
-  clip_minutes,
-  clip_percent,
-  clip_count,
-  // date / time
-  get_dt,
-  date_str,
-  time_str,
-  time_24_to_12,
-  get_duration,
-  duration_str,
-  duration_short_str,
   // for testing
   find_replace,
 };
