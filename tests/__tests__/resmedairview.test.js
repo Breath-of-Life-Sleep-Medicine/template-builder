@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import * as script from "/script.js";
+import { data, key } from "../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions
@@ -16,7 +16,7 @@ test("resmed airview find_replace", () => {
   let path = "HST/ResmedAirview";
   let {template, expected} = get_paths(path);
 
-  script.data[script.key].template_set = {};
+  data[key].template_set = {};
 
   build_form({
     date: "2025-01-20",
@@ -56,9 +56,9 @@ test("resmed airview find_replace", () => {
   global.duration2.checked = true;
 
   // call update function to do calculations
-  script.data[script.key].update.start();      // update duration
-  script.data[script.key].update.ahi();        // update hi
-  script.data[script.key].update.guidelines(); // update scored at
+  data[key].update.start();      // update duration
+  data[key].update.ahi();        // update hi
+  data[key].update.guidelines(); // update scored at
 
   expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
 });

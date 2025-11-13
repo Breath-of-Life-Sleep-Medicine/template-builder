@@ -1,4 +1,4 @@
-import { data, key } from "../../script.js";
+import { data, key } from "../data.js";
 import { clip_number, clip_index, clip_minutes, clip_percent } from "../clip.js";
 
 // ids that have no onchange callback fn; can still trigger update w/o clean

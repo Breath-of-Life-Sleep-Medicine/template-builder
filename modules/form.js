@@ -1,6 +1,6 @@
-import { data, key } from "../script.js";
+import { data, key } from "./data.js";
 import { clip_percent } from "./clip.js";
-import { decimal_places } from "./util.js";
+import { SCORE_LABEL, decimal_places } from "./util.js";
 
 
 // store into result the percentage of a to b

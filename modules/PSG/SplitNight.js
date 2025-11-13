@@ -1,4 +1,4 @@
-import { data, key } from "../../script.js";
+import { data, key } from "../data.js";
 import * as form from "../form.js";
 import { SCORE_LABEL, time_24_to_12 } from "../util.js";
 import { clip_count, clip_index, clip_minutes, clip_percent } from "../clip.js";

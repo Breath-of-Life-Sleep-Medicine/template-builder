@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import * as script from "/script.js";
+import { data, key } from "../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions
@@ -74,15 +74,15 @@ beforeEach(() => {
   global.right.id = "right";
 
   // call update function to do calculations
-  script.data[script.key].update.trt();  // update efficiency, update end
-  script.data[script.key].update.a_oc(); // update ahi (do before updating rdi)
-  script.data[script.key].update.ahi();  // update rdi (requires ahi)
+  data[key].update.trt();  // update efficiency, update end
+  data[key].update.a_oc(); // update ahi (do before updating rdi)
+  data[key].update.ahi();  // update rdi (requires ahi)
 
   // update RDI
-  script.data[script.key].update.supine();
-  script.data[script.key].update.prone();
-  script.data[script.key].update.left();
-  script.data[script.key].update.right();
+  data[key].update.supine();
+  data[key].update.prone();
+  data[key].update.left();
+  data[key].update.right();
 });
 
 test("update rdi", () => {

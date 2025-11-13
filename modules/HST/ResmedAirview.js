@@ -1,4 +1,4 @@
-import { data, key, Defaults } from "../../script.js";
+import { data, key, Defaults } from "../data.js";
 import { get_dt } from "../util.js";
 import { get_duration, duration_short_str } from "../duration.js";
 import { clip_percent } from "../clip.js";
@@ -55,6 +55,7 @@ function update_duration() {
   duration2_label.textContent = duration_short_str(...Object.values(d2));
   duration1_value = d1;
   duration2_value = d2;
+  set_duration();
 }
 
 function update_hi() {

@@ -1,4 +1,5 @@
-import { data, key, time_24_to_12 } from "../../script.js";
+import { data, key } from "../data.js";
+import { time_24_to_12 } from "../util.js";
 import { update_end } from "../form.js";
 import { clip_number, clip_index, clip_minutes, clip_percent } from "../clip.js";
 

@@ -1,4 +1,4 @@
-import { data, key } from "../../script.js";
+import { data, key } from "../data.js";
 import { time_str, get_dt } from "../util.js";
 import { clip_number, clip_index, clip_minutes, clip_percent } from "../clip.js";
 import { duration_str } from "../duration.js";

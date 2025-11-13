@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-import * as script from "/script.js";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions

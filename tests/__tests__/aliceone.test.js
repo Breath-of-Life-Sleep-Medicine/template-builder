@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import * as script from "/script.js";
+import { data, key } from "../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions
@@ -37,8 +37,8 @@ test("aliceone find_replace", () => {
     ai: "", // 5.0
   });
 
-  script.data[script.key].update.start(); // update end
-  script.data[script.key].update.ahi();   // update ai
+  data[key].update.start(); // update end
+  data[key].update.ahi();   // update ai
 
   expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
 });
