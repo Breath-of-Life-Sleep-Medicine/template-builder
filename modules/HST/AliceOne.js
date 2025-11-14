@@ -1,22 +1,31 @@
-import { data, key } from "../data.js";
-import { time_24_to_12 } from "../util.js";
+import { data, key, Defaults } from "../data.js";
 import { update_end } from "../form.js";
-import { clip_number, clip_index, clip_minutes, clip_percent } from "../clip.js";
 
-data[key].clean = {
-  "trt": () => clip_minutes(trt.value),
-  "ahi": () => clip_index(ahi.value),
-  "ai": () => clip_index(ai.value), // calculate
-  "hi": () => clip_index(hi.value),
-  "ox_avg": () => clip_percent(ox_avg.value, 0),
-  "ox_min": () => clip_percent(ox_min.value, 0),
-  "odi": () => clip_index(odi.value),
-  "od_duration": () => clip_minutes(od_duration.value),
-  "pulse_min": () => clip_number(pulse_min.value, 0, 0),
-  "pulse_avg": () => clip_number(pulse_avg.value, 1, 0),
-  "pulse_max": () => clip_number(pulse_max.value, 0, 0),
-  "snores": () => clip_number(snores.value, 0, 0),
-};
+data[key].data = {
+  start:       Defaults.time(),
+  end:         Defaults.time(),                        // calculate
+  trt:         Defaults.duration({m:0, precision:1, form: {set: duration_minutes_set, get: duration_minutes_get}}),
+  ahi:         Defaults.number.index(),
+  ai:          Defaults.number.index(),                // calculate
+  hi:          Defaults.number.index(),
+  ox_avg:      Defaults.number.percent({precision:0}),
+  ox_min:      Defaults.number.percent({precision:0}),
+  odi:         Defaults.number.index(),
+  od_duration: Defaults.duration({m:0, precision:1, form: {set: duration_minutes_set, get: duration_minutes_get}}),
+  pulse_min:   Defaults.number.pulse({precision:0}),
+  pulse_avg:   Defaults.number.pulse({precision:1}),
+  pulse_max:   Defaults.number.pulse({precision:0}),
+  snores:      Defaults.number.count(),
+}
+
+function duration_minutes_set(id, k=key) {
+  let d = data[k].data[id];
+  document.getElementById(id).value = d.value.m;
+}
+
+function duration_minutes_get(id) {
+  return {m: document.getElementById(id).value};
+}
 
 data[key].update = {
   "start": () => {update_end(start, end, trt)},
@@ -24,11 +33,6 @@ data[key].update = {
   "ahi": () => {update_ai(ahi, ai, hi);},
   "hi": () => {update_ai(ahi, ai, hi);},
 };
-
-data[key].template_set = {
-  "start": () => time_24_to_12(start.value),
-  "end": () => time_24_to_12(end.value), // calculate
-}
 
 function update_ai(ahi, ai, hi) {
   ai.value = ahi.value - hi.value;
