@@ -9,21 +9,37 @@ class Duration {
   // - initialize/set to non-null value (ex: 0) to track
   // - initialize/set to null to untrack
   // example: new Duration({h:0, m:0}) will only track hours and minutes, not seconds
-  constructor ({h=null, m=null, s=null}={}) {
-    this.h = h;
-    this.m = m;
-    this.s = s;
+  constructor ({h=null, m=null, s=null, precision=0}={}) {
+    this.precision = precision;
+    let input = Object.entries({h, m, s});
+    for (let [k,v] of input) {
+      this[k] = v;
+      if (v === null)
+        continue;
+      this.lo = k;
+    }
   }
   set({h=null, m=null, s=null}={}) {
     let input = Object.entries({h, m, s});
+    // find lo
+    for (let [k,v] of input.toReversed()) {
+      if (v === null)
+        continue;
+      this.lo = k;
+      break;
+    }
     let high_set = false;
+    let precision = 0;
     for (let [k,v] of input) {
+      if (k === this.lo) {
+        precision = this.precision;
+      }
       if (v === null) {
         this[k] = null;
       } else if (high_set) {
-        this[k] = clip_count(v,0,0,59);
+        this[k] = clip_count(v,precision,0,59);
       } else {
-        this[k] = clip_count(v,0,0);
+        this[k] = clip_count(v,precision,0);
         high_set = true;
       }
     }

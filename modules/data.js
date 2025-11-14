@@ -28,7 +28,7 @@ const Defaults = {
   },
   date: ({value = new Date(1970,1,1)}={}) => ({value, type:Type.DATE}),
   time: ({value = new Date(1970,1,1)}={}) => ({value, type:Type.TIME}),
-  duration: ({h=null, m=null, s=null}={}) => ({value: new Duration({h, m, s}), type:Type.DURATION}),
+  duration: ({h=null, m=null, s=null, precision=0}={}) => ({value: new Duration({h, m, s, precision}), type:Type.DURATION}),
   string: ({value=""}={}) => ({value, type:Type.STRING}),
 };
 

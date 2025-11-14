@@ -110,8 +110,13 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
     if (elem) {
       elem.addEventListener("change", () => {
         if (!update_only) {
-          data.clean(id,k)(elem.value);
-          elem.value = data.form_value(id,k)();
+          if (id in data[k].clean) { // non-default clean
+            data[k].clean[id]();
+          } else { // default clean
+            data.clean(id,k)(elem.value);
+            elem.value = data.form_value(id,k)();
+          }
+          
         }
         if (id in data[k].update) {
           data[k].update[id]();

@@ -9,14 +9,14 @@ Epworth Sleepiness Scale: []
 STOPBANG: []
 BMI: []
 RESULTS: This was an unattended overnight portable home sleep study performed by Aspen Sleep Centers using an MediByte Jr Type III device. The following physiologic parameters were recorded: Airflow at the nose, chest and abdominal movements, and pulse oximetry. The waveforms were reviewed and were technically adequate. Hypopneas were scored using ${scored_at}% oxygen desaturation.
-1. ANALYSIS DURATION: ${duration} minutes
+1. ANALYSIS DURATION: ${duration}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
 Apnea Index: ${ai}/hr, Hypopnea Index: ${hi}/hr
 Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_percent}%
 The patient's respiratory events were primarily obstructive.
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
 Oxygen Desaturation Index: ${odi} Events per hour
-Duration of study with oxygen saturation <=89%: ${od_duration} minutes
+Duration of study with oxygen saturation <=89%: ${od_duration}
 4. HEART RATE: Minimum: ${pulse_min} BPM, Average: ${pulse_avg} BPM, Maximum: ${pulse_max} BPM
 5. SNORING EVENTS: ${snores}
 IMPRESSIONS:
