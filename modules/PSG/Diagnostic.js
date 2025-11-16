@@ -1,33 +1,93 @@
-import {data, key} from "../data.js";
+import {data, key, Defaults} from "../data.js";
 import * as form from "../form.js";
-import { SCORE_LABEL, time_24_to_12 } from "../util.js";
-import { clip_index, clip_minutes, clip_percent, clip_count } from "../clip.js";
+import { SCORE_LABEL } from "../util.js";
+import { clip_index, clip_minutes, clip_percent } from "../clip.js";
 
-const update_ahi = () => form.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
+// TODO:
+// - update diagnostic
+// - change how update is set (add it to data)
+// - could, after using non-data stuff for init in script or data or wherever, do data[key] = data[key].data
+//    - ... would this fuck up unloading/reloading templates ....?
 
 // position duration %
-let POS = {
-  "supine": 0,
-  "prone": 0,
-  "left": 0,
-  "right": 0,
-};
+// let POS = {
+//   "supine": data[key].data.supine,
+//   "prone": data[key].data.prone,
+//   "left": data[key].data.left,
+//   "right": data[key].data.right,
+// };
 
 // initialization function
 data[key].init = () => {
   form.update_scored_at();
-}
+};
 
 data[key].data = {
-  "scored_at": 4, // %
+  // "scored_at": 4, // %
+
+  // oxygen desaturation (%) that hypopneas are scored at
+  scored_at:    Defaults.percent({value:4, precision:0, min:3, max:4}),
+  start:        Defaults.time(),    // start time, ex: "10:00 PM"
+  end:          Defaults.time(),    // end time, ex: "1:00 AM"; calculate: start + trt
+  trt:          Defaults.minutes(), // total recording time (minutes)
+  tst:          Defaults.minutes(), // total sleep time (minutes)
+  eff:          Defaults.percent(), // sleep efficiency (%); calculate: 100*tst/trt
+  lat:          Defaults.minutes(), // sleep latency (minutes)
+  waso:         Defaults.minutes(), // wake after sleep onset (minutes)
+  r_lat:        Defaults.minutes(), // REM latency - less wake (minutes)
+  n1:           Defaults.percent(), // N1  (% TST)
+  n2:           Defaults.percent(), // N2  (% TST)
+  n3:           Defaults.percent(), // N3  (% TST)
+  rem:          Defaults.percent(), // REM (% TST)
+  ahi:          Defaults.index(),   // apnea + hypopnea index (events/hour)
+  rdi:          Defaults.index(),   // (events/hour)
+  a_cc:         Defaults.count(),   // central apnea count
+  a_oc:         Defaults.count(),   // obstructive apnea count
+  a_mc:         Defaults.count(),   // mixed apnea count
+  h_c:          Defaults.count(),   // total hypopnea count
+  rera:         Defaults.count(),   // RERA count
+  arem_ahi:     Defaults.index(),   // non-REM AHI (events/hour)
+  rem_ahi:      Defaults.index(),   // REM AHI (events/hour)
+  supine:       Defaults.percent(), // (% TST)
+  prone:        Defaults.percent(), // (% TST)
+  left:         Defaults.percent(), // (% TST)
+  right:        Defaults.percent(), // (% TST)
+  rdi_s:        Defaults.index(),   // RDI while supine (events/hour)
+  rdi_p:        Defaults.index(),   // RDI while prone (events/hour)
+  rdi_l:        Defaults.index(),   // RDI while left (events/hour)
+  rdi_r:        Defaults.index(),   // RDI while right (events/hour)
+  arousals:     Defaults.count(),   // total arousals
+  arousals_sai: Defaults.index(),   // spontaneous arousal index (events/hour)
+  arousals_rai: Defaults.index(),   // respiratory arousal index (events/hour)
+  limb:         Defaults.count(),   // total limb movement count
+  limb_ai:      Defaults.index(),   // limb movement with arousal index (events/hour)
+  limb_plmi:    Defaults.index(),   // limb movement plm index (events/hour)
+  ox_w_avg:     Defaults.percent(), // oxygen saturation: wake average (%)
+  ox_tst_avg:   Defaults.percent(), // oxygen saturation: sleep average (%)
+  ox_tst_min:   Defaults.percent(), // oxygen saturation: sleep minimum (%)
+  od_duration:  Defaults.minutes(), // time spent <= 88% oxygen saturation (minutes)
+  pulse_min:    Defaults.pulse(),   // minimum heart rate (bpm)
+  pulse_avg:    Defaults.pulse(),   // average heart rate (bpm)
+  pulse_max:    Defaults.pulse(),   // maximum heart rate (bpm)
+};
+
+const DATA = data[key].data; // create alias after the object is assigned
+const update_ahi = () => form.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
+const update_sum_pos = () => form.update_sum(sum_pos, DATA.supine, DATA.prone, DATA.left, DATA.right);
+const update_sum_phase = () => form.update_sum(sum_phase, DATA.n1, DATA.n2, DATA.n3, DATA.rem);
+
+DATA.r_lat.clean.on = false;
+DATA.r_lat.template.set = () => {
+  let d = data[key].data;
+  (d.rem.value != 0) ? d.r_lat.str() : "N/A"
 }
 
 // ids that have no onchange callback fn; can still trigger update w/o clean
-data[key].no_change = [
-  "start", // don't clean time fields
-  "end",   // don't clean time fields
-  "r_lat", // clean happens after update
-];
+// data[key].no_change = [
+//   "start", // don't clean time fields
+//   "end",   // don't clean time fields
+//   "r_lat", // clean happens after update
+// ];
 
 // different clean vs template_set callbacks
 
@@ -36,51 +96,13 @@ data[key].no_change = [
 // - needs a special template print function (valid number + " minutes" OR "N/A")
 //   - template print function checks value of rem for whether it should be N/A (rem of 0 means N/A)
 
-// form getters
-data[key].clean = {
-  "start":         () => time_24_to_12(start.value),      // start time, ex: "10:00 PM"
-  "end":           () => time_24_to_12(end.value),        // end time, ex: "1:00 AM"
-  "trt":           () => clip_minutes(trt.value),         // total recording time (minutes)
-  "tst":           () => clip_minutes(tst.value),         // total sleep time (minutes)
-  "eff":           () => clip_percent(eff.value),         // sleep efficiency (%)
-  "lat":           () => clip_minutes(lat.value),         //sleep latency (minutes)
-  "waso":          () => clip_minutes(waso.value),        // wake after sleep onset (minutes)
-  "r_lat":         () => clip_minutes(r_lat.value),       // REM latency - less wake (minutes)
-  "n1":            () => clip_percent(n1.value),          // N1  (% TST)
-  "n2":            () => clip_percent(n2.value),          // N2  (% TST)
-  "n3":            () => clip_percent(n3.value),          // N3  (% TST)
-  "rem":           () => clip_percent(rem.value),         // REM (% TST)
-  "ahi":           () => clip_index(ahi.value),           // apnea + hypopnea index (events/hour)
-  "rdi":           () => clip_index(rdi.value),           // (events/hour)
-  "a_cc":          () => clip_count(a_cc.value),          // central apnea count
-  "a_oc":          () => clip_count(a_oc.value),          // obstructive apnea count
-  "a_mc":          () => clip_count(a_mc.value),          // mixed apnea count
-  "h_c":           () => clip_count(h_c.value),           // total hypopnea count
-  "rera":          () => clip_count(rera.value),          // RERA count
-  "arem_ahi":      () => clip_index(arem_ahi.value),      // non-REM AHI (events/hour)
-  "rem_ahi":       () => clip_index(rem_ahi.value),       // REM AHI (events/hour)
-  "supine":        () => clip_percent(supine.value),      // (% TST)
-  "prone":         () => clip_percent(prone.value),       // (% TST)
-  "left":          () => clip_percent(left.value),        // (% TST)
-  "right":         () => clip_percent(right.value),       // (% TST)
-  "rdi_s":         () => clip_index(rdi_s.value),
-  "rdi_p":         () => clip_index(rdi_p.value),
-  "rdi_l":         () => clip_index(rdi_l.value),
-  "rdi_r":         () => clip_index(rdi_r.value),
-  "arousals":      () => clip_count(arousals.value),      // total arousals
-  "arousals_sai":  () => clip_index(arousals_sai.value),  // spontaneous arousal index (events/hour)
-  "arousals_rai":  () => clip_index(arousals_rai.value),  // respiratory arousal index (events/hour)
-  "limb":          () => clip_count(limb.value),          // total limb movement count
-  "limb_ai":       () => clip_index(limb_ai.value),       // limb movement with arousal index (events/hour)
-  "limb_plmi":     () => clip_index(limb_plmi.value),     // limb movement plm index (events/hour)
-  "ox_w_avg":      () => clip_percent(ox_w_avg.value),    // oxygen saturation: wake average (%)
-  "ox_tst_avg":    () => clip_percent(ox_tst_avg.value),  // oxygen saturation: sleep average (%)
-  "ox_tst_min":    () => clip_percent(ox_tst_min.value),  //oxygen saturation: sleep minimum (%)
-  "od_duration":   () => clip_minutes(od_duration.value), // time spent <= 88% oxygen saturation (minutes)
-  "pulse_min":     () => clip_index(pulse_min.value),     // minimum heart rate (bpm)
-  "pulse_avg":     () => clip_index(pulse_avg.value),     // average heart rate (bpm)
-  "pulse_max":     () => clip_index(pulse_max.value),     // maximum heart rate (bpm)
-};
+
+// a way to turn off automatic clean
+// manually call clean during update
+
+// data[key].clean.on = {
+//   r_lat: false, // do update before clean
+// }
 
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
@@ -93,9 +115,10 @@ data[key].update = {
     form.update_percentage(tst, trt, eff);
     update_ahi();
   },
-  "r_lat": () => {
+  "r_lat": () => { // do update before clean
+    console.log(DATA.r_lat);
     form.rem_check(rem, r_lat);
-    r_lat.value = data[key].clean.r_lat();
+    DATA.r_lat.clean.fn(DATA.r_lat.form.get("r_lat"), "r_lat");
   },
   "a_cc": update_ahi,
   "a_oc": update_ahi,
@@ -106,43 +129,51 @@ data[key].update = {
     rdi.dispatchEvent(new Event('change'));
   },
   "supine": () => {
-    form.update_rdi(POS, supine)
-    form.update_sum(sum_pos, supine, prone, left, right);
+    form.update_rdi("supine");
+    update_sum_pos();
   },
   "prone": () => {
-    form.update_rdi(POS, prone);
-    form.update_sum(sum_pos, supine, prone, left, right);
+    form.update_rdi("prone");
+    update_sum_pos();
   },
   "left": () => {
-    form.update_rdi(POS, left);
-    form.update_sum(sum_pos, supine, prone, left, right);
+    form.update_rdi("left");
+    update_sum_pos();
   },
   "right": () => {
-    form.update_rdi(POS, right);
-    form.update_sum(sum_pos, supine, prone, left, right);
+    form.update_rdi("right");
+    update_sum_pos();
   },
-  "n1": () => form.update_sum(sum_phase, n1, n2, n3, rem),
-  "n2": () => form.update_sum(sum_phase, n1, n2, n3, rem),
-  "n3": () => form.update_sum(sum_phase, n1, n2, n3, rem),
+  "n1": update_sum_phase,
+  "n2": update_sum_phase,
+  "n3": update_sum_phase,
   "rem": () => {
-    form.update_sum(sum_phase, n1, n2, n3, rem);
+    update_sum_phase(),
     form.update_rem(rem, 'requires_rem');
   },
   "scored_at": () => {
-    data[key].data.scored_at = clip_percent(scored_at.value,0,3,4);
+    // data[key].data.scored_at = clip_percent(scored_at.value,0,3,4);
     form.update_scored_at();
   }
 };
 
 // template setters - format for setting into the template
-// only need to specify functions that should override the clean function (ie more complicated set functions that print additional material not in the form)
+// data[key].template.set = {
+//   // REM latency - less wake (minutes)
+//   "r_lat": () => (rem.value != 0) ? clip_minutes(r_lat.value) + " minutes" : "N/A",
+//   // non-rem ahi (events/hour)
+//   "arem_ahi": () => (rem.value != 0) ? clip_index(arem_ahi.value) : clip_index(ahi.value),
+//   // rem ahi (events/hour)
+//   "rem_ahi": () => (rem.value != 0) ? `${clip_index(rem_ahi.value)}/hr` : "N/A",
+//   "rdi_positions": () => form.rdi_position_str(),
+//   "scored_at_label": () => SCORE_LABEL[data[key].data.scored_at],
+// };
+
+// non-default template setters
 data[key].template_set = {
-  // REM latency - less wake (minutes)
-  "r_lat": () => (rem.value != 0) ? clip_minutes(r_lat.value) + " minutes" : "N/A",
-  // non-rem ahi (events/hour)
-  "arem_ahi": () => (rem.value != 0) ? clip_index(arem_ahi.value) : clip_index(ahi.value),
-  // rem ahi (events/hour)
-  "rem_ahi": () => (rem.value != 0) ? `${clip_index(rem_ahi.value)}/hr` : "N/A",
-  "rdi_positions": () => form.rdi_position_str(POS, rdi_s, rdi_p, rdi_l, rdi_r),
-  "scored_at_label": () => SCORE_LABEL[data[key].data.scored_at],
-};
+  r_lat: () => (DATA.rem.value != 0) ? clip_minutes(DATA.r_lat.value) + " minutes" : "N/A",
+  arem_ahi: () => (DATA.rem.value != 0) ? clip_index(DATA.arem_ahi.value) : clip_index(DATA.ahi.value),
+  rem_ahi: () => (DATA.rem.value != 0) ? `${clip_index(DATA.rem_ahi.value)}/hr` : "N/A",
+  rdi_positions: () => form.rdi_position_str(),
+  scored_at_label: () => SCORE_LABEL[DATA.scored_at.str("scored_at")],
+}

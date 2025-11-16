@@ -43,14 +43,16 @@ function append_alert (msg, type="secondary") {
 
 // returns a map of keywords to values for replacing keywords in the template
 function get_map(k=key) {
-  // priority: data > template_set > clean
-  // where template_set and clean are functions and data is a value
-  // no need to remove values, last defined will be set
-  // let clean = Object.fromEntries(Object.entries(data[k].clean).map(([k,v])=>[k, v()]));
-  let template_set = Object.fromEntries(Object.entries(data[k].template_set).map(([k,v])=>[k, v()]));
-  let d = Object.fromEntries(Object.keys(data[k].data).map((id)=>[id, data[k].data[id].template.set(id, k)]));
-  // let d = Object.fromEntries(Object.keys(data[k].data).map((id)=>[id, data.template_value(id, k)()]));
-  return {...template_set, ...d};
+  const data_ids = new Set(Object.keys(data[k].data));
+  let ids= new Set(Object.keys(data[k].template_set));
+  let map = new Map;
+  Array.from(ids).map((id)=>map.set(id, data[k].template_set[id]()));
+  ids = data_ids.difference(ids);
+  Array.from(ids).map((id)=>map.set(id, data[k].data[id].template.set(id, k)));
+  console.log(map); // DEBUG
+  return Object.fromEntries(map);
+
+  // return Object.fromEntries(Object.keys(data[k].data).map((id)=>[id, data[k].data[id].template.set(id, k)]));
 }
 
 // get data from metadata
@@ -110,13 +112,9 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
     let elem = document.getElementById(id);
     if (elem) {
       elem.addEventListener("change", () => {
-        if (!update_only) {
-          let d = data[k].data[id];
-          if (d.clean !== null) {
-            d.clean(d.form.get(id), id, k);
-          } else {
-            d.value = d.form.get(id);
-          }
+        let d = data[k].data[id];
+        if (!update_only && d.clean.on) {
+          d.clean.fn(d.form.get(id), id, k);
           d.form.set(id, k);
         }
         if (id in data[k].update) {

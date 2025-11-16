@@ -5,7 +5,7 @@ function clip_number(number, precision = null, min = null, max = null, fn=Math.f
     number = 0;
   }
   number = parseFloat(number);
-  if (number == "NaN") {
+  if (isNaN(number)) {
     number = 0;
   }
   if (min != null) {

@@ -1,6 +1,7 @@
 import { Duration } from "./duration.js";
 import { time_str, zero_pad } from "./util.js";
 import { clip_number } from "./clip.js";
+// import { update_rdi } from "./form.js";
 
 let key = null;           // key for active template data
 let key_global = "index"; // key for global data
@@ -8,6 +9,7 @@ let data = {};
 
 // enum-esque object of types
 const Type = Object.freeze({
+  NUMBER: Symbol('number'),
   COUNT: Symbol('count'),
   INDEX: Symbol('index'),
   PERCENT: Symbol('percent'),
@@ -20,24 +22,109 @@ const Type = Object.freeze({
 
 // default values for data objects
 let Defaults = {
-  number: {
-    count: ({value=0, min=0, precision=0, clean=clean_number, form:{get:form_get=default_form_getter, set:form_set=form_set_number}={}, template:{set:temp_set=template_set_number}={}}={}) => ({value, min, precision, type:Type.COUNT, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
+  number: ({
+    value=0, min=null, max=null, precision=null, str=str_number,
+    clean:{fn:clean_fn=clean_number, on:clean_on=true}={},
+    form:{get:form_get=default_form_getter,set:form_set=form_set_number}={},
+    template:{set:temp_set=template_set_number}={}
+  }={}) => ({
+    value, min, max, precision, type:Type.NUMBER, str,
+    clean: {fn:clean_fn, on: clean_on}, 
+    form: {get: form_get, set: form_set},
+    template: {set: temp_set}
+  }),
 
-    index: ({value=0, min=0, precision=1, unit="evt/hr", clean=clean_number, form:{get:form_get=default_form_getter, set:form_set=form_set_number}={}, template:{set:temp_set=template_set_number}={}}={}) => ({value, min, precision, unit, type:Type.INDEX, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
+  date: ({
+    value = new Date(1970,1,1),
+    clean:{fn:clean_fn=clean_date, on:clean_on=true}={},
+    str=str_date,
+    form:{get:form_get=default_form_getter, set:form_set=form_set_date}={},
+    template:{set:temp_set=template_set_date}={}
+  }={}) => ({
+    value, type:Type.DATE, str,
+    clean: {fn:clean_fn, on: clean_on},
+    form: {get: form_get, set: form_set},
+    template: {set: temp_set}
+  }),
 
-    percent: ({value=0, min=0, max=100, precision=1, unit="%", clean=clean_number, form:{get:form_get=default_form_getter, set:form_set=form_set_number}={}, template:{set:temp_set=template_set_number}={}}={}) => ({value, min, max, precision, unit, type:Type.PERCENT, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
+  time: ({
+    value = new Date(1970,1,1), str=str_time,
+    clean:{fn:clean_fn=clean_time, on:clean_on=true}={},
+    form:{get:form_get=default_form_getter, set:form_set=form_set_time}={},
+    template: {set:temp_set=template_set_time}={}
+  }={}) => ({
+    value, type:Type.TIME, str,
+    clean: {fn:clean_fn, on: clean_on},
+    form: {get: form_get, set: form_set},
+    template: {set: temp_set}
+  }),
 
-    pulse: ({value=0, min=0, precision=1, unit="bpm", clean=clean_number, form:{get:form_get=default_form_getter, set:form_set=form_set_number}={}, template:{set:temp_set=template_set_number}={}}={}) => ({value, min, precision, unit, type:Type.PULSE, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
-  },
+  duration: ({
+    h=null, m=null, s=null, precision=0, str=str_duration,
+    clean:{fn:clean_fn=clean_duration, on:clean_on=true}={},
+    form:{get:form_get=default_form_getter, set:form_set=form_set_duration}={},
+    template: {set:temp_set=template_set_duration}={}
+  }={}) => ({
+    value: new Duration({h, m, s, precision}), type:Type.DURATION, str,
+    clean: {fn:clean_fn, on: clean_on},
+    form: {get: form_get, set: form_set},
+    template: {set: temp_set}
+  }),
 
-  date: ({value = new Date(1970,1,1), clean=clean_date, form:{get:form_get=default_form_getter, set:form_set=form_set_date}={}, template:{set:temp_set=template_set_date}={}}={}) => ({value, type:Type.DATE, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
-
-  time: ({value = new Date(1970,1,1), clean=clean_time, form:{get:form_get=default_form_getter, set:form_set=form_set_time}={}, template: {set:temp_set=template_set_time}={}}={}) => ({value, type:Type.TIME, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
-
-  duration: ({h=null, m=null, s=null, precision=0, clean=clean_duration, form:{get:form_get=default_form_getter, set:form_set=form_set_duration}={}, template: {set:temp_set=template_set_duration}={}}={}) => ({value: new Duration({h, m, s, precision}), type:Type.DURATION, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
-
-  string: ({value="", clean=clean_string, form:{get:form_get=default_form_getter, set:form_set=form_set_str}={}, template: {set:temp_set=template_set_string}={}}={}) => ({value, type:Type.STRING, clean, form: {get: form_get, set: form_set}, template: {set: temp_set}}),
+  string: ({
+    value="", str=str_str,
+    clean:{fn:clean_fn=clean_string, on:clean_on=true}={},
+    form:{get:form_get=default_form_getter, set:form_set=form_set_str}={},
+    template: {set:temp_set=template_set_string}={}
+  }={}) => ({
+    value, type:Type.STRING, str,
+    clean: {fn:clean_fn, on: clean_on},
+    form: {get: form_get, set: form_set},
+    template: {set: temp_set}
+  }),
 };
+
+// alternative versions of number default
+// TODO: these can't handle defaults for sub-objects
+// example: defining clean.on but not clean.fn will destroy the first clean object and completely replace it with this new one
+// maybe could make a helper function??
+Defaults.count = (obj={}) => ({...Defaults.number(), min:0, precision:0, ...obj, type:Type.COUNT});
+Defaults.index = (obj={}) => ({...Defaults.number(), min:0, precision:1, ...obj, type:Type.INDEX});
+Defaults.pulse = (obj={}) => ({...Defaults.number(), min:0, precision:1, ...obj, type:Type.PULSE});
+Defaults.percent = (obj={}) => ({...Defaults.number(), min:0, max:100, precision:1, ...obj, type:Type.PERCENT});
+
+// alternative version of duration where the input is just a single text field instead of input-duration
+// mostly same as duration except it uses different form getters/setters b/c the form value has a different format.
+Defaults.minutes = (obj={}) => {
+  let {m=0, precision=1} = obj;
+  return {...Defaults.duration({m, precision}), form:{set: duration_minutes_set, get: duration_minutes_get}, ...obj}
+};
+
+// alternative version of percent where clean function updates positional rdi
+// Defaults.position = (obj) => ({...Defaults.percent(), clean:{fn:clean_position, on:true}, ...obj});
+
+function str_number(id, k=key) {
+  let d = data[k].data[id];
+  return Number(d.value).toFixed(d.precision);
+}
+
+// mm/dd/yyyy format
+function str_date(id, k=key) {
+  let d = data[k].data[id];
+  return `${d.value.getMonth() + 1}/${d.value.getDate()}/${d.value.getFullYear()}`;
+}
+
+function str_time(id, k=key) {
+  return time_str(data[k].data[id].value);
+}
+
+function str_duration(id, k=key) {
+  return data[k].data[id].value.toStr();
+}
+
+function str_str(id, k=key) {
+  return data[k].data[id].value;
+}
 
 function template_set_number(id, k=key) {
   let d = data[k].data[id];
@@ -60,6 +147,12 @@ function template_set_duration(id, k=key) {
 function template_set_string(id, k=key) {
   return data[k].data[id].value;
 }
+
+// function clean_position(value, id, k=key) {
+//   let prev = data[k].data[id].value;
+//   clean_number(value, id, k);
+//   update_rdi(id, prev);
+// }
 
 function clean_number(value, id, k=key) {
   let d = data[k].data[id];
@@ -116,6 +209,18 @@ function form_set_number(id, k=key) {
 
 function form_set_str(id, k=key) {
   document.getElementById(id).value = data[k].data[id].value;
+}
+
+// returns minutes from a form field as {m}
+function duration_minutes_get(id) {
+  console.log(id);
+  return {m: document.getElementById(id).value};
+}
+
+// sets text form field with {m} from data
+function duration_minutes_set(id, k=key) {
+  let d = data[k].data[id];
+  document.getElementById(id).value = d.value.m;
 }
 
 // assumes index.js has been fully loaded

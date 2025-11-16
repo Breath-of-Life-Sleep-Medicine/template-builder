@@ -1,6 +1,6 @@
 import { data, key } from "./data.js";
 import { clip_percent } from "./clip.js";
-import { SCORE_LABEL, decimal_places } from "./util.js";
+import { SCORE_LABEL } from "./util.js";
 
 
 // store into result the percentage of a to b
@@ -17,11 +17,11 @@ function set_class_text(cls_str, txt_str) {
   }
 }
 
-// sum is static html text
-// vals are form inputs
-function update_sum(sum, ...vals) {
-  let v = vals.reduce((acc, val) => acc + Number(val.value), 0.0);
-  sum.textContent = v.toFixed(decimal_places(vals[0].value));
+// sum is static html text to store the sum
+// ids are data ids that contain the values to sum
+function update_sum(sum, ...ids) {
+  let v = ids.reduce((acc, d) => acc + Number(d.value), 0.0);
+  sum.textContent = v.toFixed(ids[0].precision);
 }
 
 // calculate index (ex: central apnea index = central apnea count / total sleep time)
@@ -43,29 +43,25 @@ function update_end (start, end, trt) {
 }
 
 // show/hide positional rdi based on which positions are set
-// POS:      stored positional durations (to be updated)
-// pos_elem: position duration input element (%)
-//           note: the class for toggling visibility are id + _visibility (ex: "supine_visibility")
-function update_rdi (POS, pos_elem) {
-  let value = parseFloat(pos_elem.value);
-  if ((POS[pos_elem.id] === 0 && value !== 0) || (POS[pos_elem.id] !== 0 && value === 0)) {
-    let elems = document.getElementsByClassName(pos_elem.id + "_visibility");
-    for (let elem of elems) {
-      elem.hidden = !elem.hidden;
-    }
+// id: id of element that just changed (supine, prone, left, or right)
+//     note: the class for toggling visibility are id + _visibility (ex: "supine_visibility")
+function update_rdi (id, {supine, prone, left, right}=data[key].data) {
+  let duration = {supine, prone, left, right};
+  let elems = document.getElementsByClassName(id + "_visibility");
+  for (let elem of elems) {
+    elem.hidden = !Boolean(Number(duration[id].value));
   }
-  POS[pos_elem.id] = value;
   // if none of RDI are active hide div & label, else don't hide them
-  rdi_pos_div.hidden = rdi_pos_label.hidden = !(POS["supine"] | POS["prone"] | POS["left"] | POS["right"] !== 0 );
+  rdi_pos_div.hidden = rdi_pos_label.hidden = !((Number(duration.supine.value) | Number(duration.prone.value) | Number(duration.left.value) | Number(duration.right.value)) !== 0 );
 }
 
 // get rdi position string (for the template)
-// POS is the position durations (%)
-// supine, prone, left, and right are the positional RDI (evt/hr)
-function rdi_position_str(POS, supine, prone, left, right){
+// check = {supine, prone, left, right}
+// value = {rdi_s, rdi_p, rdi_l, rdi_r}
+function rdi_position_str({supine, prone, left, right, rdi_s, rdi_p, rdi_l, rdi_r}=data[key].data){
   let rdi_positions = [];
-  let value = [left.value, right.value, supine.value, prone.value];
-  let check = [POS.left, POS.right, POS.supine, POS.prone];
+  let value = [rdi_l, rdi_r, rdi_s, rdi_p];
+  let check = [left, right, supine, prone];
   let label = ["Left Side", "Right Side", "Supine", "Prone"];
   for (let i = 0; i < 4; ++i) {
     if (clip_percent(check[i]) != 0) {
@@ -95,9 +91,11 @@ function rem_check(rem, r_lat) {
   }
 }
 
+// update from data
 function update_scored_at() {
-  set_class_text("scored_at", `(${data[key].data.scored_at}%, ${SCORE_LABEL[data[key].data.scored_at]})`);
-  label_scored_at.textContent = data[key].data.scored_at;
+  let v = data[key].data.scored_at.str("scored_at");
+  set_class_text("scored_at", `(${v}%, ${SCORE_LABEL[v]})`);
+  label_scored_at.textContent = v;
 }
 
 export {
