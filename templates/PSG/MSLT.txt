@@ -11,7 +11,7 @@ Cataplexy/hypnagogic hallucinations/sleep paralysis: []
 Caffeine: [], Alcohol: [], Tobacco: [], Recreational Drugs: []
 ESS:[]
 BMI: []
-PSG from preceding night findings: AHI ${prev_ahi} events per hour, TST: ${prev_tst} Minutes, SLEEP EFFICIENCY: ${prev_eff} %, Sleep Onset Latency: ${prev_lat} Minutes, REM Latency: ${prev_r_lat}
+PSG from preceding night findings: AHI ${prev_ahi} events per hour, TST: ${prev_tst}, SLEEP EFFICIENCY: ${prev_eff} %, Sleep Onset Latency: ${prev_lat}, REM Latency: ${prev_r_lat}
 SLEEP DIARY: []
 FINDINGS:
 NAP 1: Time of nap: ${nap1_start}, Sleep latency: ${nap1_lat}, REM latency: ${nap1_r_lat}
