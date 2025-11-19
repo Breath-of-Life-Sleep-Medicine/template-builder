@@ -2,20 +2,24 @@
  * @jest-environment jsdom
  */
 
+import { key_global } from "../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
+  await import ("/modules/index.js");
   await import("/modules/PSG/MSLT.js");
 });
 
 beforeEach(() => {
   build_form({
-    date: "2025-01-01",
+    date: "2025-01-20",
     referring: "Example Doctor PAC",
     provider: "Rotcod Elpmaxe FNP",
+  }, key_global);
 
+  build_form({
     // diagnostic part
     prev_ahi: "5.0",
     prev_tst: "180.0",

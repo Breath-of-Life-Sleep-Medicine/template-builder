@@ -2,12 +2,13 @@
  * @jest-environment jsdom
  */
 
-import { data, key } from "../../modules/data";
-import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+import { data, key, key_global } from "../../modules/data";
+import { get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
+  await import ("/modules/index.js");
   await import("/modules/HST/MediByte.js");
 });
 
@@ -20,8 +21,11 @@ test("medibyte find_replace", () => {
     date: "2025-01-01",
     referring: "Example Doctor PAC",
     provider: "Rotcod Elpmaxe FNP",
+  }, key_global);
+
+  build_form({
     scored_at: "3",
-    duration: "480.0",
+    duration: {m: 480.0},
     ahi: "25.0",
     hi: "20.0",
     s_ahi: "35.0",
@@ -29,7 +33,7 @@ test("medibyte find_replace", () => {
     ox_avg: "95.4",
     ox_min: "82.0",
     odi: "12.5",
-    od_duration: "5.4",
+    od_duration: {m: 5.4},
     pulse_min: "45.0",
     pulse_avg: "64.3",
     pulse_max: "70.0",
@@ -38,7 +42,7 @@ test("medibyte find_replace", () => {
     ai: "",
   });
 
-  data[key].update.ahi(); // update ai
+  update_calculated({changed:"ahi", calculated:["ai"]}); // update ai
 
   expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
 });

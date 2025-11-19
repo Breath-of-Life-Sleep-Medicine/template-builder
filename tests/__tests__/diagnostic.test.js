@@ -2,12 +2,13 @@
  * @jest-environment jsdom
  */
 
-import { data, key } from "../../modules/data";
-import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+import { data, key, key_global } from "../../modules/data";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
+  await import ("/modules/index.js");
   await import("/modules/PSG/Diagnostic.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
@@ -18,12 +19,15 @@ beforeEach(() => {
     date: "2025-01-20",
     referring: "Example Doctor PAC",
     provider: "Rotcod Elpmaxe FNP",
+  }, key_global);
+
+  build_form({
     start: "22:00", // 10:00 PM
-    trt: "360.0", // 360 minutes (6 hours)
-    tst: "180.0", // 180 minutes (3 hours)
-    lat: "20.0",
-    waso: "10.0",
-    r_lat: "42.0",
+    trt: {m:360.0}, // 360 minutes (6 hours)
+    tst: {m:180.0}, // 180 minutes (3 hours)
+    lat: {m:20.0},
+    waso: {m:10.0},
+    r_lat: {m:42.0},
     n1: "9.0",
     n2: "51.0",
     n3: "25.0",
@@ -52,7 +56,7 @@ beforeEach(() => {
     ox_w_avg: "95.0",
     ox_tst_avg: "93.2",
     ox_tst_min: "79.9",
-    od_duration: "11.1",
+    od_duration: {m:11.1},
     pulse_min: "50.0",
     pulse_avg: "63.7",
     pulse_max: "92.0",
@@ -74,9 +78,13 @@ beforeEach(() => {
   global.right.id = "right";
 
   // call update function to do calculations
-  data[key].update.trt();  // update efficiency, update end
-  data[key].update.a_oc(); // update ahi (do before updating rdi)
-  data[key].update.ahi();  // update rdi (requires ahi)
+  update_calculated({changed: "trt", calculated: ["eff", "end"]});
+  update_calculated({changed: "a_oc", calculated: ["ahi"]});
+  update_calculated({changed: "ahi", calculated: ["rdi"]});
+
+  // data[key].update.trt();  // update efficiency, update end
+  // data[key].update.a_oc(); // update ahi (do before updating rdi)
+  // data[key].update.ahi();  // update rdi (requires ahi)
 
   // update RDI
   data[key].update.supine();
@@ -85,7 +93,7 @@ beforeEach(() => {
   data[key].update.right();
 });
 
-test("update rdi", () => {
+test("diagnostic update rdi", () => {
   expect(global.rdi.value).toBe(5); // check that update rdi worked
 });
 

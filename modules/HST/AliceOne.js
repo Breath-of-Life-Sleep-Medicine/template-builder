@@ -19,8 +19,8 @@ data[key].data = {
 }
 
 data[key].update = {
-  "start": () => {update_end(start, end, trt)},
-  "trt": () => {update_end(start, end, trt)},
+  "start": () => {update_end(end)},
+  "trt": () => {update_end(end)},
   "ahi": () => {update_ai(ahi, ai, hi);},
   "hi": () => {update_ai(ahi, ai, hi);},
 };

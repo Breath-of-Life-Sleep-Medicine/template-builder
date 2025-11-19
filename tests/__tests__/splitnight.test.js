@@ -2,12 +2,13 @@
  * @jest-environment jsdom
  */
 
-import { data, key } from "../../modules/data";
+import { data, key, key_global } from "../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
+  await import ("/modules/index.js");
   await import("/modules/PSG/SplitNight.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
@@ -18,6 +19,9 @@ beforeEach(() => {
     date: "2025-01-20",
     referring: "Example Doctor PAC",
     provider: "Rotcod Elpmaxe FNP",
+  }, key_global);
+
+  build_form({
     start: "22:00", // 10:00 PM
     trt: "360.0", // 360 minutes (6 hours)
     tst: "180.0", // 180 minutes (3 hours)

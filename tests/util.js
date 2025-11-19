@@ -1,5 +1,6 @@
 import * as script from "/script.js";
-import {readFileSync} from "fs";
+import { readFileSync } from "fs";
+import { data, key, key_global } from "../modules/data";
 
 // function that does nothing :)
 const nop = (...args) => {};
@@ -27,20 +28,26 @@ function get_paths(path) {
   };
 }
 
-function build_form(data) {
-  Object.entries(data).map(([key, value]) => {
-    global[key] = {value: value, dispatchEvent: nop};
+// builds form and also sets the value in data
+function build_form(form, k=key) {
+  Object.entries(form).map(([id, value]) => {
+    global[id] = {value: value, textContent: value, checked: value, dispatchEvent: nop};
+    // console.log("key", k, "id", id, "clean", data[k]?.data[id]?.clean);
+    data[k]?.data[id]?.clean?.fn(value, id, k);
   });
 }
 
-// has to happen before the module file gets loaded
+function update_calculated({changed, calculated=[]}, k = key) {
+  data[k].update[changed]();
+  for (let id of calculated) {
+    data[k].data[id]?.clean?.fn(global[id].value, id, k);
+    console.log(id, data[k].data[id].value, data[k].data[id]);
+  }
+}
+
 function init_data() {
-  script.data[script.key] = {
-    no_change: [],
-    clean: {},
-    update: {},
-    template_set: {},
-  };
+  data.init(key_global);
+  data.init(key);
 }
 
 export {
@@ -51,4 +58,5 @@ export {
   get_paths,
   build_form,
   init_data,
+  update_calculated,
 };

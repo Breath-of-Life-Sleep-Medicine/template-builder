@@ -84,12 +84,14 @@ data[key].clean = {
   "ti_cai":             () => clip_index(ti_cai.value),               // central apnea index (events/hour)
 };
 
+let DATA = data[key].data;
+
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
-  // "start": update_end,
+  // "start": update_end(end),
   "trt": () => {
     form.update_percentage(tst, trt, eff);
-    // update_end();
+    // update_end(end);
   },
   "tst": () => {
     form.update_percentage(tst, trt, eff);
@@ -136,9 +138,9 @@ data[key].update = {
   },
 
   // titration portion
-  "ti_start": () => form.update_end(ti_start, ti_end, ti_trt),
+  "ti_start": () => form.update_end(ti_start, ti_end, {start: DATA.ti_start, trt: DATA.ti_trt}),
   "ti_trt": () => {
-    form.update_end(ti_start, ti_end, ti_trt);
+    form.update_end(ti_start, ti_end, {start: DATA.ti_start, trt: DATA.ti_trt});
     form.update_percentage(ti_tst, ti_trt, ti_eff);
   },
   "ti_tst": () => {

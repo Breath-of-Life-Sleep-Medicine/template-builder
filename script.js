@@ -49,7 +49,7 @@ function get_map(k=key) {
   Array.from(ids).map((id)=>map.set(id, data[k].template_set[id]()));
   ids = data_ids.difference(ids);
   Array.from(ids).map((id)=>map.set(id, data[k].data[id].template.set(id, k)));
-  console.log(map); // DEBUG
+  // console.log(map); // DEBUG
   return Object.fromEntries(map);
 
   // return Object.fromEntries(Object.keys(data[k].data).map((id)=>[id, data[k].data[id].template.set(id, k)]));

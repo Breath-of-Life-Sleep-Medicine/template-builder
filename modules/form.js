@@ -35,11 +35,10 @@ function update_index(result, dur_min, ...evts) {
 }
 
 // calculate end time from start time & total record time (minutes)
-function update_end (start, end, trt) {
-  if (start.value != "" && trt.value != "") {
-    end.value = new Date(new Date("2025-01-01 " + start.value).getTime() + trt.value*60*1000).toTimeString().slice(0,5);
-    end.dispatchEvent(new Event("calculated"));
-  }
+// end is form input; start & trt are data
+function update_end(end, {start, trt}=data[key].data) {
+  end.value = new Date(start.value.getTime() + trt.value.m*60*1000).toTimeString().slice(0,5);
+  end.dispatchEvent(new Event("calculated"));
 }
 
 // show/hide positional rdi based on which positions are set

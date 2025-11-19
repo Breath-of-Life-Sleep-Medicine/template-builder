@@ -79,10 +79,10 @@ data[key].clean = {
 
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
-  "start": () => form.update_end(start, end, trt),
+  "start": () => form.update_end(end),
   "trt": () => {
     form.update_percentage(tst, trt, eff);
-    form.update_end(start, end, trt);
+    form.update_end(end);
   },
   "tst": () => {
     form.update_percentage(tst, trt, eff);
