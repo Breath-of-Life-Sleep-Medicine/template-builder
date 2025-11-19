@@ -20,17 +20,15 @@ function set_class_text(cls_str, txt_str) {
 // sum is static html text to store the sum
 // ids are data ids that contain the values to sum
 function update_sum(sum, ...ids) {
-  let v = ids.reduce((acc, d) => acc + Number(d.value), 0.0);
+  let v = ids.reduce((acc, id) => acc + Number(id.value), 0.0);
   sum.textContent = v.toFixed(ids[0].precision);
 }
 
 // calculate index (ex: central apnea index = central apnea count / total sleep time)
-function update_index(result, dur_min, ...evts) {
-  let sum = 0;
-  for (let evt of evts) {
-    sum += Number(evt.value);
-  }
-  result.value = 60 * sum / Number(dur_min.value); // convert dur from minutes to hours
+function update_index(result, dur_min, ...ids) {
+  let val = (id) => data[key]?.data[id]?.value ?? 0;
+  let sum = ids.reduce((acc, id) => acc + Number(val(id.id)), 0.0);
+  result.value = 60 * sum / Number(data[key]?.data[dur_min.id]?.value?.m ?? 0); // convert dur from minutes to hours
   result.dispatchEvent(new Event("calculated"));
 }
 
@@ -63,8 +61,8 @@ function rdi_position_str({supine, prone, left, right, rdi_s, rdi_p, rdi_l, rdi_
   let check = [left, right, supine, prone];
   let label = ["Left Side", "Right Side", "Supine", "Prone"];
   for (let i = 0; i < 4; ++i) {
-    if (clip_percent(check[i]) != 0) {
-      rdi_positions.push(`${label[i]} RDI: ${value[i]}/hr`);
+    if (clip_percent(Number(check[i].value)) != 0) {
+      rdi_positions.push(`${label[i]} RDI: ${value[i].value}/hr`);
     }
   }
   return rdi_positions.join(", ");

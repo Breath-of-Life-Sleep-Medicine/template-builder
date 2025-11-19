@@ -213,7 +213,6 @@ function form_set_str(id, k=key) {
 
 // returns minutes from a form field as {m}
 function duration_minutes_get(id) {
-  console.log(id);
   return {m: document.getElementById(id).value};
 }
 

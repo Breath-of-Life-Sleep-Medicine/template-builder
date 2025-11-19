@@ -116,7 +116,6 @@ data[key].update = {
     update_ahi();
   },
   "r_lat": () => { // do update before clean
-    console.log(DATA.r_lat);
     form.rem_check(rem, r_lat);
     DATA.r_lat.clean.fn(DATA.r_lat.form.get("r_lat"), "r_lat");
   },
@@ -171,7 +170,7 @@ data[key].update = {
 
 // non-default template setters
 data[key].template_set = {
-  r_lat: () => (DATA.rem.value != 0) ? clip_minutes(DATA.r_lat.value) + " minutes" : "N/A",
+  r_lat: () => (DATA.rem.value != 0) ? DATA.r_lat.value.toStr() : "N/A",
   arem_ahi: () => (DATA.rem.value != 0) ? clip_index(DATA.arem_ahi.value) : clip_index(DATA.ahi.value),
   rem_ahi: () => (DATA.rem.value != 0) ? `${clip_index(DATA.rem_ahi.value)}/hr` : "N/A",
   rdi_positions: () => form.rdi_position_str(),

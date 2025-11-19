@@ -1,6 +1,7 @@
 import * as script from "/script.js";
 import { readFileSync } from "fs";
 import { data, key, key_global } from "../modules/data";
+import { Type } from "../modules/data";
 
 // function that does nothing :)
 const nop = (...args) => {};
@@ -31,9 +32,13 @@ function get_paths(path) {
 // builds form and also sets the value in data
 function build_form(form, k=key) {
   Object.entries(form).map(([id, value]) => {
-    global[id] = {value: value, textContent: value, checked: value, dispatchEvent: nop};
-    // console.log("key", k, "id", id, "clean", data[k]?.data[id]?.clean);
-    data[k]?.data[id]?.clean?.fn(value, id, k);
+    global[id] = {id: id, value: value, textContent: value, checked: value, dispatchEvent: nop};
+    if (data[k]?.data[id]?.type === Type.DURATION && typeof(value) !== "object") {
+      // minutes are Duration in data, but single string input in form (Duration requires an object)
+      data[k]?.data[id]?.clean?.fn({m: value}, id, k);
+    } else {
+      data[k]?.data[id]?.clean?.fn(value, id, k);
+    }
   });
 }
 
@@ -41,7 +46,6 @@ function update_calculated({changed, calculated=[]}, k = key) {
   data[k].update[changed]();
   for (let id of calculated) {
     data[k].data[id]?.clean?.fn(global[id].value, id, k);
-    console.log(id, data[k].data[id].value, data[k].data[id]);
   }
 }
 
