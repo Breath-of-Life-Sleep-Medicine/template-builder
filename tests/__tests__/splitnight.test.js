@@ -3,7 +3,7 @@
  */
 
 import { data, key, key_global } from "../../modules/data";
-import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
@@ -72,7 +72,7 @@ beforeEach(() => {
     ti_cai: "0.1",
 
     // calculated
-    ti_end: "", // 8:00 AM
+    ti_end: "00:00", // 8:00 AM
     eff: "", // 75.0%
     ahi: "", // 5.0
     rdi: "", // 4.9
@@ -91,10 +91,10 @@ beforeEach(() => {
   global.right.id = "right";
 
   // call update function to do calculations
-  data[key].update.tst();      // update efficiency, update ahi
-  data[key].update.ahi();      // update rdi (requires ahi)
-  data[key].update.ti_start(); // update ti_end
-  data[key].update.ti_tst();   // update ti_eff, ti_supine, ti_rem
+  update_calculated({changed: "tst", calculated: ["eff", "ahi"]});
+  update_calculated({changed: "ahi", calculated: ["rdi"]});
+  update_calculated({changed: "ti_start", calculated: ["ti_end"]});
+  update_calculated({changed: "ti_tst", calculated: ["ti_eff", "ti_supine", "ti_rem"]});
 
   // update RDI
   data[key].update.supine();
@@ -111,7 +111,7 @@ test("find_replace", () => {
   let path = "PSG/SplitNight";
   let {template, expected} = get_paths(path);
 
-  global.rdi.value = "4.9";// change rdi to test the template better
+  data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
 
   expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
 });

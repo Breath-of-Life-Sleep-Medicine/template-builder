@@ -11,8 +11,8 @@ BMI: []
 SUMMARY OF REPORT: This was an attended overnight SPLIT NIGHT polysomnogram performed at Aspen Sleep Centers monitoring the following physiologic parameters: EEG 4 channels, EOG 2 channels, airflow at the nose and mouth, chin EMG, tibialis EMG, chest and abdominal movements, EKG with surface electrodes, pulse oximetry, and body position. The patient was prepared for the study without difficulty. The waveforms were reviewed and were technically adequate.
 Lights out occurred at ${start}.
 DIAGNOSTIC PORTION OF STUDY:
-1. SLEEP STAGES: Total Recording Time: ${trt} minutes, Total Sleep Time: ${tst} minutes, Sleep Efficiency: ${eff}%.
-Sleep Latency: ${lat} minutes, Wake After Sleep Onset: ${waso} minutes, REM Latency: ${r_lat}
+1. SLEEP STAGES: Total Recording Time: ${trt}, Total Sleep Time: ${tst}, Sleep Efficiency: ${eff}%.
+Sleep Latency: ${lat}, Wake After Sleep Onset: ${waso}, REM Latency: ${r_lat}
 Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing ${scored_at}% deoxygenation ${scored_at_label} criteria,
@@ -24,12 +24,12 @@ Snoring was [].
 ${rdi_positions}.
 4. AROUSALS: Total Arousals: ${arousals}, Spontaneous Arousal Index: ${arousals_sai}/hr, Respiratory Arousal Index: ${arousals_rai}/hr.
 5. EMG: Total Limb Movements: ${limb}, Limb Movement Arousal Index: ${limb_ai}/hr. PLM index: ${limb_plmi}/hr.
-6. OXYGEN SATURATION on room air: Wake Average: ${ox_w_avg}%, Sleep: Average: ${ox_tst_avg}%, Minimum: ${ox_tst_min}%, Time spent <= 88%: ${od_duration} minutes
+6. OXYGEN SATURATION on room air: Wake Average: ${ox_w_avg}%, Sleep: Average: ${ox_tst_avg}%, Minimum: ${ox_tst_min}%, Time spent <= 88%: ${od_duration}
 7. HEART RATE during sleep: Minimum: ${pulse_min} bpm, Average: ${pulse_avg} bpm, Maximum: ${pulse_max} bpm. No significant cardiac arrhythmias were identified.
 TITRATION PORTION OF STUDY:
 A CPAP titration protocol was instituted at ${ti_start}. Study ended at ${ti_end}.
-Total Recording Time: ${ti_trt} minutes. Total Sleep Time: ${ti_tst} minutes.
-Sleep Efficiency: ${ti_eff}%, Sleep Latency: ${ti_lat} minutes, REM Sleep: ${ti_rem_duration} minutes/${ti_rem}%, Supine Sleep: ${ti_supine_duration} minutes/${ti_supine}%.
+Total Recording Time: ${ti_trt}. Total Sleep Time: ${ti_tst}.
+Sleep Efficiency: ${ti_eff}%, Sleep Latency: ${ti_lat}, REM Sleep: ${ti_rem_duration}/${ti_rem}%, Supine Sleep: ${ti_supine_duration}/${ti_supine}%.
 Titration AHI: ${ti_ahi}/hr, Titration CAI: ${ti_cai}/hr
 Mask: [], Initial Pressure: [] centimeters H2O.
 Pressure was titrated up to [] centimeters H2O reduced the AHI to [] and improved the oxygen saturation to [].
