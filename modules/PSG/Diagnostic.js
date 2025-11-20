@@ -1,21 +1,7 @@
 import {data, key, Defaults} from "../data.js";
 import * as form from "../form.js";
 import { SCORE_LABEL } from "../util.js";
-import { clip_index, clip_minutes, clip_percent } from "../clip.js";
-
-// TODO:
-// - update diagnostic
-// - change how update is set (add it to data)
-// - could, after using non-data stuff for init in script or data or wherever, do data[key] = data[key].data
-//    - ... would this fuck up unloading/reloading templates ....?
-
-// position duration %
-// let POS = {
-//   "supine": data[key].data.supine,
-//   "prone": data[key].data.prone,
-//   "left": data[key].data.left,
-//   "right": data[key].data.right,
-// };
+import { clip_index } from "../clip.js";
 
 // initialization function
 data[key].init = () => {
@@ -23,8 +9,6 @@ data[key].init = () => {
 };
 
 data[key].data = {
-  // "scored_at": 4, // %
-
   // oxygen desaturation (%) that hypopneas are scored at
   scored_at:    Defaults.percent({value:4, precision:0, min:3, max:4}),
   start:        Defaults.time(),    // start time, ex: "10:00 PM"
@@ -69,6 +53,7 @@ data[key].data = {
   pulse_min:    Defaults.pulse(),   // minimum heart rate (bpm)
   pulse_avg:    Defaults.pulse(),   // average heart rate (bpm)
   pulse_max:    Defaults.pulse(),   // maximum heart rate (bpm)
+  ...data[key].data, // only set things that aren't already set
 };
 
 const DATA = data[key].data; // create alias after the object is assigned
@@ -82,27 +67,18 @@ DATA.r_lat.template.set = () => {
   (d.rem.value != 0) ? d.r_lat.str() : "N/A"
 }
 
-// ids that have no onchange callback fn; can still trigger update w/o clean
-// data[key].no_change = [
-//   "start", // don't clean time fields
-//   "end",   // don't clean time fields
-//   "r_lat", // clean happens after update
-// ];
+let key_MSLT = "PSG/MSLT";
 
-// different clean vs template_set callbacks
-
-// example: rem latency
-// - needs a simple cleaning function (valid number)
-// - needs a special template print function (valid number + " minutes" OR "N/A")
-//   - template print function checks value of rem for whether it should be N/A (rem of 0 means N/A)
-
-
-// a way to turn off automatic clean
-// manually call clean during update
-
-// data[key].clean.on = {
-//   r_lat: false, // do update before clean
-// }
+if (!(key_MSLT in data)) {
+  data.init(key_MSLT);
+  data[key_MSLT].data = {
+    prev_ahi:   Defaults.index(),   // AHI (events/hr)
+    prev_tst:   Defaults.minutes(), // total sleep time (minutes)
+    prev_eff:   Defaults.percent(), // sleep efficiency (%)
+    prev_lat:   Defaults.minutes(), // sleep onset latency (minutes)
+    prev_r_lat: Defaults.minutes(), // rem latency - less wake time (minutes)
+  };
+}
 
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
@@ -114,17 +90,22 @@ data[key].update = {
   "tst": () => {
     form.update_percentage(tst, trt, eff);
     update_ahi();
+    data[key_MSLT].data.prev_tst.value = DATA.tst.value;
   },
+  "eff": () => data[key_MSLT].data.prev_eff.value = DATA.eff.value,
+  "lat": () => data[key_MSLT].data.prev_lat.value = DATA.lat.value,
   "r_lat": () => { // do update before clean
     form.rem_check(rem, r_lat);
     DATA.r_lat.clean.fn(DATA.r_lat.form.get("r_lat"), "r_lat");
+    data[key_MSLT].data.prev_r_lat.value = DATA.r_lat.value;
   },
   "a_cc": update_ahi,
   "a_oc": update_ahi,
   "a_mc": update_ahi,
   "h_c": update_ahi,
   "ahi": () => {
-    rdi.value = ahi.value;
+    data[key_MSLT].data.prev_ahi.value = DATA.ahi.value;
+    rdi.value = DATA.ahi.value;
     rdi.dispatchEvent(new Event('change'));
   },
   "supine": () => {
@@ -151,22 +132,9 @@ data[key].update = {
     form.update_rem(rem, 'requires_rem');
   },
   "scored_at": () => {
-    // data[key].data.scored_at = clip_percent(scored_at.value,0,3,4);
     form.update_scored_at();
   }
 };
-
-// template setters - format for setting into the template
-// data[key].template.set = {
-//   // REM latency - less wake (minutes)
-//   "r_lat": () => (rem.value != 0) ? clip_minutes(r_lat.value) + " minutes" : "N/A",
-//   // non-rem ahi (events/hour)
-//   "arem_ahi": () => (rem.value != 0) ? clip_index(arem_ahi.value) : clip_index(ahi.value),
-//   // rem ahi (events/hour)
-//   "rem_ahi": () => (rem.value != 0) ? `${clip_index(rem_ahi.value)}/hr` : "N/A",
-//   "rdi_positions": () => form.rdi_position_str(),
-//   "scored_at_label": () => SCORE_LABEL[data[key].data.scored_at],
-// };
 
 // non-default template setters
 data[key].template_set = {

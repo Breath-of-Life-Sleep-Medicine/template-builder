@@ -6,6 +6,7 @@ import { clip_number } from "./clip.js";
 let key = null;           // key for active template data
 let key_global = "index"; // key for global data
 let data = {};
+const default_dt = () => new Date(1970, 0, 1);
 
 // enum-esque object of types
 const Type = Object.freeze({
@@ -35,7 +36,7 @@ let Defaults = {
   }),
 
   date: ({
-    value = new Date(1970,1,1),
+    value = default_dt(),
     clean:{fn:clean_fn=clean_date, on:clean_on=true}={},
     str=str_date,
     form:{get:form_get=default_form_getter, set:form_set=form_set_date}={},
@@ -48,7 +49,7 @@ let Defaults = {
   }),
 
   time: ({
-    value = new Date(1970,1,1), str=str_time,
+    value = default_dt(), str=str_time,
     clean:{fn:clean_fn=clean_time, on:clean_on=true}={},
     form:{get:form_get=default_form_getter, set:form_set=form_set_time}={},
     template: {set:temp_set=template_set_time}={}
@@ -204,7 +205,8 @@ function form_set_duration(id, k=key) {
 
 function form_set_number(id, k=key) {
   let d = data[k].data[id];
-  document.getElementById(id).value = Number(d.value).toFixed(d.precision);
+  if (document.getElementById(id))
+    document.getElementById(id).value = Number(d.value).toFixed(d.precision);
 }
 
 function form_set_str(id, k=key) {
@@ -238,6 +240,8 @@ data.init = (k=key) => {
     data[k].clean = {};
     data[k].update = {};
     data[k].template_set = {};
+    data[k].default = {};
+    data[k].loaded = false;
   }
 }
 
@@ -249,6 +253,39 @@ data.value = (id, k=key) => {
   return data[k]?.data[id]?.value;
 }
 
+// initialize data with non-zero defaults
+function init_defaults(k=key) {
+  for (let [id, fn] of Object.entries(data[k].default)) {
+    let d = data[k].data[id];
+    d.clean.fn(fn(), id, k); // set data to default value
+  }
+}
+
+// initialize form with data
+function init_form(k=key) {
+  for (let [id, d] of Object.entries(data[k].data)) {
+    switch(d.type) {
+      case Type.DATE: // same as time
+      case Type.TIME:
+        if (d.value.getTime() == default_dt().getTime()) {
+          continue;
+        }
+        break;
+      case Type.DURATION:
+        if (d.value.isZero()) {
+          continue;
+        }
+        break;
+      default:
+        if (!d.value) {
+          continue;
+        }
+    }
+    d.form.set(id, k);
+    // TODO: need to set max and min for calculated values
+  }
+}
+
 export {
   key,
   key_global,
@@ -256,4 +293,6 @@ export {
   Type,
   Defaults,
   new_template_key,
+  init_defaults,
+  init_form,
 };

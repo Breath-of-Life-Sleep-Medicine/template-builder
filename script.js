@@ -1,6 +1,6 @@
 import { clip_count } from "./modules/clip.js";
 import { decimal_places } from "./modules/util.js";
-import { data, key, key_global, new_template_key } from "./modules/data.js";
+import { data, key, key_global, new_template_key, init_defaults, init_form } from "./modules/data.js";
 
 let path_base;
 
@@ -93,6 +93,7 @@ function initialize() {
       });
     }
   }
+  init_form();
 }
 
 function save(data) {
@@ -126,11 +127,7 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
 }
 
 function load_script(k=key, callback=null) {
-  data.init(k); // create empty data object if necessary
-  const script = document.createElement('script');
-  script.src = path_base + "/modules/"+k+".js";
-  script.type = "module";
-  script.onload = () => {
+  const on_load = () => {
     data[k].init();
     // add onchange event listeners
     let ids;
@@ -142,9 +139,22 @@ function load_script(k=key, callback=null) {
     const update = new Set(Object.keys(data[k].update));
     ids = update.difference(ids);
     add_onchange_listeners(ids,k,true);
+    init_defaults(k);
     if (callback !== null) {
       callback();
     }
+  };
+  if (data[k]?.loaded) {
+    on_load();
+    return;
+  }
+  data.init(k); // create empty data object if necessary
+  const script = document.createElement('script');
+  script.src = path_base + "/modules/"+k+".js";
+  script.type = "module";
+  script.onload = () => {
+    on_load();
+    data[k].loaded = true;
   };
   document.body.appendChild(script);
 }

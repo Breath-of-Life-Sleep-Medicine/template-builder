@@ -32,6 +32,7 @@ data[key].data = {
   pulse_avg: Defaults.pulse({precision: 0}),
   pulse_max: Defaults.pulse({precision: 0}),
   snores: Defaults.count(),
+  ...data[key].data, // only set things that aren't already set
 }
 
 data[key].update = {

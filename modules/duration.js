@@ -72,6 +72,9 @@ class Duration {
   toStrShort() {
     return [this.h, this.m, this.s].filter((v)=>v!==null).map((v) => zero_pad(v,2)).join(":");
   }
+  isZero() {
+    return this[this.lo] === 0;
+  }
 }
 
 // start is a dt

@@ -32,9 +32,19 @@ data[key].data = {
   nap5_start: Defaults.time(),
   nap5_lat:   Defaults.duration({m:0, s:0, precision: 0}),
   nap5_r_lat: Defaults.duration({m:0, s:0, precision: 0}),
-}
 
+  ...data[key].data, // only set things that aren't already set
+}
 let DATA = data[key].data;
+
+let key_prev = "PSG/Diagnostic"; // key for the diagnostic study's data (if it exists)
+data[key].default = {
+  prev_ahi: () => data[key_prev]?.data?.ahi?.value,
+  prev_tst: () => data[key_prev]?.data?.tst?.value,
+  prev_eff: () => data[key_prev]?.data?.eff?.value,
+  prev_lat: () => data[key_prev]?.data?.lat?.value,
+  prev_r_lat: () => data[key_prev]?.data?.r_lat?.value,
+}
 
 // non-default template setters
 data[key].template_set = {
