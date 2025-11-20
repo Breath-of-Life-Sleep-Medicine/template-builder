@@ -19,6 +19,9 @@ data[key].data = {
   ...data[key].data, // only set things that aren't already set
 };
 
+const DATA = data[key].data;
+DATA.scored_at.clean.change = false;
+
 data[key].update = {
   "scored_at": update_scored_at,
   "ahi": () => {update_ai(ahi, ai, hi);},
