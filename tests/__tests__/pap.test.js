@@ -3,7 +3,7 @@
  */
 
 import { data, key, key_global } from "../../modules/data";
-import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
@@ -62,7 +62,7 @@ beforeEach(() => {
     pulse_max: "92.8",
 
     // calculated
-    end: "", // 4:00 AM
+    end: "00:00", // 4:00 AM
     eff: "", // 50.0%
     ahi: "", // 5.0
     a_ci: "", // 0.3 (1/3)
@@ -79,9 +79,9 @@ beforeEach(() => {
   global.right.id = "right";
 
   // call update function to do calculations
-  data[key].update.trt();  // update efficiency, update end
-  data[key].update.a_cc(); // update a_ci, update ahi
-  data[key].update.ahi();  // update rdi (requires ahi)
+  update_calculated({changed: "trt", calculated: ["eff", "end"]});
+  update_calculated({changed: "a_cc", calculated: ["a_ci", "ahi"]});
+  update_calculated({changed: "ahi", calculated: ["rdi"]});
 
   // update RDI
   data[key].update.supine();
@@ -98,7 +98,7 @@ test("find_replace", () => {
   let path = "PSG/PAP";
   let {template, expected} = get_paths(path);
 
-  global.rdi.value = "4.9";// change rdi to test the template better
+  data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
 
   expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
 });

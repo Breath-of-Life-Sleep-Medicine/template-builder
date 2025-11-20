@@ -12,7 +12,7 @@ data[key_global].data = {
   date: Defaults.date(),
   referring: Defaults.string(),
   provider: Defaults.string({value: "Lisa Williams FNP"}),
-  template: Defaults.string({value: "PSG/MSLT"}),
+  template: Defaults.string({value: "PSG/PAP"}),
 };
 
 data[key_global].update = {
