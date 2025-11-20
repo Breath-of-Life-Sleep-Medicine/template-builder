@@ -25,61 +25,61 @@ const Type = Object.freeze({
 let Defaults = {
   number: ({
     value=0, min=null, max=null, precision=null, str=str_number,
-    clean:{fn:clean_fn=clean_number, on:clean_on=true}={},
+    clean:{fn:clean_fn=clean_number, on:clean_on=true, change:clean_change=true}={},
     form:{get:form_get=default_form_getter,set:form_set=form_set_number}={},
     template:{set:temp_set=template_set_number}={}
   }={}) => ({
     value, min, max, precision, type:Type.NUMBER, str,
-    clean: {fn:clean_fn, on: clean_on}, 
+    clean: {fn:clean_fn, on:clean_on, change:clean_change}, 
     form: {get: form_get, set: form_set},
     template: {set: temp_set}
   }),
 
   date: ({
     value = default_dt(),
-    clean:{fn:clean_fn=clean_date, on:clean_on=true}={},
+    clean:{fn:clean_fn=clean_date, on:clean_on=true, change:clean_change=true}={},
     str=str_date,
     form:{get:form_get=default_form_getter, set:form_set=form_set_date}={},
     template:{set:temp_set=template_set_date}={}
   }={}) => ({
     value, type:Type.DATE, str,
-    clean: {fn:clean_fn, on: clean_on},
+    clean: {fn:clean_fn, on:clean_on, change:clean_change},
     form: {get: form_get, set: form_set},
     template: {set: temp_set}
   }),
 
   time: ({
     value = default_dt(), str=str_time,
-    clean:{fn:clean_fn=clean_time, on:clean_on=true}={},
+    clean:{fn:clean_fn=clean_time, on:clean_on=true, change:clean_change=true}={},
     form:{get:form_get=default_form_getter, set:form_set=form_set_time}={},
     template: {set:temp_set=template_set_time}={}
   }={}) => ({
     value, type:Type.TIME, str,
-    clean: {fn:clean_fn, on: clean_on},
+    clean: {fn:clean_fn, on:clean_on, change:clean_change},
     form: {get: form_get, set: form_set},
     template: {set: temp_set}
   }),
 
   duration: ({
     h=null, m=null, s=null, precision=0, str=str_duration,
-    clean:{fn:clean_fn=clean_duration, on:clean_on=true}={},
+    clean:{fn:clean_fn=clean_duration, on:clean_on=true, change:clean_change=true}={},
     form:{get:form_get=default_form_getter, set:form_set=form_set_duration}={},
     template: {set:temp_set=template_set_duration}={}
   }={}) => ({
     value: new Duration({h, m, s, precision}), type:Type.DURATION, str,
-    clean: {fn:clean_fn, on: clean_on},
+    clean: {fn:clean_fn, on:clean_on, change:clean_change},
     form: {get: form_get, set: form_set},
     template: {set: temp_set}
   }),
 
   string: ({
     value="", str=str_str,
-    clean:{fn:clean_fn=clean_string, on:clean_on=true}={},
+    clean:{fn:clean_fn=clean_string, on:clean_on=true, change:clean_change=true}={},
     form:{get:form_get=default_form_getter, set:form_set=form_set_str}={},
     template: {set:temp_set=template_set_string}={}
   }={}) => ({
     value, type:Type.STRING, str,
-    clean: {fn:clean_fn, on: clean_on},
+    clean: {fn:clean_fn, on:clean_on, change:clean_change},
     form: {get: form_get, set: form_set},
     template: {set: temp_set}
   }),

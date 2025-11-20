@@ -116,7 +116,8 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
         let d = data[k].data[id];
         if (!update_only && d.clean.on) {
           d.clean.fn(d.form.get(id), id, k);
-          d.form.set(id, k);
+          if (d.clean.change)
+            d.form.set(id, k);
         }
         if (id in data[k].update) {
           data[k].update[id]();

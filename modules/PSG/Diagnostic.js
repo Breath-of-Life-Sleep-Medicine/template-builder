@@ -61,6 +61,7 @@ const update_ahi = () => form.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
 const update_sum_pos = () => form.update_sum(sum_pos, DATA.supine, DATA.prone, DATA.left, DATA.right);
 const update_sum_phase = () => form.update_sum(sum_phase, DATA.n1, DATA.n2, DATA.n3, DATA.rem);
 
+DATA.scored_at.clean.change = false;
 DATA.r_lat.clean.on = false;
 DATA.r_lat.template.set = () => {
   let d = data[key].data;
@@ -131,9 +132,7 @@ data[key].update = {
     update_sum_phase(),
     form.update_rem(rem, 'requires_rem');
   },
-  "scored_at": () => {
-    form.update_scored_at();
-  }
+  "scored_at": form.update_scored_at,
 };
 
 // non-default template setters
