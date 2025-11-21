@@ -236,7 +236,7 @@ data.init = (k=key) => {
     data[k] = {};
     data[k].init = () => {};
     data[k].data = {};
-    data[k].no_change = [];
+    // data[k].no_change = [];
     data[k].clean = {};
     data[k].update = {};
     data[k].template_set = {};

@@ -45,7 +45,7 @@ Example snippet
 
 ## .txt file
 
-When the user clicks *copy to clipboard*, this template gets slightly modified, then copied.
+When the user clicks *copy to clipboard*, `script.js` does a find/replace on this template, then copies the modified version to the clipboard.
 
 Example snippet
 
@@ -60,30 +60,35 @@ Place keywords to replace inside `${}`.
 Example snippet
 
 ```js
-import * as script from "/script.js";
+// import using relative links b/c root is different for local & deployed
+import { data, key, Defaults } from "../data.js";
 
-// ids to not clean on change
-// - clean function will not run when item is changed in the form
-// - if update function is set, the update function will still run (just not the clean function)
-script.data[script.key].no_change = [
-];
+// initialization function
+// - a function that runs as soon as this script is loaded
+// - ex: set default template values
+data[key].init = () => {
+};
 
-// clean functions
-// - automatically runs on item when it is changed in the form
-// - automatically runs on item when it is extracted from the form (unless template_set is specified)
-script.data[script.key].clean = {
-  "duration": () => script.clip_minutes(duration.value),
-}
+// data objects
+// - contain value, type, clean functions, form getters and setters, template setters,
+//   and most settings relevant to data
+data[key].data = {
+  duration: Defaults.minutes();
+};
 
 // update functions
 // - automatically runs on item when it is changed in the form (runs after clean function)
-// - does NOT run when item is extracted
-script.data[script.key].update = {
-}
+// - ex: sum two inputs into another input when their values change
+data[key].update = {
+};
 
-// template set functions
-// - run only when moving data into the template
-// - if clean and template_set are BOTH set for an id, then this runs INSTEAD of the clean function
-script.data[script.key].template_set = {
-}
+// non-default template setter functions
+// - runs only when moving data into the template
+// - for each id, if this is set, this setter function will run INSTEAD of the default template setter
+data[key].template_set = {
+};
+
+// functions that return the default data value
+data[key].default = {
+};
 ```
