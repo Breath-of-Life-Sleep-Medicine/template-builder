@@ -6,17 +6,17 @@
     <input type="time" id="start" class="form-control">
     <label for="start">Lights out</label>
   </div>
-  <!-- end -->
-  <div class="form-floating">
-    <input type="time" id="end" class="form-control calculated">
-    <label for="end">Lights on</label>
-  </div>
   <!-- total recording time -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="trt" class="form-control" placeholder="">
     <label for="trt">Total recording time</label>
   </div>
   <span class="input-group-text">min</span>
+  <!-- end -->
+  <div class="form-floating">
+    <input type="time" id="end" class="form-control calculated">
+    <label for="end">Lights on</label>
+  </div>
 </div>
 
 <div class="input-group">
@@ -84,7 +84,26 @@
   <span class="input-group-text">%</span>
 </div>
 
-<label for="">Counts</label>
+<!-- sum of sleep phases -->
+<div class="form-text text-end">
+  Sum: <span id="sum_phase">0.0</span>%
+</div>
+
+<!-- scored at -->
+<!-- <label for="scored_at">3% desaturation (AASM) values are provided for AHI</label> -->
+<label for="scored_at">Available AHI table(s)</label>
+<select id="scored_at" class="form-control">
+  <option value="3">3% desaturation table only (AASM)</option>
+  <option value="4" selected>4% desaturation table only (CMS)</option> <!--default value is 4%-->
+  <option value="3">both 3% and 4% desaturation tables</option>
+</select>
+
+<!-- label_scored_at -->
+<div class="form-text text-end">
+  Hypopneas scored at oxygen desaturation <span id="label_scored_at"></span>%
+</div>
+
+<label for="">Counts <span class="scored_at"></span></label>
 <div class="input-group">
   <!-- central apnea count -->
   <div class="form-floating">
@@ -113,7 +132,7 @@
   </div>
 </div>
 
-<label for="">Indices</label>
+<label for="">Indices <span class="scored_at"></span></label>
 <div class="input-group">
   <!-- ahi -->
   <div class="form-floating">
@@ -173,8 +192,13 @@
   <span class="input-group-text">%</span>
 </div>
 
+<!-- sum of sleep positions -->
+<div class="form-text text-end">
+  Sum: <span id="sum_pos">0.0</span>%
+</div>
+
 <!-- rdi positions : fields made visible from other positions being non-zero -->
-<label for="rdi_pos" id="rdi_pos_label" hidden>RDI</label>
+<label for="rdi_pos" id="rdi_pos_label" hidden>RDI <span class="scored_at"></span></label>
 <div id="rdi_pos_div" class="input-group" hidden>
   <!-- supine -->
   <div class="form-floating supine_visibility" hidden>
@@ -274,7 +298,7 @@
 <div class="input-group">
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="od_duration" class="form-control" placeholder="">
-    <label for="od_duration">Duration with oxygen saturation <=88%</label>
+    <label for="od_duration">Duration with oxygen saturation <= 88%</label>
   </div>
   <span class="input-group-text">min</span>
 </div>

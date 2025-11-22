@@ -8,6 +8,11 @@
   <option value="4">4%</option>
 </select>
 
+<!-- label_scored_at -->
+<div class="form-text text-end">
+  Hypopneas scored at oxygen desaturation <span id="label_scored_at">4</span>%
+</div>
+
 <!-- duration -->
 <div class="input-group">
   <div class="form-floating">
@@ -25,16 +30,16 @@
     <label for="ahi">AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
-  <!-- ai: calculate ai from ahi & hi -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="ai" class="form-control calculated" placeholder="">
-    <label for="ai">Apnea index</label>
-  </div>
-  <span class="input-group-text">evt/hr</span>
   <!-- hi -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="hi" class="form-control" placeholder="">
     <label for="hi">Hypopnea index</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- ai: calculate ai from ahi & hi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ai" class="form-control calculated" placeholder="">
+    <label for="ai">Apnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
 </div>
@@ -87,7 +92,7 @@
 <div class="input-group">
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="od_duration" class="form-control" placeholder="">
-    <label for="od_duration">Duration with oxygen saturation <=89%</label>
+    <label for="od_duration">Duration with oxygen saturation <= 89%</label>
   </div>
   <span class="input-group-text">min</span>
 </div>

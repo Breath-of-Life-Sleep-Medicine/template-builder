@@ -1,88 +1,76 @@
-import * as script from "../script.js";
+const SCORE_LABEL = {
+  3: "AASM",
+  4: "CMS",
+};
 
-// store into result the percentage of a to b
-function update_percentage(a, b, result) {
-  result.value = (100 * a.value / b.value); //.toFixed(1);
-  result.dispatchEvent(new Event("change"));
+const zero_pad = (num, places) => String(num).padStart(places, '0');
+
+// given a number as a string
+// return the number of decimal places
+function decimal_places(number_str) {
+  let decimal_places = number_str.indexOf('.');
+  return (decimal_places >= 0) ? number_str.length - decimal_places - 1 : 0;
 }
 
-// calculate index (ex: central apnea index = central apnea count / total sleep time)
-function update_index(result, dur_min, ...evts) {
-  let sum = 0;
-  for (let evt of evts) {
-    sum += Number(evt.value);
-  }
-  result.value = 60 * sum / Number(dur_min.value); // convert dur from minutes to hours
-  result.dispatchEvent(new Event("change"));
+// Source - https://stackoverflow.com/a
+// Posted by Billy Moon, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-11-07, License - CC BY-SA 4.0
+function round(value, precision = 0, func = Math.round) {
+  let multiplier = Math.pow(10, precision || 0);
+  return func(value * multiplier) / multiplier;
 }
 
-// calculate end time from start time & total record time (minutes)
-function update_end (start, end, trt) {
-  if (start.value != "" && trt.value != "") {
-    end.value = new Date(new Date("2025-01-01 " + start.value).getTime() + trt.value*60*1000).toTimeString().slice(0,5);
-    end.dispatchEvent(new Event("change"));
-  }
-}
-
-// show/hide positional rdi based on which positions are set
-// POS:      stored positional durations (to be updated)
-// pos_elem: position duration input element (%)
-//           note: the class for toggling visibility are id + _visibility (ex: "supine_visibility")
-function update_rdi (POS, pos_elem) {
-  let value = parseFloat(pos_elem.value);
-  if ((POS[pos_elem.id] === 0 && value !== 0) || (POS[pos_elem.id] !== 0 && value === 0)) {
-    let elems = document.getElementsByClassName(pos_elem.id + "_visibility");
-    for (let elem of elems) {
-      elem.hidden = !elem.hidden;
+/******************************************************************************
+Desc: convert a series of time strings into Date objects (datetime)
+Input:
+- start_date: date of the first time as a string (ex: "2025-05-20")
+- ...times: times to convert to datetimes (in sequential order) (ex: "21:54")
+Output: returns the times as an array of Date objects (datetimes)
+Assumes:
+- less than 24 hours passing between any 2 adjacent times
+******************************************************************************/
+function get_dt(start_date, ...times) {
+  if (!start_date) start_date = "2025-01-01"; // this will give inaccurate dates, but accurate times
+  let dts = [];
+  if (times.length == 0) {return dts;}
+  dts.push(new Date(start_date + " " + times[0]));
+  for (let i = 1; i < times.length; ++i) {
+    let next = new Date(dts.at(-1).toDateString() + " " + times[i]);
+    if (next < dts.at(-1)) {
+      next.setDate(next.getDate() + 1); // increment date by 1 day
     }
+    dts.push(next);
   }
-  POS[pos_elem.id] = value;
-  // if none of RDI are active hide div & label, else don't hide them
-  rdi_pos_div.hidden = rdi_pos_label.hidden = !(POS["supine"] | POS["prone"] | POS["left"] | POS["right"] !== 0 );
+  return dts;
 }
 
-// get rdi position string (for the template)
-// POS is the position durations (%)
-// supine, prone, left, and right are the positional RDI (evt/hr)
-function rdi_position_str(POS, supine, prone, left, right){
-  let rdi_positions = [];
-  let value = [left.value, right.value, supine.value, prone.value];
-  let check = [POS.left, POS.right, POS.supine, POS.prone];
-  let label = ["Left Side", "Right Side", "Supine", "Prone"];
-  for (let i = 0; i < 4; ++i) {
-    if (script.clip_percent(check[i]) != 0) {
-      rdi_positions.push(`${label[i]} RDI: ${value[i]}/hr`);
-    }
-  }
-  return rdi_positions.join(", ");
+// convert yyyy-mm-dd string to mm/dd/yyyy string
+// ex: 2025-05-20 to 05/20/2025
+function date_str(s) {
+  return s.slice(5).replace(/-/g, "/") + "/" + s.slice(0, 4);
 }
 
-// hide elems if rem is 0, otherwise show them
-function update_rem (rem, cls) {
-  // console.log(event);
-  let elems = document.getElementsByClassName(cls);
-  for (let elem of elems) {
-    elem.hidden = rem.value == 0;
-  }
+// convert dt into hh:mm format string
+function time_str(dt) {
+  return dt.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
 }
 
-// if rem latency is set to "N/A", then set rem to 0
-function rem_check(rem, r_lat) {
-  let val = r_lat.value.toUpperCase();
-  let check = new Set(["N/A", "NA"]);
-
-  if (check.has(val)) {
-    rem.value = 0;
-    rem.dispatchEvent(new Event('change'));
-  }
+// convert 24 hour formatted time string to 12 hour time string
+// ex: 17:31 to 5:31 PM
+function time_24_to_12 (time) {
+  let hours = parseInt(time.slice(0, 2));
+  let suffix = hours < 12 ? " AM": " PM";
+  hours = (hours + 11) % 12 + 1;
+  return hours + time.slice(2) + suffix;
 }
 
 export {
-  update_percentage,
-  update_index,
-  update_end,
-  update_rdi,
-  rdi_position_str,
-  update_rem,
-  rem_check,
+  SCORE_LABEL,
+  zero_pad,
+  decimal_places,
+  round,
+  get_dt,
+  date_str,
+  time_str,
+  time_24_to_12,
 };

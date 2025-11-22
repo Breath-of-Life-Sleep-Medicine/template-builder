@@ -2,12 +2,13 @@
  * @jest-environment jsdom
  */
 
-import * as script from "/script.js";
-import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
+import { data, key, key_global } from "../../modules/data";
+import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
+  await import ("/modules/index.js");
   await import("/modules/PSG/SplitNight.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
@@ -18,6 +19,9 @@ beforeEach(() => {
     date: "2025-01-20",
     referring: "Example Doctor PAC",
     provider: "Rotcod Elpmaxe FNP",
+  }, key_global);
+
+  build_form({
     start: "22:00", // 10:00 PM
     trt: "360.0", // 360 minutes (6 hours)
     tst: "180.0", // 180 minutes (3 hours)
@@ -68,7 +72,7 @@ beforeEach(() => {
     ti_cai: "0.1",
 
     // calculated
-    ti_end: "", // 8:00 AM
+    ti_end: "00:00", // 8:00 AM
     eff: "", // 75.0%
     ahi: "", // 5.0
     rdi: "", // 4.9
@@ -77,6 +81,9 @@ beforeEach(() => {
     ti_supine: "", // 55.0%
   });
 
+  global.sum_phase = {textContent:""};
+  global.sum_pos = {textContent:""};
+
   // ids
   global.supine.id = "supine";
   global.prone.id = "prone";
@@ -84,16 +91,16 @@ beforeEach(() => {
   global.right.id = "right";
 
   // call update function to do calculations
-  script.data[script.key].update.tst();      // update efficiency, update ahi
-  script.data[script.key].update.ahi();      // update rdi (requires ahi)
-  script.data[script.key].update.ti_start(); // update ti_end
-  script.data[script.key].update.ti_tst();   // update ti_eff, ti_supine, ti_rem
+  update_calculated({changed: "tst", calculated: ["eff", "ahi"]});
+  update_calculated({changed: "ahi", calculated: ["rdi"]});
+  update_calculated({changed: "ti_start", calculated: ["ti_end"]});
+  update_calculated({changed: "ti_tst", calculated: ["ti_eff", "ti_supine", "ti_rem"]});
 
   // update RDI
-  script.data[script.key].update.supine();
-  script.data[script.key].update.prone();
-  script.data[script.key].update.left();
-  script.data[script.key].update.right();
+  data[key].update.supine();
+  data[key].update.prone();
+  data[key].update.left();
+  data[key].update.right();
 });
 
 test("update rdi", () => {
@@ -104,7 +111,7 @@ test("find_replace", () => {
   let path = "PSG/SplitNight";
   let {template, expected} = get_paths(path);
 
-  global.rdi.value = "4.9";// change rdi to test the template better
+  data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
 
   expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
 });

@@ -43,7 +43,7 @@
   <span class="input-group-text">evt/hr</span>
   <!-- hypopnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="hi" class="form-control calculated" aria-label="Apnea index" placeholder="Apnea index">
+    <input type="text" inputmode="numeric" id="hi" class="form-control calculated" aria-label="Hypopnea index" placeholder="Hypopnea index">
     <label for="hi">Hypopnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
@@ -61,15 +61,9 @@
 <label for="">Duration supine</label>
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="s_duration_hr" class="form-control" aria-label="hours spent supine" placeholder="">
-    <label for="s_duration_hr">Hours</label>
+    <input-duration class="form-control h m" id="s_duration"></input-duration>
+    <label for="s_duration">Hours : Minutes</label>
   </div>
-  <span class="input-group-text">:</span>
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="s_duration_min" class="form-control" aria-label="minutes spent supine" placeholder="">
-    <label for="s_duration_min">Minutes</label>
-  </div>
-  <span class="input-group-text">/</span>
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="s_percent" class="form-control" aria-label="percent of flow monitoring time spent supine" placeholder="">
     <label for="s_percent">% FMT</label>
@@ -108,15 +102,9 @@
 <label for="">Duration oxygen saturation <= 88%</label>
 <div class="input-group">
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="od_duration_hr" class="form-control" aria-label="hours spent under 88% oxygen saturation" placeholder="">
-    <label for="od_duration_hr">Hours</label>
+    <input-duration class="form-control h m" id="od_duration"></input-duration>
+    <label for="od_duration">Hours : Minutes</label>
   </div>
-  <span class="input-group-text">:</span>
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="od_duration_min" class="form-control" aria-label="minutes spent under 88% oxygen saturation" placeholder="">
-    <label for="od_duration_min">Minutes</label>
-  </div>
-  <span class="input-group-text">/</span>
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="od_percent" class="form-control" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="">
     <label for="od_percent">% OMT</label>
@@ -149,9 +137,8 @@
   <label for="snores">Snores</label>
 </div>
 
-<!-- scored_at -->
-
-<label for="">Analysis guidelines AASM</label>
+<!-- guidelines -->
+<label for="">Analysis guidelines</label>
 <select id="guidelines" class="form-control">
   <!-- 2007: 4% -->
   <option value="4" selected>2007</option>
@@ -159,10 +146,7 @@
   <option value="3">2012</option>
 </select>
 
-<div class="input-group">
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="scored_at" class="form-control calculated" aria-label="percent of oxygen monitoring time spent under 88% oxygen saturation" placeholder="" value="4">
-    <label for="scored_at">Hypopneas scored at oxygen desaturation %</label>
-  </div>
-  <span class="input-group-text">%</span>
+<!-- scored_at -->
+<div class="form-text text-end">
+  Hypopneas scored at oxygen desaturation <span id="label_scored_at"></span>%
 </div>
