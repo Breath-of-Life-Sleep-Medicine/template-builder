@@ -10,4 +10,5 @@ jobs:
     - name: Set update date
       run: | 
         date=$(date +%Y-%m-%d)
-        sed -i -E 's/(<span id="deploy_date">).*(<\/span>)/\1'"$date"'\2/g' ../../index.html
+        path=${{ github.action_path }}/index.html
+        sed -i -E 's/(<span id="deploy_date">).*(<\/span>)/\1'"$date"'\2/g' $path
