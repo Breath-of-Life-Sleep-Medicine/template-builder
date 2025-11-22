@@ -5,6 +5,8 @@ on:
     - main
 jobs:
   set-date:
+    permissions:
+      contents: read, write
     runs-on: ubuntu-latest
     steps:
     - name: Set update date
