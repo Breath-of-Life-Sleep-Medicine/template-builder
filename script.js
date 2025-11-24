@@ -1,6 +1,6 @@
 import { clip_count } from "./modules/clip.js";
 import { decimal_places } from "./modules/util.js";
-import { data, key, key_global, new_template_key, init_defaults, init_form } from "./modules/data.js";
+import { data, key, key_global, new_template_key, init_defaults, init_form, clean } from "./modules/data.js";
 
 let path_base;
 
@@ -115,9 +115,7 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
       elem.addEventListener("change", () => {
         let d = data[k].data[id];
         if (!update_only && d.clean.on) {
-          d.clean.fn(d.form.get(id), id, k);
-          if (d.clean.change)
-            d.form.set(id, k);
+          clean(id, k);
         }
         if (id in data[k].update) {
           data[k].update[id]();

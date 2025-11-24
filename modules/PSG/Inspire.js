@@ -84,7 +84,7 @@ data[key].update = {
   },
   "r_lat": () => {
     form.rem_check(rem, r_lat);
-    DATA.r_lat.clean.fn(DATA.r_lat.form.get("r_lat"), "r_lat");
+    clean("r_lat");
   },
   "a_cc": () => {
     update_ahi();

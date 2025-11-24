@@ -1,4 +1,4 @@
-import {data, key, Defaults} from "../data.js";
+import {data, key, Defaults, clean} from "../data.js";
 import * as form from "../form.js";
 import { SCORE_LABEL } from "../util.js";
 import { clip_index } from "../clip.js";
@@ -97,7 +97,7 @@ data[key].update = {
   "lat": () => data[key_MSLT].data.prev_lat.value = DATA.lat.value,
   "r_lat": () => { // do update before clean
     form.rem_check(rem, r_lat);
-    DATA.r_lat.clean.fn(DATA.r_lat.form.get("r_lat"), "r_lat");
+    clean("r_lat");
     data[key_MSLT].data.prev_r_lat.value = DATA.r_lat.value;
   },
   "a_cc": update_ahi,
