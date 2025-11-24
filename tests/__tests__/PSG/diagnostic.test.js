@@ -2,26 +2,42 @@
  * @jest-environment jsdom
  */
 
-import { data, key, key_global } from "../../../modules/data";
-import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
+import { data, key, key_global } from "/modules/data.js";
+import * as tst from "/tests/util.js";
+import { get_map } from "/script.js";
 
 // sets data callback functions
 beforeAll(async () => {
-  init_data();
+  tst.init_data();
   await import ("/modules/index.js");
   await import("/modules/PSG/Diagnostic.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
 });
 
-beforeEach(() => {
-  build_form({
+// sets calculated values from set form values
+function update() {
+  // call update function to do calculations
+  tst.update_calculated({changed: "trt", calculated: ["eff", "end"]});
+  tst.update_calculated({changed: "a_oc", calculated: ["ahi"]});
+  tst.update_calculated({changed: "ahi", calculated: ["rdi"]});
+
+  // update positional RDI
+  data[key].update.supine();
+  data[key].update.prone();
+  data[key].update.left();
+  data[key].update.right();
+}
+
+// corresponds with the file in /expected
+function setup1() {
+  tst.build_form({
     date: "2025-01-20",
     referring: "Example Doctor PAC",
     provider: "Rotcod Elpmaxe FNP",
   }, key_global);
 
-  build_form({
+  tst.build_form({
     scored_at: "4",
     start: "22:00", // 10:00 PM
     trt: "360.0", // 360 minutes (6 hours)
@@ -67,39 +83,146 @@ beforeEach(() => {
     eff: "", // 50.0%
     ahi: "", // 5.0
     rdi: "", // 4.9
+
+    // misc / labels
+    sum_phase: "",
+    sum_pos: "",
   });
 
-  global.sum_phase = {textContent:""};
-  global.sum_pos = {textContent:""};
+  update();
+}
 
-  // ids
-  global.supine.id = "supine";
-  global.prone.id = "prone";
-  global.left.id = "left";
-  global.right.id = "right";
+// tests defaults
+function setup2() {
+  tst.build_form({
+    date: "2025-01-20",
+    referring: "Outside Doctor PAC",
+    provider: "BoL Doctor MD",
+  }, key_global);
+  tst.build_form({
+    scored_at: "",
+    start: "", // 00:00?
+    trt: "",
+    tst: "",
+    lat: "",
+    waso: "",
+    r_lat: "",
+    n1: "",
+    n2: "",
+    n3: "",
+    rem: "",
+    a_cc: "",
+    a_oc: "",
+    a_mc: "",
+    h_c: "",
+    rera: "",
+    arem_ahi: "",
+    rem_ahi: "",
+    supine: "",
+    prone: "",
+    left: "",
+    right: "",
+    rdi_s: "",
+    rdi_p: "",
+    rdi_l: "",
+    rdi_r: "",
+    arousals: "",
+    arousals_sai: "",
+    arousals_rai: "",
+    limb: "",
+    limb_ai: "",
+    limb_plmi: "",
+    ox_w_avg: "",
+    ox_tst_avg: "",
+    ox_tst_min: "",
+    od_duration: "",
+    pulse_min: "",
+    pulse_avg: "",
+    pulse_max: "",
 
-  // call update function to do calculations
-  update_calculated({changed: "trt", calculated: ["eff", "end"]});
-  update_calculated({changed: "a_oc", calculated: ["ahi"]});
-  update_calculated({changed: "ahi", calculated: ["rdi"]});
+    // calculated
+    end: "", // 00:00?
+    eff: "",
+    ahi: "",
+    rdi: "",
 
-  // update positional RDI
-  data[key].update.supine();
-  data[key].update.prone();
-  data[key].update.left();
-  data[key].update.right();
-});
+    // misc / labels
+    sum_phase: "",
+    sum_pos: "",
+  });
+}
 
-test("diagnostic update rdi", () => {
+test("update rdi", () => {
+  setup1();
   expect(Number(global.rdi.value)).toBe(5); // check that update rdi worked
 });
 
-// diagnostic test
-test("diagnostic find_replace", () => {
+// check find/replace; checks against the file
+test("find_replace", () => {
+  setup1();
   let path = "PSG/Diagnostic";
-  let {template, expected} = get_paths(path);
+  let {template, expected} = tst.get_paths(path);
 
   data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
 
-  expect(get_lines(find_replace(template))).toStrictEqual(get_lines(get_file_str(expected))); // ignore newline
+  expect(tst.get_lines(tst.find_replace(template))).toStrictEqual(tst.get_lines(tst.get_file_str(expected))); // ignore newline
+});
+
+// check defaults & precision are as expected
+test ("defaults / template set", () => {
+  setup2();
+  
+  let expected = {
+    scored_at: "4",
+    start: "00:00",
+    trt: "0.0 minutes",
+    tst: "0.0 minutes",
+    lat: "0.0 minutes",
+    waso: "0.0 minutes",
+    r_lat: "N/A",
+    n1: "0.0",
+    n2: "0.0",
+    n3: "0.0",
+    rem: "0.0",
+    a_cc: "0",
+    a_oc: "0",
+    a_mc: "0",
+    h_c: "0",
+    rera: "0",
+    arem_ahi: "0.0",
+    rem_ahi: "N/A",
+    supine: "0.0",
+    prone: "0.0",
+    left: "0.0",
+    right: "0.0",
+    rdi_s: "0.0",
+    rdi_p: "0.0",
+    rdi_l: "0.0",
+    rdi_r: "0.0",
+    arousals: "0",
+    arousals_sai: "0.0",
+    arousals_rai: "0.0",
+    limb: "0",
+    limb_ai: "0.0",
+    limb_plmi: "0.0",
+    ox_w_avg: "0.0",
+    ox_tst_avg: "0.0",
+    ox_tst_min: "0.0",
+    od_duration: "0.0 minutes",
+    pulse_min: "0.0",
+    pulse_avg: "0.0",
+    pulse_max: "0.0",
+
+    // calculated
+    end: "00:00",
+    eff: "0.0",
+    ahi: "0.0",
+    rdi: "0.0",
+
+    // will be generated by get_map
+    scored_at_label: "CMS",
+    rdi_positions: "",
+  }
+
+  expect(get_map(key)).toEqual(expected);
 });

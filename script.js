@@ -245,5 +245,6 @@ export {
   submit_copy,
   load_form,
   // for testing
+  get_map,
   find_replace,
 };

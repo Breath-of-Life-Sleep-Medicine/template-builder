@@ -32,7 +32,9 @@ function get_paths(path) {
 // builds form and also sets the value in data
 function build_form(form, k=key) {
   Object.entries(form).map(([id, value]) => {
+    // set global (mock form input)
     global[id] = {id: id, value: value, textContent: value, checked: value, dispatchEvent: nop};
+    // set data (minutes are special)
     if (data[k]?.data[id]?.type === Type.DURATION && typeof(value) !== "object") {
       // minutes are Duration in data, but single string input in form (Duration requires an object)
       data[k]?.data[id]?.clean?.fn({m: value}, id, k);
