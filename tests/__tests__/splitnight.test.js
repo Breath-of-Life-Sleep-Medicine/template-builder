@@ -104,7 +104,7 @@ beforeEach(() => {
 });
 
 test("update rdi", () => {
-  expect(global.rdi.value).toBe(5); // check that update rdi worked
+  expect(Number(global.rdi.value)).toBe(5); // check that update rdi worked
 });
 
 test("find_replace", () => {
