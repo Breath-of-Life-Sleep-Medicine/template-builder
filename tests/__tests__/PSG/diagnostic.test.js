@@ -30,7 +30,8 @@ function update() {
 }
 
 // corresponds with the file in /expected
-function setup1() {
+// values are valid; extremely straightforward conversion
+function setup_valid() {
   tst.build_form({
     date: "2025-01-20",
     referring: "Example Doctor PAC",
@@ -93,15 +94,16 @@ function setup1() {
 }
 
 // tests defaults
-function setup2() {
+// empty form
+function setup_empty() {
   tst.build_form({
-    date: "2025-01-20",
-    referring: "Outside Doctor PAC",
-    provider: "BoL Doctor MD",
+    date: "",
+    referring: "",
+    provider: "",
   }, key_global);
   tst.build_form({
     scored_at: "",
-    start: "", // 00:00?
+    start: "",
     trt: "",
     tst: "",
     lat: "",
@@ -141,7 +143,7 @@ function setup2() {
     pulse_max: "",
 
     // calculated
-    end: "", // 00:00?
+    end: "",
     eff: "",
     ahi: "",
     rdi: "",
@@ -153,13 +155,13 @@ function setup2() {
 }
 
 test("update rdi", () => {
-  setup1();
+  setup_valid();
   expect(Number(global.rdi.value)).toBe(5); // check that update rdi worked
 });
 
 // check find/replace; checks against the file
 test("find_replace", () => {
-  setup1();
+  setup_valid();
   let path = "PSG/Diagnostic";
   let {template, expected} = tst.get_paths(path);
 
@@ -169,8 +171,8 @@ test("find_replace", () => {
 });
 
 // check defaults & precision are as expected
-test ("defaults / template set", () => {
-  setup2();
+test ("empty form", () => {
+  setup_empty();
   
   let expected = {
     scored_at: "4",
