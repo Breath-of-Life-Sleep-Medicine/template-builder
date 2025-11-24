@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 
-import { data, key, key_global } from "../../modules/data";
+import { data, key, key_global } from "../../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
   await import ("/modules/index.js");
-  await import("/modules/PSG/Inspire.js");
+  await import("/modules/PSG/Diagnostic.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
 });
@@ -58,15 +58,14 @@ beforeEach(() => {
     ox_tst_avg: "93.2",
     ox_tst_min: "79.9",
     od_duration: "11.1",
-    pulse_min: "51.2",
+    pulse_min: "50.0",
     pulse_avg: "63.7",
-    pulse_max: "92.8",
+    pulse_max: "92.0",
 
     // calculated
     end: "00:00", // 4:00 AM
     eff: "", // 50.0%
     ahi: "", // 5.0
-    a_ci: "", // 0.3 (1/3)
     rdi: "", // 4.9
   });
 
@@ -81,22 +80,23 @@ beforeEach(() => {
 
   // call update function to do calculations
   update_calculated({changed: "trt", calculated: ["eff", "end"]});
-  update_calculated({changed: "a_cc", calculated: ["a_ci", "ahi"]});
+  update_calculated({changed: "a_oc", calculated: ["ahi"]});
   update_calculated({changed: "ahi", calculated: ["rdi"]});
 
-  // update RDI
+  // update positional RDI
   data[key].update.supine();
   data[key].update.prone();
   data[key].update.left();
   data[key].update.right();
 });
 
-test("update rdi", () => {
+test("diagnostic update rdi", () => {
   expect(Number(global.rdi.value)).toBe(5); // check that update rdi worked
 });
 
-test("find_replace", () => {
-  let path = "PSG/Inspire";
+// diagnostic test
+test("diagnostic find_replace", () => {
+  let path = "PSG/Diagnostic";
   let {template, expected} = get_paths(path);
 
   data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better

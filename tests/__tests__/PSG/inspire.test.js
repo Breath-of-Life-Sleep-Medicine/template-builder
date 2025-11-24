@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 
-import { data, key, key_global } from "../../modules/data";
+import { data, key, key_global } from "../../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
   await import ("/modules/index.js");
-  await import("/modules/PSG/PAP.js");
+  await import("/modules/PSG/Inspire.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
 });
@@ -22,6 +22,7 @@ beforeEach(() => {
   }, key_global);
 
   build_form({
+    scored_at: "4",
     start: "22:00", // 10:00 PM
     trt: "360.0", // 360 minutes (6 hours)
     tst: "180.0", // 180 minutes (3 hours)
@@ -95,7 +96,7 @@ test("update rdi", () => {
 });
 
 test("find_replace", () => {
-  let path = "PSG/PAP";
+  let path = "PSG/Inspire";
   let {template, expected} = get_paths(path);
 
   data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better

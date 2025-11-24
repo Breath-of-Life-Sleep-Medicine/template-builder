@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { key_global } from "../../modules/data";
+import { key_global } from "../../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data} from "/tests/util.js";
 
 // sets data callback functions

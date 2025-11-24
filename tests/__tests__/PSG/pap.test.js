@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 
-import { data, key, key_global } from "../../modules/data";
+import { data, key, key_global } from "../../../modules/data";
 import {get_paths, get_lines, find_replace, get_file_str, build_form, init_data, update_calculated} from "/tests/util.js";
 
 // sets data callback functions
 beforeAll(async () => {
   init_data();
   await import ("/modules/index.js");
-  await import("/modules/PSG/SplitNight.js");
+  await import("/modules/PSG/PAP.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
 });
@@ -57,28 +57,16 @@ beforeEach(() => {
     ox_tst_avg: "93.2",
     ox_tst_min: "79.9",
     od_duration: "11.1",
-    pulse_min: "50.0",
+    pulse_min: "51.2",
     pulse_avg: "63.7",
-    pulse_max: "92.0",
-
-    // titration
-    ti_start: "04:00", // 4:00 AM
-    ti_trt: "240.0", // 4 hours
-    ti_tst: "180.0", // 3 hours
-    ti_lat: "35.0",
-    ti_rem_duration: "72.0",
-    ti_supine_duration: "99.0",
-    ti_ahi: "0.3",
-    ti_cai: "0.1",
+    pulse_max: "92.8",
 
     // calculated
-    ti_end: "00:00", // 8:00 AM
-    eff: "", // 75.0%
+    end: "00:00", // 4:00 AM
+    eff: "", // 50.0%
     ahi: "", // 5.0
+    a_ci: "", // 0.3 (1/3)
     rdi: "", // 4.9
-    ti_eff: "", // 75.0%
-    ti_rem: "", // 40.0%
-    ti_supine: "", // 55.0%
   });
 
   global.sum_phase = {textContent:""};
@@ -91,10 +79,9 @@ beforeEach(() => {
   global.right.id = "right";
 
   // call update function to do calculations
-  update_calculated({changed: "tst", calculated: ["eff", "ahi"]});
+  update_calculated({changed: "trt", calculated: ["eff", "end"]});
+  update_calculated({changed: "a_cc", calculated: ["a_ci", "ahi"]});
   update_calculated({changed: "ahi", calculated: ["rdi"]});
-  update_calculated({changed: "ti_start", calculated: ["ti_end"]});
-  update_calculated({changed: "ti_tst", calculated: ["ti_eff", "ti_supine", "ti_rem"]});
 
   // update RDI
   data[key].update.supine();
@@ -108,7 +95,7 @@ test("update rdi", () => {
 });
 
 test("find_replace", () => {
-  let path = "PSG/SplitNight";
+  let path = "PSG/PAP";
   let {template, expected} = get_paths(path);
 
   data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
