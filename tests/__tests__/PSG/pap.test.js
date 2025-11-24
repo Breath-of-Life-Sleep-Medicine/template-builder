@@ -172,7 +172,7 @@ test("empty form", () => {
 
   let expected = {
     scored_at: "4",
-    start: "00:00",
+    start: "12:00 AM",
     trt: "0.0 minutes",
     tst: "0.0 minutes",
     lat: "0.0 minutes",
@@ -212,7 +212,7 @@ test("empty form", () => {
     pulse_max: "0.0",
 
     // calculated
-    end: "00:00",
+    end: "12:00 AM",
     eff: "0.0",
     ahi: "0.0",
     a_ci: "0.0",
