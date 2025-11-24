@@ -2,14 +2,23 @@
 
 ## To set up node_modules
 
-```
+```sh
 npm install
 ```
 
-## To run tests
+## To run all tests
 
-```
+```sh
 npm test
+```
+
+## To run a specific test suite
+
+**Example**: run test suite for `modules/util.js`
+- test location: `tests/__tests__/util.test.js`
+
+```sh
+npm test ./tests/__tests__/util.test.js
 ```
 
 ## Design

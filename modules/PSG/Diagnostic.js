@@ -1,7 +1,6 @@
-import {data, key, Defaults} from "../data.js";
+import {data, key, Defaults, clean} from "../data.js";
 import * as form from "../form.js";
 import { SCORE_LABEL } from "../util.js";
-import { clip_index } from "../clip.js";
 
 // initialization function
 data[key].init = () => {
@@ -97,7 +96,7 @@ data[key].update = {
   "lat": () => data[key_MSLT].data.prev_lat.value = DATA.lat.value,
   "r_lat": () => { // do update before clean
     form.rem_check(rem, r_lat);
-    DATA.r_lat.clean.fn(DATA.r_lat.form.get("r_lat"), "r_lat");
+    clean("r_lat");
     data[key_MSLT].data.prev_r_lat.value = DATA.r_lat.value;
   },
   "a_cc": update_ahi,
@@ -138,8 +137,8 @@ data[key].update = {
 // non-default template setters
 data[key].template_set = {
   r_lat: () => (DATA.rem.value != 0) ? DATA.r_lat.value.toStr() : "N/A",
-  arem_ahi: () => (DATA.rem.value != 0) ? clip_index(DATA.arem_ahi.value) : clip_index(DATA.ahi.value),
-  rem_ahi: () => (DATA.rem.value != 0) ? `${clip_index(DATA.rem_ahi.value)}/hr` : "N/A",
+  arem_ahi: () => (DATA.rem.value != 0) ? DATA.arem_ahi.template.set("arem_ahi") : DATA.ahi.template.set("ahi"),
+  rem_ahi: () => (DATA.rem.value != 0) ? `${DATA.rem_ahi.template.set("rem_ahi")}/hr` : "N/A",
   rdi_positions: () => form.rdi_position_str(),
   scored_at_label: () => SCORE_LABEL[DATA.scored_at.str("scored_at")],
 }

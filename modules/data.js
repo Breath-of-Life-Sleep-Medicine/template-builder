@@ -286,6 +286,15 @@ function init_form(k=key) {
   }
 }
 
+// cleans & sets data from form input
+// then sets form input with the cleaned data
+function clean(id, k=key) {
+  let d = data[k].data[id];
+  d.clean.fn(d.form.get(id), id, k);
+  if (d.clean.change)
+    d.form.set(id, k);
+}
+
 export {
   key,
   key_global,
@@ -295,4 +304,5 @@ export {
   new_template_key,
   init_defaults,
   init_form,
+  clean,
 };
