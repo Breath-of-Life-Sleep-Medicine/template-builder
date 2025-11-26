@@ -36,7 +36,7 @@ function setup_valid() {
       pulse_max:   {value: "70.0"},
       snores:      {value: "243"},
       // calculated
-      ai:          {value: ""},
+      ai:          {value: "", class: "calculated"},
       // misc
       label_scored_at: {textContent: ""},
     },
@@ -66,7 +66,7 @@ function setup_empty() {
       pulse_max:   {value: ""},
       snores:      {value: ""},
       // calculated
-      ai:          {value: ""},
+      ai:          {value: "", class: "calculated"},
       // misc
       label_scored_at: {textContent: ""},
     },
