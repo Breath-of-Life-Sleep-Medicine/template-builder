@@ -41,7 +41,7 @@ function build_form(form) {
       // create form
       if (!(id in global))
       {
-        let is_duration = data[k]?.data[id]?.type === Type.DURATION;
+        let is_duration = data[k]?.data[id]?.type === Type.DURATION && typeof(value.value) === "object";
         if (is_duration) {
           global[id] = document.createElement("input-duration");
         } else {
