@@ -90,6 +90,7 @@ function initialize() {
         let v = new Date("2025-01-01 " + elem.value).getTime();
         elem.min = new Date(v - 1000*60).toTimeString().slice(0,5);
         elem.max = new Date(v + 1000*60).toTimeString().slice(0,5);
+        elem.dispatchEvent(new Event("change"));
       });
     }
   }
