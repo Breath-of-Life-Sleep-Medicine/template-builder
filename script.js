@@ -69,7 +69,6 @@ function initialize() {
       // TODO: make a precision associated with the input field in the js files; luckily or not, all the calculated fields atm are 0.1 precision
       elem.step = "0.1";
       elem.addEventListener("calculated", () => {
-        // console.log("CALCULATED");
         // clipped to hard min/max in change event
         let v = Number(elem.value);
         let precision = decimal_places(elem.step);
@@ -80,7 +79,6 @@ function initialize() {
       });
     } else if (elem.type == "time") {
       elem.addEventListener("change", () => {
-        // console.log("CHANGE");
         // clip calculated time changes to their set max and min
         // what if max or min aren't set?
         let v = new Date("2025-01-01 " + elem.value).getTime();
@@ -89,7 +87,6 @@ function initialize() {
         elem.value = new Date (Number(clip_count(v, 0, min, max))).toTimeString().slice(0,5);
       });
       elem.addEventListener("calculated", () => {
-        // console.log("CALCULATED");
         let v = new Date("2025-01-01 " + elem.value).getTime();
         elem.min = new Date(v - 1000*60).toTimeString().slice(0,5);
         elem.max = new Date(v + 1000*60).toTimeString().slice(0,5);
@@ -117,7 +114,6 @@ function add_onchange_listeners(ids, k=key, update_only = false) {
     let elem = document.getElementById(id);
     if (elem) {
       elem.addEventListener("change", () => {
-        // console.log("CHANGE");
         let d = data[k].data[id];
         if (!update_only && d.clean.on) {
           clean(id, k);
