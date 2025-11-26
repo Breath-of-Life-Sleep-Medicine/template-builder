@@ -35,6 +35,14 @@ data[key].data = {
   ...data[key].data, // only set things that aren't already set
 }
 
+const DATA = data[key].data;
+DATA.duration.form.get = () => {
+  set_duration();
+  return DATA.duration.value;
+};
+DATA.duration.form.set = () => {};
+// DATA.duration.form.set = (id) => {console.error(`TRYING TO SET DURATION (FORM) TO ${JSON.stringify(DATA.duration.value)}`)};
+
 data[key].update = {
   "start": update_duration,
   "end": update_duration,

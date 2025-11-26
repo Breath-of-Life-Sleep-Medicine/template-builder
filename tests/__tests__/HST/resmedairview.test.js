@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { data, key, key_global} from "/modules/data.js";
+import { key, key_global} from "/modules/data.js";
 import * as tst from "/tests/util.js";
 import { get_map } from "/script.js";
 
@@ -13,87 +13,83 @@ beforeAll(async () => {
   await import("/modules/HST/ResmedAirview.js");
 });
 
-function update() {
-  // call update function to do calculations
-  data[key].update.start(); // update duration
-  tst.update_calculated({changed: "ahi", calculated:["hi"]});
-  tst.update_calculated({changed: "guidelines", calculated:["scored_at"]});
-}
-
 function setup_valid() {
   tst.build_form({
-    date: "2025-01-20",
-    referring: "Example Doctor PAC",
-    provider: "Rotcod Elpmaxe FNP",
-  }, key_global);
-  tst.build_form({
-    start: "22:00", // 10:00 PM
-    end: "04:00", // 4:00 AM
-    ahi: "25.0",
-    ai: "5.0",
-    s_ahi: "35.0",
-    s_percent: "50",
-    ox_base: "96",
-    ox_avg: "95",
-    ox_min: "82",
-    odi: "12.5",
-    pulse_min: "45",
-    pulse_avg: "64",
-    pulse_max: "70",
-    snores: "243",
-    guidelines: "3",
-    s_duration: {h: 3, m: 1},
-    od_duration: {h: 0, m: 4},
-    od_percent: "1",
-    duration1: false,
-    duration2: true,
-    // calculated
-    duration: "", // 6 hours 0 minutes
-    hi: "", // 20.0
-    scored_at: "", // 3
-    // misc
-    duration1_label: "",
-    duration2_label: "",
-    label_scored_at: "",
+    key_global: {
+      date:        {value: "2025-01-20"},
+      referring:   {value: "Example Doctor PAC"},
+      provider:    {value: "Rotcod Elpmaxe FNP"},
+    },
+    key: {
+      start:       {value: "22:00"}, // 10:00 PM
+      end:         {value: "04:00"}, // 4:00 AM
+      ahi:         {value: "25.0"},
+      ai:          {value: "5.0"},
+      s_ahi:       {value: "35.0"},
+      s_percent:   {value: "50"},
+      ox_base:     {value: "96"},
+      ox_avg:      {value: "95"},
+      ox_min:      {value: "82"},
+      odi:         {value: "12.5"},
+      pulse_min:   {value: "45"},
+      pulse_avg:   {value: "64"},
+      pulse_max:   {value: "70"},
+      snores:      {value: "243"},
+      guidelines:  {value: "3"},
+      s_duration:  {value: {h: 3, m: 1}, class: "h m"},
+      od_duration: {value: {h: 0, m: 4}, class: "h m"},
+      od_percent:  {value: "1"},
+      duration1:   {checked: false},
+      duration2:   {checked: true},
+      // calculated
+      duration:    {value:{h:0, m:0}, class:"calculated h m"}, // 6 hours 0 minutes
+      hi:          {value: "", class: "calculated"},           // 20.0
+      scored_at:   {value: "", class: "calculated"},           // 3
+      // misc
+      duration1_label: {value: ""},
+      duration2_label: {value: ""},
+      label_scored_at: {value: ""},
+    }
   });
-  update();
 }
 
 function setup_empty() {
   tst.build_form({
-    date: "",
-    referring: "",
-    provider: "",
-  }, key_global);
-  tst.build_form({
-    start: "",
-    end: "",
-    ahi: "",
-    ai: "",
-    s_ahi: "",
-    s_percent: "",
-    ox_base: "",
-    ox_avg: "",
-    ox_min: "",
-    odi: "",
-    pulse_min: "",
-    pulse_avg: "",
-    pulse_max: "",
-    snores: "",
-    guidelines: "",
-    s_duration: {h: 0, m: 0},
-    od_duration: {h: 0, m: 0},
-    od_percent: "",
-    duration1: true,
-    duration2: false,
-    // calculated
-    duration: "",
-    hi: "",
-    scored_at: "",
-    // misc
-    duration1_label: "",
-    duration2_label: "",
-    label_scored_at: "",
+    key_global: {
+      date:      {value:""},
+      referring: {value:""},
+      provider:  {value:""},
+    },
+    key: {
+      start: {value:""},
+      end: {value:""},
+      ahi: {value:""},
+      ai: {value:""},
+      s_ahi: {value:""},
+      s_percent: {value:""},
+      ox_base: {value:""},
+      ox_avg: {value:""},
+      ox_min: {value:""},
+      odi: {value:""},
+      pulse_min: {value:""},
+      pulse_avg: {value:""},
+      pulse_max: {value:""},
+      snores: {value:""},
+      guidelines: {value:""},
+      s_duration: {value: {h: 0, m: 0}},
+      od_duration: {value: {h: 0, m: 0}},
+      od_percent: {value:""},
+      duration1: true,
+      duration2: false,
+      // calculated
+      duration: {value:{h:0, m:0}, class:"calculated h m"},
+      hi: {value:"", class:"calculated"},
+      scored_at: {value:"", class:"calculated"},
+      // misc
+      duration1_label: {value:""},
+      duration2_label: {value:""},
+      label_scored_at: {value:""},
+    },
   });
 }
 
