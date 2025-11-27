@@ -15,160 +15,167 @@ beforeAll(async () => {
   global.rdi_pos_label = {hidden: true};
 });
 
-function update() {
-  // call update function to do calculations
-  tst.update_calculated({changed: "tst", calculated: ["eff", "ahi"]});
-  tst.update_calculated({changed: "ahi", calculated: ["rdi"]});
-  tst.update_calculated({changed: "ti_start", calculated: ["ti_end"]});
-  tst.update_calculated({changed: "ti_tst", calculated: ["ti_eff", "ti_supine", "ti_rem"]});
+// function update() {
+//   // call update function to do calculations
+//   tst.update_calculated({changed: "tst", calculated: ["eff", "ahi"]});
+//   tst.update_calculated({changed: "ahi", calculated: ["rdi"]});
+//   tst.update_calculated({changed: "ti_start", calculated: ["ti_end"]});
+//   tst.update_calculated({changed: "ti_tst", calculated: ["ti_eff", "ti_supine", "ti_rem"]});
 
-  // update RDI
-  data[key].update.supine();
-  data[key].update.prone();
-  data[key].update.left();
-  data[key].update.right();
-}
+//   // update RDI
+//   data[key].update.supine();
+//   data[key].update.prone();
+//   data[key].update.left();
+//   data[key].update.right();
+// }
 
 function setup_valid() {
   tst.build_form({
-    date: "2025-01-20",
-    referring: "Example Doctor PAC",
-    provider: "Rotcod Elpmaxe FNP",
-  }, key_global);
-  tst.build_form({
-    start: "22:00", // 10:00 PM
-    trt: "360.0", // 360 minutes (6 hours)
-    tst: "180.0", // 180 minutes (3 hours)
-    lat: "20.0",
-    waso: "10.0",
-    r_lat: "42.0",
-    n1: "9.0",
-    n2: "51.0",
-    n3: "25.0",
-    rem: "15.0",
-    a_cc: "1",
-    a_oc: "4",
-    a_mc: "3",
-    h_c: "7",
-    rera: "2",
-    arem_ahi: "1.7",
-    rem_ahi: "3.1",
-    supine: "30.0",
-    prone: "10.0",
-    left: "7.0",
-    right: "53.0",
-    rdi_s: "1.7",
-    rdi_p: "3.2",
-    rdi_l: "0.2",
-    rdi_r: "2.1",
-    arousals: "12",
-    arousals_sai: "0.5",
-    arousals_rai: "0.4",
-    limb: "22",
-    limb_ai: "0.3",
-    limb_plmi: "0.2",
-    ox_w_avg: "95.0",
-    ox_tst_avg: "93.2",
-    ox_tst_min: "79.9",
-    od_duration: "11.1",
-    pulse_min: "50.0",
-    pulse_avg: "63.7",
-    pulse_max: "92.0",
+    key_global: {
+      date:         {value: "2025-01-20"},
+      referring:    {value: "Example Doctor PAC"},
+      provider:     {value: "Rotcod Elpmaxe FNP"},
+    },
+    key: {
+      scored_at:    {value: "4"},
+      start:        {value: "22:00"}, // 10:00 PM
+      trt:          {value: "360.0"}, // 360 minutes (6 hours)
+      tst:          {value: "180.0"}, // 180 minutes (3 hours)
+      lat:          {value: "20.0"},
+      waso:         {value: "10.0"},
+      r_lat:        {value: "42.0"},
+      n1:           {value: "9.0"},
+      n2:           {value: "51.0"},
+      n3:           {value: "25.0"},
+      rem:          {value: "15.0"},
+      a_cc:         {value: "1"},
+      a_oc:         {value: "4"},
+      a_mc:         {value: "3"},
+      h_c:          {value: "7"},
+      rera:         {value: "2"},
+      arem_ahi:     {value: "1.7"},
+      rem_ahi:      {value: "3.1"},
+      supine:       {value: "30.0"},
+      prone:        {value: "10.0"},
+      left:         {value: "7.0"},
+      right:        {value: "53.0"},
+      rdi_s:        {value: "1.7"},
+      rdi_p:        {value: "3.2"},
+      rdi_l:        {value: "0.2"},
+      rdi_r:        {value: "2.1"},
+      arousals:     {value: "12"},
+      arousals_sai: {value: "0.5"},
+      arousals_rai: {value: "0.4"},
+      limb:         {value: "22"},
+      limb_ai:      {value: "0.3"},
+      limb_plmi:    {value: "0.2"},
+      ox_w_avg:     {value: "95.0"},
+      ox_tst_avg:   {value: "93.2"},
+      ox_tst_min:   {value: "79.9"},
+      od_duration:  {value: "11.1"},
+      pulse_min:    {value: "50.0"},
+      pulse_avg:    {value: "63.7"},
+      pulse_max:    {value: "92.0"},
 
-    // titration
-    ti_start: "04:00", // 4:00 AM
-    ti_trt: "240.0", // 4 hours
-    ti_tst: "180.0", // 3 hours
-    ti_lat: "35.0",
-    ti_rem_duration: "72.0",
-    ti_supine_duration: "99.0",
-    ti_ahi: "0.3",
-    ti_cai: "0.1",
+      // titration
+      ti_start:           {value: "04:00"}, // 4:00 AM
+      ti_trt:             {value: "240.0"}, // 4 hours
+      ti_tst:             {value: "180.0"}, // 3 hours
+      ti_lat:             {value: "35.0"},
+      ti_rem_duration:    {value: "72.0"},
+      ti_supine_duration: {value: "99.0"},
+      ti_ahi:             {value: "0.3"},
+      ti_cai:             {value: "0.1"},
 
-    // calculated
-    ti_end: "00:00", // 8:00 AM
-    eff: "", // 75.0%
-    ahi: "", // 5.0
-    rdi: "", // 4.9
-    ti_eff: "", // 75.0%
-    ti_rem: "", // 40.0%
-    ti_supine: "", // 55.0%
+      // calculated
+      eff:       {value: "", class: "calculated"},      // 50.0%
+      ahi:       {value: "", class: "calculated"},      // 5.0
+      rdi:       {value: "", class: "calculated"},      // 4.9
+      ti_end:    {value: "00:00", class: "calculated"}, // 8:00 AM
+      ti_eff:    {value: "", class: "calculated"},      // 75.0%
+      ti_rem:    {value: "", class: "calculated"},      // 40.0%
+      ti_supine: {value: "", class: "calculated"},      // 55.0%
 
-    // misc / labels
-    sum_phase: "",
-    sum_pos: "",
+      // misc / labels
+      label_scored_at: {textContent: ""},
+      sum_phase:       {textContent: ""},
+      sum_pos:         {textContent: ""},
+    },
   });
-  update();
 }
 
 function setup_empty() {
   tst.build_form({
-    date: "",
-    referring: "",
-    provider: "",
-  }, key_global);
-  tst.build_form({
-    start: "",
-    trt: "",
-    tst: "",
-    lat: "",
-    waso: "",
-    r_lat: "",
-    n1: "",
-    n2: "",
-    n3: "",
-    rem: "",
-    a_cc: "",
-    a_oc: "",
-    a_mc: "",
-    h_c: "",
-    rera: "",
-    arem_ahi: "",
-    rem_ahi: "",
-    supine: "",
-    prone: "",
-    left: "",
-    right: "",
-    rdi_s: "",
-    rdi_p: "",
-    rdi_l: "",
-    rdi_r: "",
-    arousals: "",
-    arousals_sai: "",
-    arousals_rai: "",
-    limb: "",
-    limb_ai: "",
-    limb_plmi: "",
-    ox_w_avg: "",
-    ox_tst_avg: "",
-    ox_tst_min: "",
-    od_duration: "",
-    pulse_min: "",
-    pulse_avg: "",
-    pulse_max: "",
+    key_global: {
+      date:         {value: ""},
+      referring:    {value: ""},
+      provider:     {value: ""},
+    },
+    key: {
+      scored_at:    {value: ""},
+      start:        {value: ""},
+      trt:          {value: ""},
+      tst:          {value: ""},
+      lat:          {value: ""},
+      waso:         {value: ""},
+      r_lat:        {value: ""},
+      n1:           {value: ""},
+      n2:           {value: ""},
+      n3:           {value: ""},
+      rem:          {value: ""},
+      a_cc:         {value: ""},
+      a_oc:         {value: ""},
+      a_mc:         {value: ""},
+      h_c:          {value: ""},
+      rera:         {value: ""},
+      arem_ahi:     {value: ""},
+      rem_ahi:      {value: ""},
+      supine:       {value: ""},
+      prone:        {value: ""},
+      left:         {value: ""},
+      right:        {value: ""},
+      rdi_s:        {value: ""},
+      rdi_p:        {value: ""},
+      rdi_l:        {value: ""},
+      rdi_r:        {value: ""},
+      arousals:     {value: ""},
+      arousals_sai: {value: ""},
+      arousals_rai: {value: ""},
+      limb:         {value: ""},
+      limb_ai:      {value: ""},
+      limb_plmi:    {value: ""},
+      ox_w_avg:     {value: ""},
+      ox_tst_avg:   {value: ""},
+      ox_tst_min:   {value: ""},
+      od_duration:  {value: ""},
+      pulse_min:    {value: ""},
+      pulse_avg:    {value: ""},
+      pulse_max:    {value: ""},
 
-    // titration
-    ti_start: "",
-    ti_trt: "",
-    ti_tst: "",
-    ti_lat: "",
-    ti_rem_duration: "",
-    ti_supine_duration: "",
-    ti_ahi: "",
-    ti_cai: "",
+      // titration
+      ti_start:           {value: ""},
+      ti_trt:             {value: ""},
+      ti_tst:             {value: ""},
+      ti_lat:             {value: ""},
+      ti_rem_duration:    {value: ""},
+      ti_supine_duration: {value: ""},
+      ti_ahi:             {value: ""},
+      ti_cai:             {value: ""},
 
-    // calculated
-    ti_end: "",
-    eff: "",
-    ahi: "",
-    rdi: "",
-    ti_eff: "",
-    ti_rem: "",
-    ti_supine: "",
+      // calculated
+      eff:       {value: "", class: "calculated"},
+      ahi:       {value: "", class: "calculated"},
+      rdi:       {value: "", class: "calculated"},
+      ti_end:    {value: "", class: "calculated"},
+      ti_eff:    {value: "", class: "calculated"},
+      ti_rem:    {value: "", class: "calculated"},
+      ti_supine: {value: "", class: "calculated"},
 
-    // misc / labels
-    sum_phase: "",
-    sum_pos: "",
+      // misc / labels
+      label_scored_at: {textContent: ""},
+      sum_phase:       {textContent: ""},
+      sum_pos:         {textContent: ""},
+    },
   });
 }
 
