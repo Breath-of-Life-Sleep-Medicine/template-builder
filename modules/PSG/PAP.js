@@ -1,4 +1,4 @@
-import { data, key, Defaults } from "../data.js";
+import { data, key, Defaults, clean } from "../data.js";
 import * as form from "../form.js";
 import { SCORE_LABEL } from "../util.js";
 
