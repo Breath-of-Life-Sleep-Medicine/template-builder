@@ -15,20 +15,6 @@ beforeAll(async () => {
   global.rdi_pos_label = {hidden: true};
 });
 
-// calculates values from form values
-// function update() {
-//   // call update function to do calculations
-//   tst.update_calculated({changed: "trt", calculated: ["eff", "end"]});
-//   tst.update_calculated({changed: "a_cc", calculated: ["a_ci", "ahi"]});
-//   tst.update_calculated({changed: "ahi", calculated: ["rdi"]});
-
-//   // update RDI
-//   data[key].update.supine();
-//   data[key].update.prone();
-//   data[key].update.left();
-//   data[key].update.right();
-// }
-
 // corresponds with the file in /expected
 // values are valid; extremely straightforward conversion
 function setup_valid() {
@@ -92,65 +78,6 @@ function setup_valid() {
       sum_pos:         {textContent: ""},
     },
   });
-
-  // tst.build_form({
-  //   date: "2025-01-20",
-  //   referring: "Example Doctor PAC",
-  //   provider: "Rotcod Elpmaxe FNP",
-  // }, key_global);
-  // tst.build_form({
-  //   scored_at: "4",
-  //   start: "22:00", // 10:00 PM
-  //   trt: "360.0", // 360 minutes (6 hours)
-  //   tst: "180.0", // 180 minutes (3 hours)
-  //   lat: "20.0",
-  //   waso: "10.0",
-  //   r_lat: "42.0",
-  //   n1: "9.0",
-  //   n2: "51.0",
-  //   n3: "25.0",
-  //   rem: "15.0",
-  //   a_cc: "1",
-  //   a_oc: "4",
-  //   a_mc: "3",
-  //   h_c: "7",
-  //   rera: "2",
-  //   arem_ahi: "1.7",
-  //   rem_ahi: "3.1",
-  //   supine: "30.0",
-  //   prone: "10.0",
-  //   left: "7.0",
-  //   right: "53.0",
-  //   rdi_s: "1.7",
-  //   rdi_p: "3.2",
-  //   rdi_l: "0.2",
-  //   rdi_r: "2.1",
-  //   arousals: "12",
-  //   arousals_sai: "0.5",
-  //   arousals_rai: "0.4",
-  //   limb: "22",
-  //   limb_ai: "0.3",
-  //   limb_plmi: "0.2",
-  //   ox_w_avg: "95.0",
-  //   ox_tst_avg: "93.2",
-  //   ox_tst_min: "79.9",
-  //   od_duration: "11.1",
-  //   pulse_min: "51.2",
-  //   pulse_avg: "63.7",
-  //   pulse_max: "92.8",
-
-  //   // calculated
-  //   end: "00:00", // 4:00 AM
-  //   eff: "", // 50.0%
-  //   ahi: "", // 5.0
-  //   a_ci: "", // 0.3 (1/3)
-  //   rdi: "", // 4.9
-
-  //   // misc / labels
-  //   sum_phase: "",
-  //   sum_pos: "",
-  // });
-  // update();
 }
 
 function setup_empty() {
@@ -214,63 +141,6 @@ function setup_empty() {
       sum_pos:         {textContent: ""},
     },
   });
-  // tst.build_form({
-  //   date: "",
-  //   referring: "",
-  //   provider: "",
-  // }, key_global);
-  // tst.build_form({
-  //   scored_at: "",
-  //   start: "",
-  //   trt: "",
-  //   tst: "",
-  //   lat: "",
-  //   waso: "",
-  //   r_lat: "",
-  //   n1: "",
-  //   n2: "",
-  //   n3: "",
-  //   rem: "",
-  //   a_cc: "",
-  //   a_oc: "",
-  //   a_mc: "",
-  //   h_c: "",
-  //   rera: "",
-  //   arem_ahi: "",
-  //   rem_ahi: "",
-  //   supine: "",
-  //   prone: "",
-  //   left: "",
-  //   right: "",
-  //   rdi_s: "",
-  //   rdi_p: "",
-  //   rdi_l: "",
-  //   rdi_r: "",
-  //   arousals: "",
-  //   arousals_sai: "",
-  //   arousals_rai: "",
-  //   limb: "",
-  //   limb_ai: "",
-  //   limb_plmi: "",
-  //   ox_w_avg: "",
-  //   ox_tst_avg: "",
-  //   ox_tst_min: "",
-  //   od_duration: "",
-  //   pulse_min: "",
-  //   pulse_avg: "",
-  //   pulse_max: "",
-
-  //   // calculated
-  //   end: "",
-  //   eff: "",
-  //   ahi: "",
-  //   a_ci: "",
-  //   rdi: "",
-
-  //   // misc / labels
-  //   sum_phase: "",
-  //   sum_pos: "",
-  // });
 }
 
 test("update rdi", () => {
