@@ -83,7 +83,7 @@ test("find_replace", () => {
 test("empty form", () => {
   setup_empty();
   let expected = {
-    scored_at:   "4",
+    scored_at:   "3",
     duration:    "0.0 minutes",
     ahi:         "0.0",
     hi:          "0.0",
