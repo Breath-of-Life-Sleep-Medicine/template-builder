@@ -5,7 +5,11 @@ import { clip_count } from "../clip.js";
 class InputDurationElement extends HTMLElement {
   constructor() {
     super();
-    const shadowRoot = this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'open' });
+    this.build();
+  }
+
+  build() {
     let cls_elem = new Set(this.classList);
     let cls_find = ["h", "m", "s"];
     let cls_found = new Set();
@@ -32,7 +36,7 @@ class InputDurationElement extends HTMLElement {
       ];
     }
     strs = strs.join(`\n<span>:</span>\n`);
-    shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
       <link href="style.css" rel="stylesheet">
       <div class="duration-container">
@@ -41,7 +45,7 @@ class InputDurationElement extends HTMLElement {
     `;
     
     for (let cls of cls_found) {
-      this[cls] = shadowRoot.querySelector(`[part="${cls}"]`);
+      this[cls] = this.shadowRoot.querySelector(`[part="${cls}"]`);
     }
     for (let cls of cls_found) {
       this[cls].addEventListener("change", () => {

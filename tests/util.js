@@ -1,7 +1,8 @@
 import * as script from "/script.js";
+import { data, key, key_global, Type } from "/modules/data.js";
 import { readFileSync } from "fs";
-import { data, key, key_global } from "../modules/data";
-import { Type } from "../modules/data";
+
+import * as _ from "/modules/input/duration.js"; // define input-duration
 
 // function that does nothing :)
 const nop = (...args) => {};
@@ -30,18 +31,58 @@ function get_paths(path) {
 }
 
 // builds form and also sets the value in data
-function build_form(form, k=key) {
-  Object.entries(form).map(([id, value]) => {
-    // set global (mock form input)
-    global[id] = {id: id, value: value, textContent: value, checked: value, dispatchEvent: nop};
-    // set data (minutes are special)
-    if (data[k]?.data[id]?.type === Type.DURATION && typeof(value) !== "object") {
-      // minutes are Duration in data, but single string input in form (Duration requires an object)
-      data[k]?.data[id]?.clean?.fn({m: value}, id, k);
-    } else {
-      data[k]?.data[id]?.clean?.fn(value, id, k);
-    }
+function build_form(form) {
+  Object.entries(form).map(([k, d]) =>{
+    k = eval(k);
+    Object.entries(d).map(([id, value]) => {
+      // set global (mock form input)
+      // global[id] = {id: id, value: value, textContent: value, checked: value, dispatchEvent: nop};
+
+      // create form
+      if (!(id in global))
+      {
+        let is_duration = data[k]?.data[id]?.type === Type.DURATION && typeof(value.value) === "object";
+        if (is_duration) {
+          global[id] = document.createElement("input-duration");
+        } else {
+          global[id] = document.createElement("input");
+        }
+        global[id].id          = id;
+        global[id].className   = value.class;
+        if (value.class) {
+          global[id].classList.add(...value.class?.split(" "));
+          // console.log("CLASS:", value.class, global[id].className, ...global[id].classList);
+        }
+        if (is_duration) {
+          global[id].build();
+        }
+        document.body.appendChild(global[id]);
+      }
+
+      // set form
+      global[id].value       = value.value;
+      global[id].textContent = value.textContent;
+      global[id].checked     = value.checked;
+
+      // set data from form
+      data[k]?.data[id]?.clean?.fn(data[k]?.data[id]?.form?.get(id), id, k);
+
+      // debug
+      // console.log(id, data[k]?.data[id]?.value);
+    });
+
+    // setup event listeners - happen after form is setup
+    add_listeners(k);
   });
+
+  script.initialize(); // this will also set the form from data potentially
+
+  Object.entries(form).map(([k, d]) =>{
+    Object.entries(d).map(([id, value]) => {
+      global[id].dispatchEvent(new Event("change"));
+    });
+  });
+
 }
 
 function update_calculated({changed, calculated=[]}, k = key) {
@@ -49,6 +90,14 @@ function update_calculated({changed, calculated=[]}, k = key) {
   for (let id of calculated) {
     data[k].data[id]?.clean?.fn(global[id].value, id, k);
   }
+}
+
+function add_listeners(k) {
+  let ids = new Set(Object.keys(data[k].data));
+  script.add_onchange_listeners(ids,k);
+  const update = new Set(Object.keys(data[k].update));
+  ids = update.difference(ids);
+  script.add_onchange_listeners(ids,k,true);
 }
 
 function init_data() {

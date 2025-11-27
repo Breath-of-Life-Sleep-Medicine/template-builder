@@ -15,142 +15,131 @@ beforeAll(async () => {
   global.rdi_pos_label = {hidden: true};
 });
 
-// sets calculated values from set form values
-function update() {
-  // call update function to do calculations
-  tst.update_calculated({changed: "trt", calculated: ["eff", "end"]});
-  tst.update_calculated({changed: "a_oc", calculated: ["ahi"]});
-  tst.update_calculated({changed: "ahi", calculated: ["rdi"]});
-
-  // update positional RDI
-  data[key].update.supine();
-  data[key].update.prone();
-  data[key].update.left();
-  data[key].update.right();
-}
-
 // corresponds with the file in /expected
 // values are valid; extremely straightforward conversion
 function setup_valid() {
   tst.build_form({
-    date: "2025-01-20",
-    referring: "Example Doctor PAC",
-    provider: "Rotcod Elpmaxe FNP",
-  }, key_global);
+    key_global: {
+      date:         {value: "2025-01-20"},
+      referring:    {value: "Example Doctor PAC"},
+      provider:     {value: "Rotcod Elpmaxe FNP"},
+    },
+    key: {
+      scored_at:    {value: "4"},
+      start:        {value: "22:00"}, // 10:00 PM
+      trt:          {value: "360.0"}, // 360 minutes (6 hours)
+      tst:          {value: "180.0"}, // 180 minutes (3 hours)
+      lat:          {value: "20.0"},
+      waso:         {value: "10.0"},
+      r_lat:        {value: "42.0"},
+      n1:           {value: "9.0"},
+      n2:           {value: "51.0"},
+      n3:           {value: "25.0"},
+      rem:          {value: "15.0"},
+      a_cc:         {value: "1"},
+      a_oc:         {value: "4"},
+      a_mc:         {value: "3"},
+      h_c:          {value: "7"},
+      rera:         {value: "2"},
+      arem_ahi:     {value: "1.7"},
+      rem_ahi:      {value: "3.1"},
+      supine:       {value: "30.0"},
+      prone:        {value: "10.0"},
+      left:         {value: "7.0"},
+      right:        {value: "53.0"},
+      rdi_s:        {value: "1.7"},
+      rdi_p:        {value: "3.2"},
+      rdi_l:        {value: "0.2"},
+      rdi_r:        {value: "2.1"},
+      arousals:     {value: "12"},
+      arousals_sai: {value: "0.5"},
+      arousals_rai: {value: "0.4"},
+      limb:         {value: "22"},
+      limb_ai:      {value: "0.3"},
+      limb_plmi:    {value: "0.2"},
+      ox_w_avg:     {value: "95.0"},
+      ox_tst_avg:   {value: "93.2"},
+      ox_tst_min:   {value: "79.9"},
+      od_duration:  {value: "11.1"},
+      pulse_min:    {value: "50.0"},
+      pulse_avg:    {value: "63.7"},
+      pulse_max:    {value: "92.0"},
 
-  tst.build_form({
-    scored_at: "4",
-    start: "22:00", // 10:00 PM
-    trt: "360.0", // 360 minutes (6 hours)
-    tst: "180.0", // 180 minutes (3 hours)
-    lat: "20.0",
-    waso: "10.0",
-    r_lat: "42.0",
-    n1: "9.0",
-    n2: "51.0",
-    n3: "25.0",
-    rem: "15.0",
-    a_cc: "1",
-    a_oc: "4",
-    a_mc: "3",
-    h_c: "7",
-    rera: "2",
-    arem_ahi: "1.7",
-    rem_ahi: "3.1",
-    supine: "30.0",
-    prone: "10.0",
-    left: "7.0",
-    right: "53.0",
-    rdi_s: "1.7",
-    rdi_p: "3.2",
-    rdi_l: "0.2",
-    rdi_r: "2.1",
-    arousals: "12",
-    arousals_sai: "0.5",
-    arousals_rai: "0.4",
-    limb: "22",
-    limb_ai: "0.3",
-    limb_plmi: "0.2",
-    ox_w_avg: "95.0",
-    ox_tst_avg: "93.2",
-    ox_tst_min: "79.9",
-    od_duration: "11.1",
-    pulse_min: "50.0",
-    pulse_avg: "63.7",
-    pulse_max: "92.0",
+      // calculated
+      end: {value: "00:00", class: "calculated"}, // 4:00 AM
+      eff: {value: "", class: "calculated"},      // 50.0%
+      ahi: {value: "", class: "calculated"},      // 5.0
+      rdi: {value: "", class: "calculated"},      // 4.9
 
-    // calculated
-    end: "00:00", // 4:00 AM
-    eff: "", // 50.0%
-    ahi: "", // 5.0
-    rdi: "", // 4.9
-
-    // misc / labels
-    sum_phase: "",
-    sum_pos: "",
+      // misc / labels
+      label_scored_at: {textContent: ""},
+      sum_phase:       {textContent: ""},
+      sum_pos:         {textContent: ""},
+    },
   });
-
-  update();
 }
 
 // tests defaults
 // empty form
 function setup_empty() {
   tst.build_form({
-    date: "",
-    referring: "",
-    provider: "",
-  }, key_global);
-  tst.build_form({
-    scored_at: "",
-    start: "",
-    trt: "",
-    tst: "",
-    lat: "",
-    waso: "",
-    r_lat: "",
-    n1: "",
-    n2: "",
-    n3: "",
-    rem: "",
-    a_cc: "",
-    a_oc: "",
-    a_mc: "",
-    h_c: "",
-    rera: "",
-    arem_ahi: "",
-    rem_ahi: "",
-    supine: "",
-    prone: "",
-    left: "",
-    right: "",
-    rdi_s: "",
-    rdi_p: "",
-    rdi_l: "",
-    rdi_r: "",
-    arousals: "",
-    arousals_sai: "",
-    arousals_rai: "",
-    limb: "",
-    limb_ai: "",
-    limb_plmi: "",
-    ox_w_avg: "",
-    ox_tst_avg: "",
-    ox_tst_min: "",
-    od_duration: "",
-    pulse_min: "",
-    pulse_avg: "",
-    pulse_max: "",
+    key_global: {
+      date:         {value: ""},
+      referring:    {value: ""},
+      provider:     {value: ""},
+    },
+    key: {
+      scored_at:    {value: ""},
+      start:        {value: ""}, // 10:00 PM
+      trt:          {value: ""}, // 360 minutes (6 hours)
+      tst:          {value: ""}, // 180 minutes (3 hours)
+      lat:          {value: ""},
+      waso:         {value: ""},
+      r_lat:        {value: ""},
+      n1:           {value: ""},
+      n2:           {value: ""},
+      n3:           {value: ""},
+      rem:          {value: ""},
+      a_cc:         {value: ""},
+      a_oc:         {value: ""},
+      a_mc:         {value: ""},
+      h_c:          {value: ""},
+      rera:         {value: ""},
+      arem_ahi:     {value: ""},
+      rem_ahi:      {value: ""},
+      supine:       {value: ""},
+      prone:        {value: ""},
+      left:         {value: ""},
+      right:        {value: ""},
+      rdi_s:        {value: ""},
+      rdi_p:        {value: ""},
+      rdi_l:        {value: ""},
+      rdi_r:        {value: ""},
+      arousals:     {value: ""},
+      arousals_sai: {value: ""},
+      arousals_rai: {value: ""},
+      limb:         {value: ""},
+      limb_ai:      {value: ""},
+      limb_plmi:    {value: ""},
+      ox_w_avg:     {value: ""},
+      ox_tst_avg:   {value: ""},
+      ox_tst_min:   {value: ""},
+      od_duration:  {value: ""},
+      pulse_min:    {value: ""},
+      pulse_avg:    {value: ""},
+      pulse_max:    {value: ""},
 
-    // calculated
-    end: "",
-    eff: "",
-    ahi: "",
-    rdi: "",
+      // calculated
+      end: {value: "", class: "calculated"}, // 4:00 AM
+      eff: {value: "", class: "calculated"}, // 50.0%
+      ahi: {value: "", class: "calculated"}, // 5.0
+      rdi: {value: "", class: "calculated"}, // 4.9
 
-    // misc / labels
-    sum_phase: "",
-    sum_pos: "",
+      // misc / labels
+      label_scored_at: {textContent: ""},
+      sum_phase:       {textContent: ""},
+      sum_pos:         {textContent: ""},
+    },
   });
 }
 
@@ -175,45 +164,45 @@ test ("empty form", () => {
   setup_empty();
   
   let expected = {
-    scored_at: "4",
-    start: "12:00 AM",
-    trt: "0.0 minutes",
-    tst: "0.0 minutes",
-    lat: "0.0 minutes",
-    waso: "0.0 minutes",
-    r_lat: "N/A",
-    n1: "0.0",
-    n2: "0.0",
-    n3: "0.0",
-    rem: "0.0",
-    a_cc: "0",
-    a_oc: "0",
-    a_mc: "0",
-    h_c: "0",
-    rera: "0",
-    arem_ahi: "0.0",
-    rem_ahi: "N/A",
-    supine: "0.0",
-    prone: "0.0",
-    left: "0.0",
-    right: "0.0",
-    rdi_s: "0.0",
-    rdi_p: "0.0",
-    rdi_l: "0.0",
-    rdi_r: "0.0",
-    arousals: "0",
+    scored_at:    "3",
+    start:        "12:00 AM",
+    trt:          "0.0 minutes",
+    tst:          "0.0 minutes",
+    lat:          "0.0 minutes",
+    waso:         "0.0 minutes",
+    r_lat:        "N/A",
+    n1:           "0.0",
+    n2:           "0.0",
+    n3:           "0.0",
+    rem:          "0.0",
+    a_cc:         "0",
+    a_oc:         "0",
+    a_mc:         "0",
+    h_c:          "0",
+    rera:         "0",
+    arem_ahi:     "0.0",
+    rem_ahi:      "N/A",
+    supine:       "0.0",
+    prone:        "0.0",
+    left:         "0.0",
+    right:        "0.0",
+    rdi_s:        "0.0",
+    rdi_p:        "0.0",
+    rdi_l:        "0.0",
+    rdi_r:        "0.0",
+    arousals:     "0",
     arousals_sai: "0.0",
     arousals_rai: "0.0",
-    limb: "0",
-    limb_ai: "0.0",
-    limb_plmi: "0.0",
-    ox_w_avg: "0.0",
-    ox_tst_avg: "0.0",
-    ox_tst_min: "0.0",
-    od_duration: "0.0 minutes",
-    pulse_min: "0.0",
-    pulse_avg: "0.0",
-    pulse_max: "0.0",
+    limb:         "0",
+    limb_ai:      "0.0",
+    limb_plmi:    "0.0",
+    ox_w_avg:     "0.0",
+    ox_tst_avg:   "0.0",
+    ox_tst_min:   "0.0",
+    od_duration:  "0.0 minutes",
+    pulse_min:    "0.0",
+    pulse_avg:    "0.0",
+    pulse_max:    "0.0",
 
     // calculated
     end: "12:00 AM",
@@ -222,8 +211,8 @@ test ("empty form", () => {
     rdi: "0.0",
 
     // will be generated by get_map
-    scored_at_label: "CMS",
-    rdi_positions: "",
+    scored_at_label: "AASM",
+    rdi_positions:   "",
   }
 
   expect(get_map(key)).toEqual(expected);

@@ -35,6 +35,14 @@ data[key].data = {
   ...data[key].data, // only set things that aren't already set
 }
 
+const DATA = data[key].data;
+DATA.duration.form.get = () => {
+  set_duration();
+  return DATA.duration.value;
+};
+DATA.duration.form.set = () => {};
+// DATA.duration.form.set = (id) => {console.error(`TRYING TO SET DURATION (FORM) TO ${JSON.stringify(DATA.duration.value)}`)};
+
 data[key].update = {
   "start": update_duration,
   "end": update_duration,
@@ -48,6 +56,8 @@ data[key].update = {
   },
 };
 
+// TODO: fix this
+// issue: d1 can be 60 when d2 is 0 (in this case both would be 0)
 function update_duration() {
   let [s, e] = get_dt("01/01/2000", start.value, end.value);
   let d1 = get_duration(s, new Date(e.getTime() - 1000 * 60));

@@ -248,4 +248,6 @@ export {
   // for testing
   get_map,
   find_replace,
+  add_onchange_listeners,
+  initialize,
 };

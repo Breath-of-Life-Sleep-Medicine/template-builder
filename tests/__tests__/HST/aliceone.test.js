@@ -13,59 +13,57 @@ beforeAll(async () => {
   await import("/modules/HST/AliceOne.js");
 });
 
-function update() {
-  tst.update_calculated({changed: "start", calculated: ["end"]}); // update end
-  tst.update_calculated({changed: "ahi", calculated: ["ai"]});    // update ai
-}
-
 function setup_valid() {
   tst.build_form({
-    date: "2025-01-20",
-    referring: "Example Doctor PAC",
-    provider: "Rotcod Elpmaxe FNP",
-  }, key_global);
-  tst.build_form({
-    start: "22:00", // 10:00 PM
-    trt: "360.0",
-    ahi: "25.0",
-    hi: "20.0",
-    ox_avg: "96",
-    ox_min: "80",
-    odi: "2.4",
-    od_duration: "5.4",
-    pulse_min: "55",
-    pulse_avg: "76.5",
-    pulse_max: "110",
-    snores: "243",
-    // calculated
-    end: "00:00", // 4:00 AM
-    ai: "", // 5.0
+    key_global: {
+      date:        {value: "2025-01-20"},
+      referring:   {value: "Example Doctor PAC"},
+      provider:    {value: "Rotcod Elpmaxe FNP"},
+    },
+    key: {
+      start:       {value: "22:00"}, // 10:00 PM
+      trt:         {value: "360.0"},
+      ahi:         {value: "25.0"},
+      hi:          {value: "20.0"},
+      ox_avg:      {value: "96"},
+      ox_min:      {value: "80"},
+      odi:         {value: "2.4"},
+      od_duration: {value: "5.4"},
+      pulse_min:   {value: "55"},
+      pulse_avg:   {value: "76.5"},
+      pulse_max:   {value: "110"},
+      snores:      {value: "243"},
+      // calculated
+      end:         {value: "00:00", class: "calculated"}, // 4:00 AM
+      ai:          {value: "", class: "calculated"},      // 5.0
+    },
   });
-  update();
 }
 
 function setup_empty() {
   tst.build_form({
-    date: "",
-    referring: "",
-    provider: "",
-  }, key_global);
-  tst.build_form({
-    start: "",
-    trt: "",
-    ahi: "",
-    hi: "",
-    ox_avg: "",
-    ox_min: "",
-    odi: "",
-    od_duration: "",
-    pulse_min: "",
-    pulse_avg: "",
-    pulse_max: "",
-    snores: "",
-    // calculated
-    end: "",
-    ai: "",
+    key_global: {
+      date:        {value: ""},
+      referring:   {value: ""},
+      provider:    {value: ""},
+    },
+    key: {
+      start:       {value: ""},
+      trt:         {value: ""},
+      ahi:         {value: ""},
+      hi:          {value: ""},
+      ox_avg:      {value: ""},
+      ox_min:      {value: ""},
+      odi:         {value: ""},
+      od_duration: {value: ""},
+      pulse_min:   {value: ""},
+      pulse_avg:   {value: ""},
+      pulse_max:   {value: ""},
+      snores:      {value: ""},
+      // calculated
+      end:         {value: "", class: "calculated"},
+      ai:          {value: "", class: "calculated"},
+    },
   });
 }
 
