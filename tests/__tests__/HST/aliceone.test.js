@@ -21,6 +21,7 @@ function setup_valid() {
       provider:    {value: "Rotcod Elpmaxe FNP"},
     },
     key: {
+      scored_at:   {value: "3"},
       start:       {value: "22:00"}, // 10:00 PM
       trt:         {value: "360.0"},
       ahi:         {value: "25.0"},
@@ -34,6 +35,8 @@ function setup_valid() {
       // calculated
       end:         {value: "00:00", class: "calculated"}, // 4:00 AM
       ai:          {value: "", class: "calculated"},      // 5.0
+      // misc
+      label_scored_at: {textContent: ""},
     },
   });
 }
@@ -46,6 +49,7 @@ function setup_empty() {
       provider:    {value: ""},
     },
     key: {
+      scored_at:   {value: ""},
       start:       {value: ""},
       trt:         {value: ""},
       ahi:         {value: ""},
@@ -59,6 +63,8 @@ function setup_empty() {
       // calculated
       end:         {value: "", class: "calculated"},
       ai:          {value: "", class: "calculated"},
+      // misc
+      label_scored_at: {textContent: ""},
     },
   });
 }
@@ -73,6 +79,7 @@ test("find_replace", () => {
 test("empty form", () => {
   setup_empty();
   let expected = {
+    scored_at:   "3",
     start:       "12:00 AM",
     trt:         "0.0 minutes",
     ahi:         "0.0",
