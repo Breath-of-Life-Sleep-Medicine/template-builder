@@ -31,9 +31,7 @@ function setup_valid() {
       ox_min:      {value: "82.0"},
       odi:         {value: "12.5"},
       od_duration: {value: "5.4"},
-      pulse_min:   {value: "45.0"},
       pulse_avg:   {value: "64.3"},
-      pulse_max:   {value: "70.0"},
       snores:      {value: "243"},
       // calculated
       ai:          {value: "", class: "calculated"},
@@ -61,9 +59,7 @@ function setup_empty() {
       ox_min:      {value: ""},
       odi:         {value: ""},
       od_duration: {value: ""},
-      pulse_min:   {value: ""},
       pulse_avg:   {value: ""},
-      pulse_max:   {value: ""},
       snores:      {value: ""},
       // calculated
       ai:          {value: "", class: "calculated"},
@@ -93,9 +89,7 @@ test("empty form", () => {
     ox_min:      "0.0",
     odi:         "0.0",
     od_duration: "0.0 minutes",
-    pulse_min:   "0.0",
     pulse_avg:   "0.0",
-    pulse_max:   "0.0",
     snores:      "0",
     // calculated
     ai:          "0.0",
