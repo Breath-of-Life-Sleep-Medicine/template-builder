@@ -12,9 +12,7 @@ data[key].data = {
   ox_min:      Defaults.percent(),
   odi:         Defaults.index(),
   od_duration: Defaults.minutes(),
-  pulse_min:   Defaults.pulse(),
   pulse_avg:   Defaults.pulse(),
-  pulse_max:   Defaults.pulse(),
   snores:      Defaults.count(),
   ...data[key].data, // only set things that aren't already set
 };

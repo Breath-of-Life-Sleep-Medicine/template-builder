@@ -12,9 +12,7 @@ data[key].data = {
   ox_min:      Defaults.percent({precision:0}),
   odi:         Defaults.index(),
   od_duration: Defaults.minutes(),
-  pulse_min:   Defaults.pulse({precision:0}),
   pulse_avg:   Defaults.pulse({precision:1}),
-  pulse_max:   Defaults.pulse({precision:0}),
   snores:      Defaults.count(),
   ...data[key].data, // only set things that aren't already set
 }

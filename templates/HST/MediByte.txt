@@ -17,7 +17,7 @@ The patient's respiratory events were primarily obstructive.
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
 Oxygen Desaturation Index: ${odi} Events per hour
 Duration of study with oxygen saturation <=89%: ${od_duration}
-4. HEART RATE: Minimum: ${pulse_min} BPM, Average: ${pulse_avg} BPM, Maximum: ${pulse_max} BPM
+4. HEART RATE: Average: ${pulse_avg} BPM
 5. SNORING EVENTS: ${snores}
 IMPRESSIONS:
 1. Abnormal portable sleep study consistent with [] Obstructive Sleep Apnea [] significant oxygen desaturations.
