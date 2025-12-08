@@ -8,7 +8,7 @@ Medications: []
 Epworth Sleepiness Scale: []
 STOPBANG: []
 BMI: []
-RESULTS: This was an unattended overnight portable home sleep study performed by Aspen Sleep Centers using an Alice NightOne Type III device. The following physiologic parameters were recorded: Airflow at the nose, chest and abdominal movements, and pulse oximetry. The waveforms were reviewed and were technically adequate. Hypopneas were scored using 4% oxygen desaturation.
+RESULTS: This was an unattended overnight portable home sleep study performed by Aspen Sleep Centers using an Alice NightOne Type III device. The following physiologic parameters were recorded: Airflow at the nose, chest and abdominal movements, and pulse oximetry. The waveforms were reviewed and were technically adequate. Hypopneas were scored using ${scored_at}% oxygen desaturation.
 Recording: Started: ${start}, Ended: ${end}
 1. DURATION OF EVALUATION: ${trt}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
