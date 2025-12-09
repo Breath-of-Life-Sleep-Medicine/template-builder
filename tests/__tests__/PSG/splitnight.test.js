@@ -253,5 +253,7 @@ test("calculated min/max range", () => {
   let expected = {
     eff: "94.0",
   };
-  expect(get_map(key).eff).toEqual(expected.eff);
+  expect(get_map(key).eff).toEqual(expected.eff); // check initial value
+  expect(global.eff.min).toEqual("93.9");         // check min
+  expect(global.eff.max).toEqual("94.1");         // check max
 });

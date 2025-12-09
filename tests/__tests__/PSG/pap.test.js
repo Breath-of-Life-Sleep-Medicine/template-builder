@@ -6,6 +6,67 @@ import { data, key, key_global } from "/modules/data.js";
 import * as tst from "/tests/util.js";
 import { get_map } from "/script.js";
 
+const empty_form = {
+  key_global: {
+    date:         {value: ""},
+    referring:    {value: ""},
+    provider:     {value: ""},
+  },
+  key: {
+    scored_at:    {value: ""},
+    start:        {value: ""},
+    trt:          {value: ""},
+    tst:          {value: ""},
+    lat:          {value: ""},
+    waso:         {value: ""},
+    r_lat:        {value: ""},
+    n1:           {value: ""},
+    n2:           {value: ""},
+    n3:           {value: ""},
+    rem:          {value: ""},
+    a_cc:         {value: ""},
+    a_oc:         {value: ""},
+    a_mc:         {value: ""},
+    h_c:          {value: ""},
+    rera:         {value: ""},
+    arem_ahi:     {value: ""},
+    rem_ahi:      {value: ""},
+    supine:       {value: ""},
+    prone:        {value: ""},
+    left:         {value: ""},
+    right:        {value: ""},
+    rdi_s:        {value: ""},
+    rdi_p:        {value: ""},
+    rdi_l:        {value: ""},
+    rdi_r:        {value: ""},
+    arousals:     {value: ""},
+    arousals_sai: {value: ""},
+    arousals_rai: {value: ""},
+    limb:         {value: ""},
+    limb_ai:      {value: ""},
+    limb_plmi:    {value: ""},
+    ox_w_avg:     {value: ""},
+    ox_tst_avg:   {value: ""},
+    ox_tst_min:   {value: ""},
+    od_duration:  {value: ""},
+    pulse_min:    {value: ""},
+    pulse_avg:    {value: ""},
+    pulse_max:    {value: ""},
+
+    // calculated
+    end: {value: "", class: "calculated"},
+    eff: {value: "", class: "calculated"},
+    ahi: {value: "", class: "calculated"},
+    a_ci: {value: "", class: "calculated"},
+    rdi: {value: "", class: "calculated"},
+
+    // misc / labels
+    label_scored_at: {textContent: ""},
+    sum_phase:       {textContent: ""},
+    sum_pos:         {textContent: ""},
+  },
+};
+
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
@@ -13,12 +74,17 @@ beforeAll(async () => {
   await import("/modules/PSG/PAP.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
+  tst.build_form(empty_form);
 });
+
+beforeEach(() => {
+  tst.update_form(empty_form);
+})
 
 // corresponds with the file in /expected
 // values are valid; extremely straightforward conversion
 function setup_valid() {
-  tst.build_form({
+  tst.update_form({
     key_global: {
       date:         {value: "2025-01-20"},
       referring:    {value: "Example Doctor PAC"},
@@ -64,81 +130,6 @@ function setup_valid() {
       pulse_min:    {value: "51.2"},
       pulse_avg:    {value: "63.7"},
       pulse_max:    {value: "92.8"},
-
-      // calculated
-      end: {value: "00:00", class: "calculated"}, // 4:00 AM
-      eff: {value: "", class: "calculated"},      // 50.0%
-      ahi: {value: "", class: "calculated"},      // 5.0
-      a_ci: {value: "", class: "calculated"},     // 0.3 (1/3)
-      rdi: {value: "", class: "calculated"},      // 4.9
-
-      // misc / labels
-      label_scored_at: {textContent: ""},
-      sum_phase:       {textContent: ""},
-      sum_pos:         {textContent: ""},
-    },
-  });
-}
-
-function setup_empty() {
-  tst.build_form({
-    key_global: {
-      date:         {value: ""},
-      referring:    {value: ""},
-      provider:     {value: ""},
-    },
-    key: {
-      scored_at:    {value: ""},
-      start:        {value: ""}, // 10:00 PM
-      trt:          {value: ""}, // 360 minutes (6 hours)
-      tst:          {value: ""}, // 180 minutes (3 hours)
-      lat:          {value: ""},
-      waso:         {value: ""},
-      r_lat:        {value: ""},
-      n1:           {value: ""},
-      n2:           {value: ""},
-      n3:           {value: ""},
-      rem:          {value: ""},
-      a_cc:         {value: ""},
-      a_oc:         {value: ""},
-      a_mc:         {value: ""},
-      h_c:          {value: ""},
-      rera:         {value: ""},
-      arem_ahi:     {value: ""},
-      rem_ahi:      {value: ""},
-      supine:       {value: ""},
-      prone:        {value: ""},
-      left:         {value: ""},
-      right:        {value: ""},
-      rdi_s:        {value: ""},
-      rdi_p:        {value: ""},
-      rdi_l:        {value: ""},
-      rdi_r:        {value: ""},
-      arousals:     {value: ""},
-      arousals_sai: {value: ""},
-      arousals_rai: {value: ""},
-      limb:         {value: ""},
-      limb_ai:      {value: ""},
-      limb_plmi:    {value: ""},
-      ox_w_avg:     {value: ""},
-      ox_tst_avg:   {value: ""},
-      ox_tst_min:   {value: ""},
-      od_duration:  {value: ""},
-      pulse_min:    {value: ""},
-      pulse_avg:    {value: ""},
-      pulse_max:    {value: ""},
-
-      // calculated
-      end: {value: "", class: "calculated"}, // 4:00 AM
-      eff: {value: "", class: "calculated"}, // 50.0%
-      ahi: {value: "", class: "calculated"}, // 5.0
-      a_ci: {value: "", class: "calculated"},// 0.3 (1/3)
-      rdi: {value: "", class: "calculated"}, // 4.9
-
-      // misc / labels
-      label_scored_at: {textContent: ""},
-      sum_phase:       {textContent: ""},
-      sum_pos:         {textContent: ""},
     },
   });
 }
@@ -152,15 +143,15 @@ test("find_replace", () => {
   setup_valid();
   let path = "PSG/Inspire";
   let {template, expected} = tst.get_paths(path);
-
-  data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
-
+  tst.update_form({
+    key: {
+      rdi: {value: "4.9"}
+    }
+  });
   expect(tst.get_lines(tst.find_replace(template))).toStrictEqual(tst.get_lines(tst.get_file_str(expected))); // ignore newline
 });
 
 test("empty form", () => {
-  setup_empty();
-
   let expected = {
     scored_at:    "3",
     start:        "12:00 AM",
@@ -213,6 +204,5 @@ test("empty form", () => {
     scored_at_label: "AASM",
     rdi_positions:   "",
   }
-
   expect(get_map(key)).toEqual(expected);
 });
