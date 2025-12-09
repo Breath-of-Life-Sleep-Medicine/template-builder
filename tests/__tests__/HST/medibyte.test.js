@@ -6,15 +6,46 @@ import { key, key_global } from "/modules/data.js";
 import * as tst from "/tests/util.js";
 import { get_map } from "/script.js";
 
+const empty_form = {
+  key_global: {
+    date:        {value: ""},
+    referring:   {value: ""},
+    provider:    {value: ""},
+  },
+  key: {
+    scored_at:   {value: ""},
+    duration:    {value: ""},
+    ahi:         {value: ""},
+    hi:          {value: ""},
+    s_ahi:       {value: ""},
+    s_percent:   {value: ""},
+    ox_avg:      {value: ""},
+    ox_min:      {value: ""},
+    odi:         {value: ""},
+    od_duration: {value: ""},
+    pulse_avg:   {value: ""},
+    snores:      {value: ""},
+    // calculated
+    ai:          {value: "", class: "calculated"},
+    // misc
+    label_scored_at: {textContent: ""},
+  },
+};
+
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
   await import ("/modules/index.js");
   await import("/modules/HST/MediByte.js");
+  tst.build_form(empty_form);
 });
 
+beforeEach(() => {
+  tst.update_form(empty_form);
+})
+
 function setup_valid() {
-  tst.build_form({
+  tst.update_form({
     key_global: {
       date:        {value: "2025-01-01"},
       referring:   {value: "Example Doctor PAC"},
@@ -33,38 +64,6 @@ function setup_valid() {
       od_duration: {value: "5.4"},
       pulse_avg:   {value: "64.3"},
       snores:      {value: "243"},
-      // calculated
-      ai:          {value: "", class: "calculated"},
-      // misc
-      label_scored_at: {textContent: ""},
-    },
-  });
-}
-
-function setup_empty() {
-  tst.build_form({
-    key_global: {
-      date:        {value: ""},
-      referring:   {value: ""},
-      provider:    {value: ""},
-    },
-    key: {
-      scored_at:   {value: ""},
-      duration:    {value: ""},
-      ahi:         {value: ""},
-      hi:          {value: ""},
-      s_ahi:       {value: ""},
-      s_percent:   {value: ""},
-      ox_avg:      {value: ""},
-      ox_min:      {value: ""},
-      odi:         {value: ""},
-      od_duration: {value: ""},
-      pulse_avg:   {value: ""},
-      snores:      {value: ""},
-      // calculated
-      ai:          {value: "", class: "calculated"},
-      // misc
-      label_scored_at: {textContent: ""},
     },
   });
 }
@@ -77,7 +76,6 @@ test("find_replace", () => {
 });
 
 test("empty form", () => {
-  setup_empty();
   let expected = {
     scored_at:   "3",
     duration:    "0.0 minutes",

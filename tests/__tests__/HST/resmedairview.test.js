@@ -6,15 +6,56 @@ import { key, key_global} from "/modules/data.js";
 import * as tst from "/tests/util.js";
 import { get_map } from "/script.js";
 
+const empty_form = {
+  key_global: {
+    date:      {value:""},
+    referring: {value:""},
+    provider:  {value:""},
+  },
+  key: {
+    start:       {value:""},
+    end:         {value:""},
+    ahi:         {value:""},
+    ai:          {value:""},
+    s_ahi:       {value:""},
+    s_percent:   {value:""},
+    ox_base:     {value:""},
+    ox_avg:      {value:""},
+    ox_min:      {value:""},
+    odi:         {value:""},
+    pulse_avg:   {value:""},
+    snores:      {value:""},
+    guidelines:  {value:""},
+    s_duration:  {value: {h: 0, m: 0}, class: "h m"},
+    od_duration: {value: {h: 0, m: 0}, class: "h m"},
+    od_percent:  {value:""},
+    duration1:   {checked: true},
+    duration2:   {checked: false},
+    // calculated
+    duration:    {value:{h:0, m:0}, class:"calculated h m"},
+    hi:          {value:"", class:"calculated"},
+    scored_at:   {value:"", class:"calculated"},
+    // misc
+    duration1_label: {value:""},
+    duration2_label: {value:""},
+    label_scored_at: {value:""},
+  },
+};
+
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
   await import ("/modules/index.js");
   await import("/modules/HST/ResmedAirview.js");
+  tst.build_form(empty_form);
+});
+
+beforeEach(() => {
+  tst.update_form(empty_form);
 });
 
 function setup_valid() {
-  tst.build_form({
+  tst.update_form({
     key_global: {
       date:        {value: "2025-01-20"},
       referring:   {value: "Example Doctor PAC"},
@@ -39,53 +80,7 @@ function setup_valid() {
       od_percent:  {value: "1"},
       duration1:   {checked: false},
       duration2:   {checked: true},
-      // calculated
-      duration:    {value:{h:0, m:0}, class:"calculated h m"}, // 6 hours 0 minutes
-      hi:          {value: "", class: "calculated"},           // 20.0
-      scored_at:   {value: "", class: "calculated"},           // 3
-      // misc
-      duration1_label: {value: ""},
-      duration2_label: {value: ""},
-      label_scored_at: {value: ""},
     }
-  });
-}
-
-function setup_empty() {
-  tst.build_form({
-    key_global: {
-      date:      {value:""},
-      referring: {value:""},
-      provider:  {value:""},
-    },
-    key: {
-      start:       {value:""},
-      end:         {value:""},
-      ahi:         {value:""},
-      ai:          {value:""},
-      s_ahi:       {value:""},
-      s_percent:   {value:""},
-      ox_base:     {value:""},
-      ox_avg:      {value:""},
-      ox_min:      {value:""},
-      odi:         {value:""},
-      pulse_avg:   {value:""},
-      snores:      {value:""},
-      guidelines:  {value:""},
-      s_duration:  {value: {h: 0, m: 0}},
-      od_duration: {value: {h: 0, m: 0}},
-      od_percent:  {value:""},
-      duration1:   {checked: true},
-      duration2:   {checked: false},
-      // calculated
-      duration:    {value:{h:0, m:0}, class:"calculated h m"},
-      hi:          {value:"", class:"calculated"},
-      scored_at:   {value:"", class:"calculated"},
-      // misc
-      duration1_label: {value:""},
-      duration2_label: {value:""},
-      label_scored_at: {value:""},
-    },
   });
 }
 
@@ -98,7 +93,6 @@ test("resmed airview find_replace", () => {
 });
 
 test("empty form", () => {
-  setup_empty();
   let expected = {
     start:       "12:00 AM",
     end:         "12:00 AM",
