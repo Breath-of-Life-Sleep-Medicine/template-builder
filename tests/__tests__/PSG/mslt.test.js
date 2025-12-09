@@ -6,15 +6,65 @@ import { key } from "/modules/data.js";
 import * as tst from "/tests/util.js";
 import { get_map } from "/script.js";
 
+const empty_form = {
+  key_global: {
+    date:      {value: ""},
+    referring: {value: ""},
+    provider:  {value: ""},
+  },
+  key: {
+    // diagnostic part
+    prev_ahi:   {value: ""},
+    prev_tst:   {value: ""},
+    prev_eff:   {value: ""},
+    prev_lat:   {value: ""},
+    prev_r_lat: {value: ""},
+
+    // MSLT part
+    nap1_start: {value: ""},
+    nap1_lat:   {value: {m: "0", s: "0"}, class: "m s"},
+    nap1_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
+
+    nap2_start: {value: ""},
+    nap2_lat:   {value: {m: "0", s: "0"}, class: "m s"},
+    nap2_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
+
+    nap3_start: {value: ""},
+    nap3_lat:   {value: {m: "0", s: "0"}, class: "m s"},
+    nap3_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
+
+    nap4_start: {value: ""},
+    nap4_lat:   {value: {m: "0", s: "0"}, class: "m s"},
+    nap4_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
+
+    nap5_start: {value: ""},
+    nap5_lat:   {value: {m: "0", s: "0"}, class: "m s"},
+    nap5_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
+
+    // N/A checkboxes
+    prev_r_na: {checked: false},
+    nap1_r_na: {checked: false},
+    nap2_r_na: {checked: false},
+    nap3_r_na: {checked: false},
+    nap4_r_na: {checked: false},
+    nap5_r_na: {checked: false},
+  },
+};
+
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
   await import ("/modules/index.js");
   await import("/modules/PSG/MSLT.js");
+  tst.build_form(empty_form);
+});
+
+beforeEach(() => {
+  tst.update_form(empty_form);
 });
 
 function setup_valid() {
-  tst.build_form({
+  tst.update_form({
     key_global: {
       date:      {value: "2025-01-25"},
       referring: {value: "Example Doctor PAC"},
@@ -60,53 +110,6 @@ function setup_valid() {
   });
 }
 
-function setup_empty() {
-  tst.build_form({
-    key_global: {
-      date:      {value: ""},
-      referring: {value: ""},
-      provider:  {value: ""},
-    },
-    key: {
-      // diagnostic part
-      prev_ahi:   {value: ""},
-      prev_tst:   {value: ""},
-      prev_eff:   {value: ""},
-      prev_lat:   {value: ""},
-      prev_r_lat: {value: ""},
-
-      // MSLT part
-      nap1_start: {value: ""},
-      nap1_lat:   {value: {m: "0", s: "0"}, class: "m s"},
-      nap1_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
-
-      nap2_start: {value: ""},
-      nap2_lat:   {value: {m: "0", s: "0"}, class: "m s"},
-      nap2_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
-
-      nap3_start: {value: ""},
-      nap3_lat:   {value: {m: "0", s: "0"}, class: "m s"},
-      nap3_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
-
-      nap4_start: {value: ""},
-      nap4_lat:   {value: {m: "0", s: "0"}, class: "m s"},
-      nap4_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
-
-      nap5_start: {value: ""},
-      nap5_lat:   {value: {m: "0", s: "0"}, class: "m s"},
-      nap5_r_lat: {value: {m: "0", s: "0"}, class: "m s"},
-
-      // N/A checkboxes
-      prev_r_na: {checked: false},
-      nap1_r_na: {checked: false},
-      nap2_r_na: {checked: false},
-      nap3_r_na: {checked: false},
-      nap4_r_na: {checked: false},
-      nap5_r_na: {checked: false},
-    },
-  });
-}
-
 test("find_replace", () => {
   setup_valid();
   let path = "PSG/MSLT";
@@ -115,7 +118,6 @@ test("find_replace", () => {
 });
 
 test("empty form", () => {
-  setup_empty();
   let expected = {
     // diagnostic part
     prev_ahi:   "0.0",

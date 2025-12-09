@@ -55,11 +55,15 @@ data[key].update = {
 };
 
 // TODO: fix this
-// issue: d1 can be 60 when d2 is 0 (in this case both would be 0)
 function update_duration() {
   let [s, e] = get_dt("01/01/2000", start.value, end.value);
-  let d1 = get_duration(s, new Date(e.getTime() - 1000 * 60));
-  let d2 = get_duration(s, e);
+  let d1, d2 = get_duration(s, e);
+  // edge case: d1 can be 60 when d2 is 0 (in this case both would be 0)
+  if (d2.h === 0 && d2.m === 0) {
+    d1 = d2;
+  } else {
+    d1 = get_duration(s, new Date(e.getTime() - 1000 * 60));
+  }
   duration1_label.textContent = duration_short_str(...Object.values(d1));
   duration2_label.textContent = duration_short_str(...Object.values(d2));
   duration1_value = d1;

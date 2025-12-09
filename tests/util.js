@@ -46,6 +46,20 @@ function build_form(form) {
           global[id] = document.createElement("input-duration");
         } else {
           global[id] = document.createElement("input");
+
+          switch(data[k]?.data[id]?.type) {
+            case Type.TIME:
+              global[id].type = "time";
+              break;
+            case Type.DATE:
+              global[id].type = "date";
+              break;
+            default: // number is the default
+              global[id].inputMode = "numeric";
+            case Type.STRING:
+              global[id].type = "text";
+            case undefined:
+          }
         }
         global[id].id          = id;
         global[id].className   = value.class;
@@ -65,7 +79,7 @@ function build_form(form) {
       global[id].checked     = value.checked;
 
       // set data from form
-      data[k]?.data[id]?.clean?.fn(data[k]?.data[id]?.form?.get(id), id, k);
+      // data[k]?.data[id]?.clean?.fn(data[k]?.data[id]?.form?.get(id), id, k);
 
       // debug
       // console.log(id, data[k]?.data[id]?.value);
@@ -82,15 +96,30 @@ function build_form(form) {
       global[id].dispatchEvent(new Event("change"));
     });
   });
-
 }
 
-function update_calculated({changed, calculated=[]}, k = key) {
-  data[k].update[changed]();
-  for (let id of calculated) {
-    data[k].data[id]?.clean?.fn(global[id].value, id, k);
-  }
+// make changes to the form
+// like build form but don't add listeners / other initializations
+function update_form(form) {
+  Object.entries(form).map(([k, d]) =>{
+    k = eval(k);
+    Object.entries(d).map(([id, value]) => {
+      // set form
+      global[id].value       = value.value;
+      global[id].textContent = value.textContent;
+      global[id].checked     = value.checked;
+      // change event
+      global[id].dispatchEvent(new Event("change"));
+    });
+  });
 }
+
+// function update_calculated({changed, calculated=[]}, k = key) {
+//   data[k].update[changed]();
+//   for (let id of calculated) {
+//     data[k].data[id]?.clean?.fn(global[id].value, id, k);
+//   }
+// }
 
 function add_listeners(k) {
   let ids = new Set(Object.keys(data[k].data));
@@ -112,6 +141,7 @@ export {
   get_lines,
   get_paths,
   build_form,
+  update_form,
   init_data,
-  update_calculated,
+  // update_calculated,
 };

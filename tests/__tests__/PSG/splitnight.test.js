@@ -6,6 +6,79 @@ import { data, key, key_global } from "/modules/data.js";
 import * as tst from "/tests/util.js";
 import { get_map } from "/script.js";
 
+const empty_form = {
+  key_global: {
+    date:         {value: ""},
+    referring:    {value: ""},
+    provider:     {value: ""},
+  },
+  key: {
+    scored_at:    {value: ""},
+    start:        {value: ""},
+    trt:          {value: ""},
+    tst:          {value: ""},
+    lat:          {value: ""},
+    waso:         {value: ""},
+    r_lat:        {value: ""},
+    n1:           {value: ""},
+    n2:           {value: ""},
+    n3:           {value: ""},
+    rem:          {value: ""},
+    a_cc:         {value: ""},
+    a_oc:         {value: ""},
+    a_mc:         {value: ""},
+    h_c:          {value: ""},
+    rera:         {value: ""},
+    arem_ahi:     {value: ""},
+    rem_ahi:      {value: ""},
+    supine:       {value: ""},
+    prone:        {value: ""},
+    left:         {value: ""},
+    right:        {value: ""},
+    rdi_s:        {value: ""},
+    rdi_p:        {value: ""},
+    rdi_l:        {value: ""},
+    rdi_r:        {value: ""},
+    arousals:     {value: ""},
+    arousals_sai: {value: ""},
+    arousals_rai: {value: ""},
+    limb:         {value: ""},
+    limb_ai:      {value: ""},
+    limb_plmi:    {value: ""},
+    ox_w_avg:     {value: ""},
+    ox_tst_avg:   {value: ""},
+    ox_tst_min:   {value: ""},
+    od_duration:  {value: ""},
+    pulse_min:    {value: ""},
+    pulse_avg:    {value: ""},
+    pulse_max:    {value: ""},
+
+    // titration
+    ti_start:           {value: ""},
+    ti_trt:             {value: ""},
+    ti_tst:             {value: ""},
+    ti_lat:             {value: ""},
+    ti_rem_duration:    {value: ""},
+    ti_supine_duration: {value: ""},
+    ti_ahi:             {value: ""},
+    ti_cai:             {value: ""},
+
+    // calculated
+    eff:       {value: "", class: "calculated"},
+    ahi:       {value: "", class: "calculated"},
+    rdi:       {value: "", class: "calculated"},
+    ti_end:    {value: "", class: "calculated"},
+    ti_eff:    {value: "", class: "calculated"},
+    ti_rem:    {value: "", class: "calculated"},
+    ti_supine: {value: "", class: "calculated"},
+
+    // misc / labels
+    label_scored_at: {textContent: ""},
+    sum_phase:       {textContent: ""},
+    sum_pos:         {textContent: ""},
+  },
+}
+
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
@@ -13,10 +86,19 @@ beforeAll(async () => {
   await import("/modules/PSG/SplitNight.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
+  tst.build_form(empty_form);
 });
 
+beforeEach(() => {
+  setup_empty();
+});
+
+function setup_empty() {
+  tst.update_form(empty_form);
+}
+
 function setup_valid() {
-  tst.build_form({
+  tst.update_form({
     key_global: {
       date:         {value: "2025-01-20"},
       referring:    {value: "Example Doctor PAC"},
@@ -72,95 +154,6 @@ function setup_valid() {
       ti_supine_duration: {value: "99.0"},
       ti_ahi:             {value: "0.3"},
       ti_cai:             {value: "0.1"},
-
-      // calculated
-      eff:       {value: "", class: "calculated"},      // 50.0%
-      ahi:       {value: "", class: "calculated"},      // 5.0
-      rdi:       {value: "", class: "calculated"},      // 4.9
-      ti_end:    {value: "00:00", class: "calculated"}, // 8:00 AM
-      ti_eff:    {value: "", class: "calculated"},      // 75.0%
-      ti_rem:    {value: "", class: "calculated"},      // 40.0%
-      ti_supine: {value: "", class: "calculated"},      // 55.0%
-
-      // misc / labels
-      label_scored_at: {textContent: ""},
-      sum_phase:       {textContent: ""},
-      sum_pos:         {textContent: ""},
-    },
-  });
-}
-
-function setup_empty() {
-  tst.build_form({
-    key_global: {
-      date:         {value: ""},
-      referring:    {value: ""},
-      provider:     {value: ""},
-    },
-    key: {
-      scored_at:    {value: ""},
-      start:        {value: ""},
-      trt:          {value: ""},
-      tst:          {value: ""},
-      lat:          {value: ""},
-      waso:         {value: ""},
-      r_lat:        {value: ""},
-      n1:           {value: ""},
-      n2:           {value: ""},
-      n3:           {value: ""},
-      rem:          {value: ""},
-      a_cc:         {value: ""},
-      a_oc:         {value: ""},
-      a_mc:         {value: ""},
-      h_c:          {value: ""},
-      rera:         {value: ""},
-      arem_ahi:     {value: ""},
-      rem_ahi:      {value: ""},
-      supine:       {value: ""},
-      prone:        {value: ""},
-      left:         {value: ""},
-      right:        {value: ""},
-      rdi_s:        {value: ""},
-      rdi_p:        {value: ""},
-      rdi_l:        {value: ""},
-      rdi_r:        {value: ""},
-      arousals:     {value: ""},
-      arousals_sai: {value: ""},
-      arousals_rai: {value: ""},
-      limb:         {value: ""},
-      limb_ai:      {value: ""},
-      limb_plmi:    {value: ""},
-      ox_w_avg:     {value: ""},
-      ox_tst_avg:   {value: ""},
-      ox_tst_min:   {value: ""},
-      od_duration:  {value: ""},
-      pulse_min:    {value: ""},
-      pulse_avg:    {value: ""},
-      pulse_max:    {value: ""},
-
-      // titration
-      ti_start:           {value: ""},
-      ti_trt:             {value: ""},
-      ti_tst:             {value: ""},
-      ti_lat:             {value: ""},
-      ti_rem_duration:    {value: ""},
-      ti_supine_duration: {value: ""},
-      ti_ahi:             {value: ""},
-      ti_cai:             {value: ""},
-
-      // calculated
-      eff:       {value: "", class: "calculated"},
-      ahi:       {value: "", class: "calculated"},
-      rdi:       {value: "", class: "calculated"},
-      ti_end:    {value: "", class: "calculated"},
-      ti_eff:    {value: "", class: "calculated"},
-      ti_rem:    {value: "", class: "calculated"},
-      ti_supine: {value: "", class: "calculated"},
-
-      // misc / labels
-      label_scored_at: {textContent: ""},
-      sum_phase:       {textContent: ""},
-      sum_pos:         {textContent: ""},
     },
   });
 }
@@ -172,16 +165,17 @@ test("update rdi", () => {
 
 test("find_replace", () => {
   setup_valid();
+  tst.update_form({
+    key: {
+      rdi: {value: "4.9"}, // change rdi to test the template better
+    }
+  });
   let path = "PSG/SplitNight";
   let {template, expected} = tst.get_paths(path);
-
-  data[key].data.rdi.clean.fn(4.9, "rdi"); // change rdi to test the template better
-
   expect(tst.get_lines(tst.find_replace(template))).toStrictEqual(tst.get_lines(tst.get_file_str(expected))); // ignore newline
 });
 
 test("empty form", () => {
-  setup_empty();
   let expected = {
     scored_at:    "3",
     start:        "12:00 AM",
@@ -247,4 +241,19 @@ test("empty form", () => {
     rdi_positions:   "",
   };
   expect(get_map(key)).toEqual(expected);
+});
+
+test("calculated min/max range", () => {
+  tst.update_form({
+    key: {
+      trt: {value: "40.4"},
+      tst: {value: "38.0"},
+    }
+  });
+  let expected = {
+    eff: "94.0",
+  };
+  expect(get_map(key).eff).toEqual(expected.eff); // check initial value
+  expect(global.eff.min).toEqual("93.9");         // check min
+  expect(global.eff.max).toEqual("94.1");         // check max
 });

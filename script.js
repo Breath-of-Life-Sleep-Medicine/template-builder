@@ -1,5 +1,5 @@
 import { clip_count } from "./modules/clip.js";
-import { decimal_places } from "./modules/util.js";
+import { decimal_places, round } from "./modules/util.js";
 import { data, key, key_global, new_template_key, init_defaults, init_form, clean } from "./modules/data.js";
 
 let path_base;
@@ -70,8 +70,8 @@ function initialize() {
       elem.step = "0.1";
       elem.addEventListener("calculated", () => {
         // clipped to hard min/max in change event
-        let v = Number(elem.value);
         let precision = decimal_places(elem.step);
+        let v = round(Number(elem.value), precision, Math.floor);
         elem.value = v.toFixed(precision);
         elem.min = (v - Number(elem.step)).toFixed(precision);
         elem.max = (v + Number(elem.step)).toFixed(precision);
