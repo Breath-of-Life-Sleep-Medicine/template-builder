@@ -25,7 +25,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O with EPR 3 cm H2O and with further pressure adjustments to be made on a clinical basis.
+1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O and with further pressure adjustments to be made on a clinical basis.
 Alternatively, the patient may be a candidate for oral appliance therapy provided by a dentist.
 []. Due to the significant duration and extent of oxygen desaturations identified on this home sleep study, recommend obtaining a nocturnal oximetry following auto CPAP acclimatization or oral appliance therapy titration.
 []. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.

@@ -39,7 +39,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] centimeters H2O with EPR 3 cm H2O and with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
+1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] centimeters H2O and with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
 Alternatively, the patient may benefit from oral appliance therapy provided by a dentist.
 []. Consider other causes of subjective daytime fatigue/sleepiness/insomnia, such as poor sleep hygiene, insufficient sleep, irregular sleep-wake pattern/circadian rhythm disorder, medication/substance effects, mood disorders, medical disorders, primary hypersomnias, etc. Clinical correlation with further evaluation/management as indicated is recommended.
 []. If the patient is interested in further management for primary snoring, then therapeutic options as clinically appropriate may include optimization of nasal breathing(saline rinses, nasal dilators, nasal lubricants, nasal breathing practice, nasal steroids, allergy medications, Singulair, ENT referral), sleep/airway dental/orthodontic referral for further evaluation and management with arch expansion with fixed or removable appliances, anti snore devices, weight loss, physical exercise, etc. Clinical correlation with further evaluation/management as indicated is recommended.

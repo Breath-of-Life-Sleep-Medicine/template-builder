@@ -42,7 +42,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] cm H2O with EPR 3 cm H2O with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
+1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] cm H2O with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
 []. Central sleep apnea may be associated with obstructive sleep apnea, cardiopulmonary disorders such as CHF, asthma/COPD, obesity hypoventilation syndrome, neurologic disorders such as Chiari malformation, other CNS pathology, medication/substance effects such as with opioid use, etc. Clinical correlation with further evaluation/management as indicated is recommended.
 []. Aside from significant obstructive sleep apnea, causes of nocturnal oxygen desaturations may include various disorders such as pulmonary parenchymal and/or vascular disease, cardiac disease, thoracic cage anomalies, neuromuscular disease, medication/substance effects, obesity hypoventilation syndrome, etc.. Clinical correlation with further evaluation/management as indicated is recommended.
 []. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.
