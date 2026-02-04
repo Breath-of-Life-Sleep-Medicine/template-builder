@@ -13,7 +13,6 @@ RESULTS: This was an unattended overnight portable home sleep study performed by
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
 Apnea Index: ${ai}/hr, Hypopnea Index: ${hi}/hr
 Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_percent}%
-The patient's respiratory events were primarily obstructive.
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
 Oxygen Desaturation Index: ${odi} Events per hour
 Duration of study with oxygen saturation <=89%: ${od_duration}

@@ -13,7 +13,6 @@ Recording: Started: 10:00 PM, Ended: 4:00 AM
 1. DURATION OF EVALUATION: 360.0 minutes
 2. RESPIRATORY EVENTS: AHI: 25.0/hr
 Apnea Index: 5.0/hr, Hypopnea Index: 20.0/hr
-The patient's respiratory events were primarily obstructive.
 3. OXYGEN SATURATION: Average: 96%, Minimum: 80%
 Oxygen Desaturation Index: 2.4 Events per hour
 Duration of study with oxygen saturation <89%: 5.4 minutes

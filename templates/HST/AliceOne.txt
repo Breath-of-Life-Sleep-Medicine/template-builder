@@ -13,7 +13,6 @@ Recording: Started: ${start}, Ended: ${end}
 1. DURATION OF EVALUATION: ${trt}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
 Apnea Index: ${ai}/hr, Hypopnea Index: ${hi}/hr
-The patient's respiratory events were primarily obstructive.
 3. OXYGEN SATURATION: Average: ${ox_avg}%, Minimum: ${ox_min}%
 Oxygen Desaturation Index: ${odi} Events per hour
 Duration of study with oxygen saturation <89%: ${od_duration}
