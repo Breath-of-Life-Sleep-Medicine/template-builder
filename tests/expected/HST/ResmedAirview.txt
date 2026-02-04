@@ -13,6 +13,8 @@ Recording: Started: 10:00 PM, Ended: 4:00 AM
 1. DURATION OF EVALUATION: 6 hours 0 minutes
 2. RESPIRATORY EVENTS: AHI: 25.0/hr
 Apnea Index: 5.0/hr, Hypopnea Index: 20.0/hr
+Central Apnea Index: 1.0/hr, Mixed Apnea Index: 1.5/hr, Obstructive Apnea Index: 2.5/hr
+Central + Mixed Apnea Indexes: 50% of AHI
 Supine AHI: 35.0/hr, Duration Supine: 3 hours 1 minute/50.0% FMT
 3. OXYGEN SATURATION: Baseline: 96%, Average: 95%, Minimum: 82%
 Oxygen Desaturation Index: 12.5 Events per hour

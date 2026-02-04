@@ -12,6 +12,8 @@ RESULTS: This was an unattended overnight portable home sleep study performed by
 1. ANALYSIS DURATION: 480.0 minutes
 2. RESPIRATORY EVENTS: AHI: 25.0/hr
 Apnea Index: 5.0/hr, Hypopnea Index: 20.0/hr
+Central Apnea Index: 1.0/hr, Mixed Apnea Index: 1.5/hr, Obstructive Apnea Index: 2.5/hr
+Central + Mixed Apnea Indexes: 50% of AHI
 Supine AHI: 35.0/hr, Duration Supine: 60.0%
 3. OXYGEN SATURATION: Mean: 95.4%, Minimum: 82.0%
 Oxygen Desaturation Index: 12.5 Events per hour
