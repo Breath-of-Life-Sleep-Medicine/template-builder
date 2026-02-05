@@ -1,4 +1,4 @@
-import { clip_count } from "./modules/clip.js";
+import { clip_count, clip_number } from "./modules/clip.js";
 import { decimal_places, round } from "./modules/util.js";
 import { data, key, key_global, new_template_key, init_defaults, init_form, clean } from "./modules/data.js";
 
@@ -68,9 +68,15 @@ function initialize() {
       elem.type = "number";
       // TODO: make a precision associated with the input field in the js files; luckily or not, all the calculated fields atm are 0.1 precision
       elem.step = "0.1";
+      let precision = decimal_places(elem.step);
+      elem.addEventListener("change", () => {
+        // clip to soft min/max set by the calculation
+        let min = elem.min === "" ? null : elem.min;
+        let max = elem.max === "" ? null : elem.max;
+        elem.value = clip_number(elem.value, precision, min, max);
+      });
       elem.addEventListener("calculated", () => {
         // clipped to hard min/max in change event
-        let precision = decimal_places(elem.step);
         let v = round(Number(elem.value), precision, Math.floor);
         elem.value = v.toFixed(precision);
         elem.min = (v - Number(elem.step)).toFixed(precision);

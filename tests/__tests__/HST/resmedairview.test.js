@@ -122,7 +122,7 @@ test("empty form", () => {
     // calculated
     duration:    "0 minutes",
     hi:          "0.0",
-    a_cmi:       "0.0",
+    a_cmi:       "0",
     scored_at:   "3",
   };
   expect(get_map(key)).toEqual(expected);

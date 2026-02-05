@@ -175,7 +175,7 @@ function clean_date(value, id, k=key) {
 
 function clean_time(value, id, k=key) {
   if (!value) {
-    console.error(`trying to set time to non-value (${value})`);
+    console.log(`trying to set time to non-value (${value})`);
     value = "00:00"; // default
   }
   let v = value.split(":");

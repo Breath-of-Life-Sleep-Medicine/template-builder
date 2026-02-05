@@ -8,13 +8,13 @@ function clip_number(number, precision = null, min = null, max = null, fn=Math.f
   if (isNaN(number)) {
     number = 0;
   }
-  if (min != null) {
+  if (min !== null) {
     number = Math.max(number, min);
   }
-  if (max != null) {
+  if (max !== null) {
     number = Math.min(number, max);
   }
-  if (precision != null) {
+  if (precision !== null) {
     number = round(number, precision, fn).toFixed(precision);
   }
   return number;

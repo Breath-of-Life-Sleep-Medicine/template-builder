@@ -16,7 +16,6 @@ const empty_form = {
     scored_at:   {value: ""},
     start:       {value: ""},
     trt:         {value: ""},
-    ahi:         {value: ""},
     hi:          {value: ""},
     a_ci:        {value: ""},
     a_mi:        {value: ""},
@@ -30,6 +29,7 @@ const empty_form = {
     // calculated
     end:         {value: "", class: "calculated"},
     ai:          {value: "", class: "calculated"},
+    ahi:         {value: "", class: "calculated"},
     a_cmi:       {value: "", class: "calculated"},
     // misc
     label_scored_at: {textContent: ""},
@@ -59,7 +59,6 @@ function setup_valid() {
       scored_at:   {value: "3"},
       start:       {value: "22:00"}, // 10:00 PM
       trt:         {value: "360.0"},
-      ahi:         {value: "25.0"},
       hi:          {value: "20.0"},
       a_ci:        {value: "1.0"},
       a_mi:        {value: "1.5"},
@@ -86,7 +85,6 @@ test("empty form", () => {
     scored_at:   "3",
     start:       "12:00 AM",
     trt:         "0.0 minutes",
-    ahi:         "0.0",
     hi:          "0.0",
     a_ci:        "0.0",
     a_mi:        "0.0",
@@ -100,7 +98,8 @@ test("empty form", () => {
     // calculated
     end:         "12:00 AM",
     ai:          "0.0",
-    a_cmi:       "0.0",
+    ahi:         "0.0",
+    a_cmi:       "0",
   };
   expect(get_map(key)).toEqual(expected);
 });

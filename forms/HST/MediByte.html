@@ -22,26 +22,56 @@
   <span class="input-group-text">min</span>
 </div>
 
-
+<label>Apnea Index</label>
 <div class="input-group">
-  <!-- ahi -->
+  <!-- central apnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="ahi" class="form-control" placeholder="">
-    <label for="ahi">AHI</label>
+    <input type="text" inputmode="numeric" id="a_ci" class="form-control" aria-label="central apnea index" placeholder="">
+    <label for="a_ci">Central</label>
   </div>
   <span class="input-group-text">evt/hr</span>
+  <!-- obstructive apnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_oi" class="form-control" aria-label="obstructive apnea index" placeholder="">
+    <label for="a_oi">Obstructive</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- mixed apnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_mi" class="form-control" aria-label="mixed apnea index" placeholder="">
+    <label for="a_mi">Mixed</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<div class="input-group">
   <!-- hi -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="hi" class="form-control" placeholder="">
     <label for="hi">Hypopnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
+  <!-- ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control calculated" placeholder="">
+    <label for="ahi">AHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<div class="input-group">
   <!-- ai: calculate ai from ahi & hi -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="ai" class="form-control calculated" placeholder="">
     <label for="ai">Apnea index</label>
   </div>
   <span class="input-group-text">evt/hr</span>
+  <!-- Central + Mixed Apnea Indexes / AHI -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_cmi" class="form-control calculated" aria-label="central + mixed apnea indexes as a percentage of AHI" placeholder="">
+    <label for="a_cmi">(central + mixed) / AHI</label>
+  </div>
+  <span class="input-group-text">%</span>
 </div>
 
 <label for="">Supine</label>

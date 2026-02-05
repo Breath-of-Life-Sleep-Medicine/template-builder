@@ -71,6 +71,37 @@
   <span class="input-group-text">%</span>
 </div>
 
+<label>Apnea Index</label>
+<div class="input-group">
+  <!-- obstructive apnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_oi" class="form-control" aria-label="obstructive apnea index" placeholder="">
+    <label for="a_oi">Obstructive</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- central apnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_ci" class="form-control" aria-label="central apnea index" placeholder="">
+    <label for="a_ci">Central</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- mixed apnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_mi" class="form-control" aria-label="mixed apnea index" placeholder="">
+    <label for="a_mi">Mixed</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<!-- Central + Mixed Apnea Indexes / AHI -->
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="a_cmi" class="form-control calculated" aria-label="central + mixed apnea indexes as a percentage of AHI" placeholder="">
+    <label for="a_cmi">(central + mixed) / AHI</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
 <label for=""> Oxygen saturation</label>
 
 <div class="input-group">
