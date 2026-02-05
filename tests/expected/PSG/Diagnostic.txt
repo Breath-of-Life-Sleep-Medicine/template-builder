@@ -17,7 +17,9 @@ Sleep architecture: Stage N1: 9.0%, Stage N2: 51.0%, Stage N3: 25.0%, Stage R: 1
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
 AHI: 5.0/hr.
-CENTRAL APNEAS: 1, OBSTRUCTIVE APNEAS: 4, MIXED APNEAS: 3, HYPOPNEAS: 7
+Hypopnea Index: 1.6/hr
+Central Apnea Index: 0.6/hr, Mixed Apnea Index: 1.3/hr, Obstructive Apnea Index: 1.5/hr
+Central + Mixed Apnea Indexes: 38% of AHI
 Non-REM AHI: 1.7/hr, REM AHI: 3.1/hr
 Snoring was [].
 3. BODY POSITION: Supine: 30.0% TST, Prone: 10.0% TST, Left Side: 7.0% TST, Right Side: 53.0% TST

@@ -23,10 +23,11 @@ data[key].data = {
   n3:           Defaults.percent(), // N3  (% TST)
   rem:          Defaults.percent(), // REM (% TST)
   ahi:          Defaults.index(),   // apnea + hypopnea index (events/hour)
-  a_cc:         Defaults.count(),   // central apnea count
-  a_oc:         Defaults.count(),   // obstructive apnea count
-  a_mc:         Defaults.count(),   // mixed apnea count
-  h_c:          Defaults.count(),   // total hypopnea count
+  a_ci:         Defaults.index(),   // central apnea index
+  a_oi:         Defaults.index(),   // obstructive apnea index
+  a_mi:         Defaults.index(),   // mixed apnea index
+  hi:           Defaults.index(),   // total hypopnea index
+  a_cmi:        Defaults.percent({precision:0}), // inspire check: (central + mixed) / ahi
   arem_ahi:     Defaults.index(),   // non-REM AHI (events/hour)
   rem_ahi:      Defaults.index(),   // REM AHI (events/hour)
   supine:       Defaults.percent(), // (% TST)
@@ -69,9 +70,13 @@ data[key].data = {
 };
 
 const DATA = data[key].data; // create alias after the object is assigned
-const update_ahi = () => form.update_index(ahi, tst, a_cc, a_oc, a_mc, h_c);
+const update_ahi = () => form.update_index(ahi, DATA.a_ci, DATA.a_oi, DATA.a_mi, DATA.hi);
 const update_sum_pos = () => form.update_sum(sum_pos, DATA.supine, DATA.prone, DATA.left, DATA.right);
 const update_sum_phase = () => form.update_sum(sum_phase, DATA.n1, DATA.n2, DATA.n3, DATA.rem);
+const update_acmi = () => {
+  a_cmi.value = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / Number(DATA.ahi.value);
+  a_cmi.dispatchEvent(new Event("calculated"));
+}
 
 DATA.scored_at.clean.change = false;
 DATA.r_lat.clean.on = false;
@@ -83,60 +88,61 @@ DATA.r_lat.template.set = () => {
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
   // "start": () => form.update_end(end),
-  "trt": () => {
+  trt: () => {
     form.update_percentage(tst, trt, eff);
     // form.update_end(end);
   },
-  "tst": () => {
+  tst: () => {
     form.update_percentage(tst, trt, eff);
     update_ahi();
   },
-  "r_lat": () => {
+  r_lat: () => {
     form.rem_check(rem, r_lat);
     clean("r_lat");
   },
-  "a_cc": update_ahi,
-  "a_oc": update_ahi,
-  "a_mc": update_ahi,
-  "h_c": update_ahi,
-  "supine": () => {
+  a_ci: update_ahi,
+  a_oi: update_ahi,
+  a_mi: update_ahi,
+  hi: update_ahi,
+  ahi: update_acmi,
+  supine: () => {
     form.update_rdi("supine");
     update_sum_pos();
   },
-  "prone": () => {
+  prone: () => {
     form.update_rdi("prone");
     update_sum_pos();
   },
-  "left": () => {
+  left: () => {
     form.update_rdi("left");
     update_sum_pos();
   },
-  "right": () => {
+  right: () => {
     form.update_rdi("right");
     update_sum_pos();
   },
-  "n1": update_sum_phase,
-  "n2": update_sum_phase,
-  "n3": update_sum_phase,
-  "rem": () => {
+  n1: update_sum_phase,
+  n2: update_sum_phase,
+  n3: update_sum_phase,
+  rem: () => {
     update_sum_phase(),
     form.update_rem(rem, 'requires_rem');
   },
-  "scored_at": form.update_scored_at,
+  scored_at: form.update_scored_at,
 
   // titration portion
-  "ti_start": () => form.update_end(ti_end, {start: DATA.ti_start, trt: DATA.ti_trt}),
-  "ti_trt": () => {
+  ti_start: () => form.update_end(ti_end, {start: DATA.ti_start, trt: DATA.ti_trt}),
+  ti_trt: () => {
     form.update_end(ti_end, {start: DATA.ti_start, trt: DATA.ti_trt});
     form.update_percentage(ti_tst, ti_trt, ti_eff);
   },
-  "ti_tst": () => {
+  ti_tst: () => {
     form.update_percentage(ti_tst, ti_trt, ti_eff);
     form.update_percentage(ti_supine_duration, ti_tst, ti_supine);
     form.update_percentage(ti_rem_duration, ti_tst, ti_rem);
   },
-  "ti_rem_duration": () => form.update_percentage(ti_rem_duration, ti_tst, ti_rem),
-  "ti_supine_duration": () => form.update_percentage(ti_supine_duration, ti_tst, ti_supine),
+  ti_rem_duration: () => form.update_percentage(ti_rem_duration, ti_tst, ti_rem),
+  ti_supine_duration: () => form.update_percentage(ti_supine_duration, ti_tst, ti_supine),
 };
 
 // non-default template setters

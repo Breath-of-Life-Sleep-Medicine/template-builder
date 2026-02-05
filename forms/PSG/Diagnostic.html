@@ -103,35 +103,38 @@
   Hypopneas scored at oxygen desaturation <span id="label_scored_at"></span>%
 </div>
 
-<label for="">Counts <span class="scored_at"></span></label>
+<label>Indexes <span class="scored_at"></span></label>
 <div class="input-group">
-  <!-- central apnea count -->
+  <!-- central apnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_cc" class="form-control" placeholder="">
-    <label for="a_cc">Central apneas</label>
+    <input type="text" inputmode="numeric" id="a_ci" class="form-control" aria-label=" central apnea index" placeholder="">
+    <label for="a_ci">Central apneas</label>
   </div>
-  <!-- obstructive apnea count -->
+  <span class="input-group-text">evt/hr</span>
+  <!-- obstructive apnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_oc" class="form-control" placeholder="">
-    <label for="a_oc">Obstructive apneas</label>
+    <input type="text" inputmode="numeric" id="a_oi" class="form-control" aria-label="obstructive apnea index" placeholder="">
+    <label for="a_oi">Obstructive apneas</label>
   </div>
-  <!-- mixed apnea count -->
+  <span class="input-group-text">evt/hr</span>
+  <!-- mixed apnea index -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="a_mc" class="form-control" placeholder="">
-    <label for="a_mc">Mixed apneas</label>
+    <input type="text" inputmode="numeric" id="a_mi" class="form-control" aria-label="mixed apnea index" placeholder="">
+    <label for="a_mi">Mixed apneas</label>
   </div>
-  <!-- hypopnea count -->
-  <div class="form-floating">
-    <input type="text" inputmode="numeric" id="h_c" class="form-control" placeholder="">
-    <label for="h_c">Hypopneas</label>
-  </div>
+  <span class="input-group-text">evt/hr</span>
 </div>
 
-<label for="">Indices <span class="scored_at"></span></label>
 <div class="input-group">
+  <!-- hypopnea index -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="hi" class="form-control" aria-label="hypopnea index" placeholder="">
+    <label for="hi">Hypopneas</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
   <!-- ahi -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="ahi" class="form-control calculated" placeholder="">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control calculated" aria-label="apnea-hypopnea index" placeholder="">
     <label for="ahi">AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
@@ -149,6 +152,11 @@
     <label for="rem_ahi">REM AHI</label>
   </div>
   <span class="input-group-text">evt/hr</span>
+</div>
+
+<!-- Central + Mixed Apnea Indexes / AHI -->
+<div class="form-text text-end">
+  Inspire check: (central + mixed) / AHI = <span class="a_cmi"></span>%
 </div>
 
 <hr> <!-- next page -->

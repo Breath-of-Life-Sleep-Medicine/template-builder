@@ -17,20 +17,32 @@ function set_class_text(cls_str, txt_str) {
   }
 }
 
-// sum is static html text to store the sum
-// ids are data ids that contain the values to sum
-function update_sum(sum, ...ids) {
-  let v = ids.reduce((acc, id) => acc + Number(id.value), 0.0);
-  sum.textContent = v.toFixed(ids[0].precision);
+// ex: sum(data[key].data.ai, data[key].data.hi)
+// ids: objects based on the input fields
+function sum(...ids) {
+  return ids.reduce((acc, id) => acc + Number(id.value), 0.0);
+  // let val = (id) => data[key]?.data[id]?.value ?? 0;
+  // return ids.reduce((acc, id) => acc + Number(val(id.id)), 0.0);
 }
 
-// calculate index (ex: central apnea index = central apnea count / total sleep time)
-function update_index(result, dur_min, ...ids) {
-  let val = (id) => data[key]?.data[id]?.value ?? 0;
-  let sum = ids.reduce((acc, id) => acc + Number(val(id.id)), 0.0);
-  result.value = 60 * sum / Number(data[key]?.data[dur_min.id]?.value?.m ?? 0); // convert dur from minutes to hours
+// sum is static html text to store the sum
+// ids: objects based on the input fields that contain the values to sum
+function update_sum(sum_label, ...ids) {
+  sum_label.textContent = sum(...ids).toFixed(ids[0].precision);
+}
+
+function update_index(result, ...ids) {
+  result.value = sum(...ids);
   result.dispatchEvent(new Event("calculated"));
 }
+
+// calculate index from count (ex: central apnea index = central apnea count / total sleep time)
+// function update_index(result, dur_min, ...ids) {
+//   let val = (id) => data[key]?.data[id]?.value ?? 0;
+//   let sum = ids.reduce((acc, id) => acc + Number(val(id.id)), 0.0);
+//   result.value = 60 * sum / Number(data[key]?.data[dur_min.id]?.value?.m ?? 0); // convert dur from minutes to hours
+//   result.dispatchEvent(new Event("calculated"));
+// }
 
 // calculate end time from start time & total record time (minutes)
 // end is form input; start & trt are data

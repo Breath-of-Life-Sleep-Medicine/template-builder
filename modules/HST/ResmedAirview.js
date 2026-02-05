@@ -46,18 +46,18 @@ DATA.duration.form.set = () => {};
 // DATA.duration.form.set = (id) => {console.error(`TRYING TO SET DURATION (FORM) TO ${JSON.stringify(DATA.duration.value)}`)};
 
 data[key].update = {
-  "start": update_duration,
-  "end": update_duration,
-  "duration1": set_duration,
-  "duration2": set_duration,
-  "ahi": () => {
+  start: update_duration,
+  end: update_duration,
+  duration1: set_duration,
+  duration2: set_duration,
+  ahi: () => {
     update_hi();
     update_acmi();
   },
-  "ai": update_hi,
-  "a_ci": update_acmi,
-  "a_mi": update_acmi,
-  "guidelines": () => {
+  ai: update_hi,
+  a_ci: update_acmi,
+  a_mi: update_acmi,
+  guidelines: () => {
     data[key].data.scored_at.value = clip_percent(guidelines.value,0,3,4);
     update_scored_at();
   },
