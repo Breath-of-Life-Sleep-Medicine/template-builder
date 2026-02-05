@@ -23,12 +23,10 @@ data[key].data = {
   n3:           Defaults.percent(), // N3  (% TST)
   rem:          Defaults.percent(), // REM (% TST)
   ahi:          Defaults.index(),   // apnea + hypopnea index (events/hour)
-  rdi:          Defaults.index(),   // (events/hour)
   a_cc:         Defaults.count(),   // central apnea count
   a_oc:         Defaults.count(),   // obstructive apnea count
   a_mc:         Defaults.count(),   // mixed apnea count
   h_c:          Defaults.count(),   // total hypopnea count
-  rera:         Defaults.count(),   // RERA count
   arem_ahi:     Defaults.index(),   // non-REM AHI (events/hour)
   rem_ahi:      Defaults.index(),   // REM AHI (events/hour)
   supine:       Defaults.percent(), // (% TST)
@@ -105,8 +103,6 @@ data[key].update = {
   "h_c": update_ahi,
   "ahi": () => {
     data[key_MSLT].data.prev_ahi.value = DATA.ahi.value;
-    rdi.value = DATA.ahi.value;
-    rdi.dispatchEvent(new Event('change'));
   },
   "supine": () => {
     form.update_rdi("supine");

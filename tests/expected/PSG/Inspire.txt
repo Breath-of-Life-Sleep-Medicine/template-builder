@@ -18,8 +18,8 @@ Sleep Latency: 20.0 minutes, Wake After Sleep Onset: 10.0 minutes, REM Latency: 
 Sleep architecture: Stage N1: 9.0%, Stage N2: 51.0%, Stage N3: 25.0%, Stage R: 15.0%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS DURING HGNS TITRATION: Utilizing 4% deoxygenation CMS criteria,
-AHI: 5.0 EVENTS PER HOUR, RDI: 4.9 EVENTS PER HOUR.
-Central Apneas: 1, Obstructive Apneas: 4, Mixed Apneas: 3, Hypopneas: 7, RERA: 2.
+AHI: 5.0 EVENTS PER HOUR.
+Central Apneas: 1, Obstructive Apneas: 4, Mixed Apneas: 3, Hypopneas: 7.
 Non-REM AHI: 1.7/hr, REM AHI: 3.1/hr, CAI: 0.3/hr
 3. BODY POSITION: Supine: 30.0% TST, Prone: 10.0% TST, Left Side: 7.0% TST, Right Side: 53.0% TST
 Left Side RDI: 0.2/hr, Right Side RDI: 2.1/hr, Supine RDI: 1.7/hr, Prone RDI: 3.2/hr.

@@ -28,7 +28,6 @@ const empty_form = {
     a_oc:         {value: ""},
     a_mc:         {value: ""},
     h_c:          {value: ""},
-    rera:         {value: ""},
     arem_ahi:     {value: ""},
     rem_ahi:      {value: ""},
     supine:       {value: ""},
@@ -66,7 +65,6 @@ const empty_form = {
     // calculated
     eff:       {value: "", class: "calculated"},
     ahi:       {value: "", class: "calculated"},
-    rdi:       {value: "", class: "calculated"},
     ti_end:    {value: "", class: "calculated"},
     ti_eff:    {value: "", class: "calculated"},
     ti_rem:    {value: "", class: "calculated"},
@@ -120,7 +118,6 @@ function setup_valid() {
       a_oc:         {value: "4"},
       a_mc:         {value: "3"},
       h_c:          {value: "7"},
-      rera:         {value: "2"},
       arem_ahi:     {value: "1.7"},
       rem_ahi:      {value: "3.1"},
       supine:       {value: "30.0"},
@@ -158,18 +155,13 @@ function setup_valid() {
   });
 }
 
-test("update rdi", () => {
+test("check setup", () => {
   setup_valid();
-  expect(Number(global.rdi.value)).toBe(5); // check that update rdi worked
+  expect(Number(global.ahi.value)).toBe(5); // check that the setup worked
 });
 
 test("find_replace", () => {
   setup_valid();
-  tst.update_form({
-    key: {
-      rdi: {value: "4.9"}, // change rdi to test the template better
-    }
-  });
   let path = "PSG/SplitNight";
   let {template, expected} = tst.get_paths(path);
   expect(tst.get_lines(tst.find_replace(template))).toStrictEqual(tst.get_lines(tst.get_file_str(expected))); // ignore newline
@@ -192,7 +184,6 @@ test("empty form", () => {
     a_oc:         "0",
     a_mc:         "0",
     h_c:          "0",
-    rera:         "0",
     arem_ahi:     "0.0",
     rem_ahi:      "N/A",
     supine:       "0.0",
@@ -231,7 +222,6 @@ test("empty form", () => {
     ti_end:    "12:00 AM",
     eff:       "0.0",
     ahi:       "0.0",
-    rdi:       "0.0",
     ti_eff:    "0.0",
     ti_rem:    "0.0",
     ti_supine: "0.0",
