@@ -54,8 +54,12 @@ data[key].update = {
     update_hi();
     update_acmi();
   },
-  ai: update_hi,
-  a_ci: update_acmi,
+  ai: () => {
+    update_hi();
+    update_mixed();
+  },
+  a_oi: update_mixed,
+  a_ci: update_mixed,
   a_mi: update_acmi,
   guidelines: () => {
     data[key].data.scored_at.value = clip_percent(guidelines.value,0,3,4);
@@ -86,8 +90,14 @@ function update_hi() {
 }
 
 function update_acmi() {
-  a_cmi.value = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / DATA.ahi.value;
-  a_cmi.dispatchEvent(new Event('calculated'));
+  let val = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / Number(DATA.ahi.value);
+  DATA.a_cmi.clean.fn(val, "a_cmi");
+}
+
+function update_mixed() {
+  // mixed = apneas - obstructive - central
+  a_mi.value = Number(DATA.ai.value) - Number(DATA.a_oi.value) - Number(DATA.a_ci.value);
+  a_mi.dispatchEvent(new Event('calculated'));
 }
 
 function update_scored_at() {

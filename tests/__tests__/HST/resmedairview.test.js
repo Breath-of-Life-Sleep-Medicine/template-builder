@@ -18,7 +18,6 @@ const empty_form = {
     ahi:         {value:""},
     ai:          {value:""},
     a_ci:        {value: ""},
-    a_mi:        {value: ""},
     a_oi:        {value: ""},
     s_ahi:       {value:""},
     s_percent:   {value:""},
@@ -37,7 +36,7 @@ const empty_form = {
     // calculated
     duration:    {value:{h:0, m:0}, class:"calculated h m"},
     hi:          {value:"", class:"calculated"},
-    a_cmi:       {value: "", class: "calculated"},
+    a_mi:        {value: "", class: "calculated"},
     scored_at:   {value:"", class:"calculated"},
     // misc
     duration1_label: {value:""},
@@ -71,7 +70,6 @@ function setup_valid() {
       ahi:         {value: "25.0"},
       ai:          {value: "5.0"},
       a_ci:        {value: "1.0"},
-      a_mi:        {value: "1.5"},
       a_oi:        {value: "2.5"},
       s_ahi:       {value: "35.0"},
       s_percent:   {value: "50"},
@@ -106,7 +104,6 @@ test("empty form", () => {
     ahi:         "0.0",
     ai:          "0.0",
     a_ci:        "0.0",
-    a_mi:        "0.0",
     a_oi:        "0.0",
     s_ahi:       "0.0",
     s_percent:   "0.0",
@@ -122,6 +119,7 @@ test("empty form", () => {
     // calculated
     duration:    "0 minutes",
     hi:          "0.0",
+    a_mi:        "0.0",
     a_cmi:       "0",
     scored_at:   "3",
   };
