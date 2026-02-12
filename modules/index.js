@@ -12,7 +12,8 @@ data[key_global].data = {
   date: Defaults.date(),
   referring: Defaults.string(),
   provider: Defaults.string({value: "Lisa Williams FNP"}),
-  template: Defaults.string({value: "HST/ResmedAirview"}), // default template
+  // template: Defaults.string({value: "HST/ResmedAirview"}), // default template
+  template: Defaults.string({value: "HST/MediByte"}), // default template
 };
 
 data[key_global].update = {

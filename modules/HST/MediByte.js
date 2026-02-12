@@ -28,15 +28,15 @@ data[key].update = {
   scored_at: update_scored_at,
   ahi: update_acmi,
   hi: update_ahi,
-  ai: update_ahi,
   a_oi: update_ai,
   a_ci: update_ai,
   a_mi: update_ai,
 };
 
 function update_ai() {
-  ai.value = Number(DATA.a_ci.value) + Number(DATA.a_mi.value) + Number(DATA.a_oi.value);
-  ai.dispatchEvent(new Event('calculated'));
+  let val = Number(DATA.a_ci.value) + Number(DATA.a_mi.value) + Number(DATA.a_oi.value);
+  DATA.ai.clean.fn(val, "ai");
+  update_ahi();
 }
 
 function update_ahi() {
@@ -45,8 +45,8 @@ function update_ahi() {
 }
 
 function update_acmi() {
-  a_cmi.value = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / DATA.ahi.value;
-  a_cmi.dispatchEvent(new Event('calculated'));
+  let val = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / Number(DATA.ahi.value);
+  DATA.a_cmi.clean.fn(val, "a_cmi");
 }
 
 function update_scored_at() {
