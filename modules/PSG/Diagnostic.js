@@ -59,8 +59,8 @@ const update_ahi = () => form.update_index(ahi, DATA.a_ci, DATA.a_oi, DATA.a_mi,
 const update_sum_pos = () => form.update_sum(sum_pos, DATA.supine, DATA.prone, DATA.left, DATA.right);
 const update_sum_phase = () => form.update_sum(sum_phase, DATA.n1, DATA.n2, DATA.n3, DATA.rem);
 const update_acmi = () => {
-  a_cmi.value = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / Number(DATA.ahi.value);
-  a_cmi.dispatchEvent(new Event("calculated"));
+  let val = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / Number(DATA.ahi.value);
+  DATA.a_cmi.value = DATA.a_cmi.clean.fn(val, "a_cmi");
 }
 
 DATA.scored_at.clean.change = false;
