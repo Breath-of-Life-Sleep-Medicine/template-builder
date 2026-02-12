@@ -60,7 +60,7 @@ const update_sum_pos = () => form.update_sum(sum_pos, DATA.supine, DATA.prone, D
 const update_sum_phase = () => form.update_sum(sum_phase, DATA.n1, DATA.n2, DATA.n3, DATA.rem);
 const update_acmi = () => {
   let val = 100.0 * (Number(DATA.a_ci.value) + Number(DATA.a_mi.value)) / Number(DATA.ahi.value);
-  DATA.a_cmi.value = DATA.a_cmi.clean.fn(val, "a_cmi");
+  DATA.a_cmi.clean.fn(val, "a_cmi");
 }
 
 DATA.scored_at.clean.change = false;
