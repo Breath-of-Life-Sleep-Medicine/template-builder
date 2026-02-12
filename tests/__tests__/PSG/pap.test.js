@@ -56,12 +56,12 @@ const empty_form = {
     end:   {value: "", class: "calculated"},
     eff:   {value: "", class: "calculated"},
     ahi:   {value: "", class: "calculated"},
-    a_cmi: {value: "", class: "calculated"},
 
     // misc / labels
     label_scored_at: {textContent: ""},
     sum_phase:       {textContent: ""},
     sum_pos:         {textContent: ""},
+    label_acmi:      {textContent: "", class: "a_cmi"},
   },
 };
 

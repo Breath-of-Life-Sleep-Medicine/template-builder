@@ -65,7 +65,6 @@ const empty_form = {
     // calculated
     eff:       {value: "", class: "calculated"},
     ahi:       {value: "", class: "calculated"},
-    a_cmi:     {value: "", class: "calculated"},
     ti_end:    {value: "", class: "calculated"},
     ti_eff:    {value: "", class: "calculated"},
     ti_rem:    {value: "", class: "calculated"},
@@ -75,6 +74,7 @@ const empty_form = {
     label_scored_at: {textContent: ""},
     sum_phase:       {textContent: ""},
     sum_pos:         {textContent: ""},
+    label_acmi:      {textContent: "", class: "a_cmi"},
   },
 }
 
