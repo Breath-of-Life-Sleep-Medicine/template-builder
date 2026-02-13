@@ -28,11 +28,11 @@ const empty_form = {
     snores:      {value: ""},
     // calculated
     end:         {value: "", class: "calculated"},
-    ai:          {value: "", class: "calculated"},
     ahi:         {value: "", class: "calculated"},
-    a_cmi:       {value: "", class: "calculated"},
     // misc
     label_scored_at: {textContent: ""},
+    label_ai:        {textContent: "", class: "ai"},
+    label_acmi:      {textContent: "", class: "a_cmi"},
   },
 };
 
