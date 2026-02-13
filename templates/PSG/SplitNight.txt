@@ -16,8 +16,10 @@ Sleep Latency: ${lat}, Wake After Sleep Onset: ${waso}, REM Latency: ${r_lat}
 Sleep architecture: Stage N1: ${n1}%, Stage N2: ${n2}%, Stage N3: ${n3}%, Stage R: ${rem}%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing ${scored_at}% deoxygenation ${scored_at_label} criteria,
-AHI: ${ahi} EVENTS PER HOUR, RDI: ${rdi} EVENTS PER HOUR.
-CENTRAL APNEAS: ${a_cc}, OBSTRUCTIVE APNEAS: ${a_oc}, MIXED APNEAS: ${a_mc}, HYPOPNEAS: ${h_c}, RERA: ${rera}
+AHI: ${ahi} EVENTS PER HOUR.
+Hypopnea Index: ${hi}/hr
+Central Apnea Index: ${a_ci}/hr, Mixed Apnea Index: ${a_mi}/hr, Obstructive Apnea Index: ${a_oi}/hr
+Central + Mixed Apnea Indexes: ${a_cmi}% of AHI
 Non-REM AHI: ${arem_ahi}/hr, REM AHI: ${rem_ahi}.
 Snoring was [].
 3. BODY POSITION: Supine: ${supine}% TST, Prone: ${prone}% TST, Left Side: ${left}% TST, Right Side: ${right}% TST
@@ -42,7 +44,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] cm H2O with EPR 3 cm H2O with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
+1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] cm H2O with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
 []. Central sleep apnea may be associated with obstructive sleep apnea, cardiopulmonary disorders such as CHF, asthma/COPD, obesity hypoventilation syndrome, neurologic disorders such as Chiari malformation, other CNS pathology, medication/substance effects such as with opioid use, etc. Clinical correlation with further evaluation/management as indicated is recommended.
 []. Aside from significant obstructive sleep apnea, causes of nocturnal oxygen desaturations may include various disorders such as pulmonary parenchymal and/or vascular disease, cardiac disease, thoracic cage anomalies, neuromuscular disease, medication/substance effects, obesity hypoventilation syndrome, etc.. Clinical correlation with further evaluation/management as indicated is recommended.
 []. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.

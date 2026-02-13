@@ -15,8 +15,10 @@ const empty_form = {
   key: {
     scored_at:   {value: ""},
     duration:    {value: ""},
-    ahi:         {value: ""},
     hi:          {value: ""},
+    a_ci:        {value: ""},
+    a_mi:        {value: ""},
+    a_oi:        {value: ""},
     s_ahi:       {value: ""},
     s_percent:   {value: ""},
     ox_avg:      {value: ""},
@@ -26,9 +28,11 @@ const empty_form = {
     pulse_avg:   {value: ""},
     snores:      {value: ""},
     // calculated
-    ai:          {value: "", class: "calculated"},
-    // misc
+    ahi:         {value: "", class: "calculated"},
+    // label
     label_scored_at: {textContent: ""},
+    label_ai:        {textContent: "", class: "ai"},
+    label_acmi:      {textContent: "", class: "a_cmi"},
   },
 };
 
@@ -54,8 +58,10 @@ function setup_valid() {
     key: {
       scored_at:   {value: "3"},
       duration:    {value: "480.0"},
-      ahi:         {value: "25.0"},
       hi:          {value: "20.0"},
+      a_ci:        {value: "1.0"},
+      a_mi:        {value: "1.5"},
+      a_oi:        {value: "2.5"},
       s_ahi:       {value: "35.0"},
       s_percent:   {value: "60.0"},
       ox_avg:      {value: "95.4"},
@@ -79,8 +85,10 @@ test("empty form", () => {
   let expected = {
     scored_at:   "3",
     duration:    "0.0 minutes",
-    ahi:         "0.0",
     hi:          "0.0",
+    a_ci:        "0.0",
+    a_mi:        "0.0",
+    a_oi:        "0.0",
     s_ahi:       "0.0",
     s_percent:   "0.0",
     ox_avg:      "0.0",
@@ -91,6 +99,8 @@ test("empty form", () => {
     snores:      "0",
     // calculated
     ai:          "0.0",
+    ahi:         "0.0",
+    a_cmi:       "0",
   };
   expect(get_map(key)).toEqual(expected);
 });

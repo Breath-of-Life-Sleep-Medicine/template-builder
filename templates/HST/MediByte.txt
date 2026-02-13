@@ -12,8 +12,9 @@ RESULTS: This was an unattended overnight portable home sleep study performed by
 1. ANALYSIS DURATION: ${duration}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
 Apnea Index: ${ai}/hr, Hypopnea Index: ${hi}/hr
+Central Apnea Index: ${a_ci}/hr, Mixed Apnea Index: ${a_mi}/hr, Obstructive Apnea Index: ${a_oi}/hr
+Central + Mixed Apnea Indexes: ${a_cmi}% of AHI
 Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_percent}%
-The patient's respiratory events were primarily obstructive.
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
 Oxygen Desaturation Index: ${odi} Events per hour
 Duration of study with oxygen saturation <=89%: ${od_duration}
@@ -25,7 +26,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O with EPR 3 cm H2O and with further pressure adjustments to be made on a clinical basis.
+1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O and with further pressure adjustments to be made on a clinical basis.
 Alternatively, the patient may be a candidate for oral appliance therapy provided by a dentist.
 []. Due to the significant duration and extent of oxygen desaturations identified on this home sleep study, recommend obtaining a nocturnal oximetry following auto CPAP acclimatization or oral appliance therapy titration.
 []. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.

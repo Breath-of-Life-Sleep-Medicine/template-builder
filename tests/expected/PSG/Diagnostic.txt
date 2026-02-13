@@ -16,8 +16,10 @@ Sleep Latency: 20.0 minutes, Wake After Sleep Onset: 10.0 minutes, REM Latency: 
 Sleep architecture: Stage N1: 9.0%, Stage N2: 51.0%, Stage N3: 25.0%, Stage R: 15.0%.
 Sleep architecture distribution is [].
 2. RESPIRATORY EVENTS: Utilizing 4% deoxygenation CMS criteria,
-AHI: 5.0/hr, RDI: 4.9/hr.
-CENTRAL APNEAS: 1, OBSTRUCTIVE APNEAS: 4, MIXED APNEAS: 3, HYPOPNEAS: 7, RERA: 2
+AHI: 5.0/hr.
+Hypopnea Index: 1.6/hr
+Central Apnea Index: 0.6/hr, Mixed Apnea Index: 1.3/hr, Obstructive Apnea Index: 1.5/hr
+Central + Mixed Apnea Indexes: 38% of AHI
 Non-REM AHI: 1.7/hr, REM AHI: 3.1/hr
 Snoring was [].
 3. BODY POSITION: Supine: 30.0% TST, Prone: 10.0% TST, Left Side: 7.0% TST, Right Side: 53.0% TST
@@ -39,7 +41,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] centimeters H2O with EPR 3 cm H2O and with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
+1. The patient has sleep apnea and would likely benefit from a trial of auto CPAP provided by a DME company. This may be done with initiating auto CPAP [] centimeters H2O and with an appropriately fitted mask and heated humidifier. Further pressure adjustments may be made on a clinical basis.
 Alternatively, the patient may benefit from oral appliance therapy provided by a dentist.
 []. Consider other causes of subjective daytime fatigue/sleepiness/insomnia, such as poor sleep hygiene, insufficient sleep, irregular sleep-wake pattern/circadian rhythm disorder, medication/substance effects, mood disorders, medical disorders, primary hypersomnias, etc. Clinical correlation with further evaluation/management as indicated is recommended.
 []. If the patient is interested in further management for primary snoring, then therapeutic options as clinically appropriate may include optimization of nasal breathing(saline rinses, nasal dilators, nasal lubricants, nasal breathing practice, nasal steroids, allergy medications, Singulair, ENT referral), sleep/airway dental/orthodontic referral for further evaluation and management with arch expansion with fixed or removable appliances, anti snore devices, weight loss, physical exercise, etc. Clinical correlation with further evaluation/management as indicated is recommended.

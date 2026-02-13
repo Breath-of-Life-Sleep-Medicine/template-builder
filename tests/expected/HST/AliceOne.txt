@@ -13,7 +13,8 @@ Recording: Started: 10:00 PM, Ended: 4:00 AM
 1. DURATION OF EVALUATION: 360.0 minutes
 2. RESPIRATORY EVENTS: AHI: 25.0/hr
 Apnea Index: 5.0/hr, Hypopnea Index: 20.0/hr
-The patient's respiratory events were primarily obstructive.
+Central Apnea Index: 1.0/hr, Mixed Apnea Index: 1.5/hr, Obstructive Apnea Index: 2.5/hr
+Central + Mixed Apnea Indexes: 10% of AHI
 3. OXYGEN SATURATION: Average: 96%, Minimum: 80%
 Oxygen Desaturation Index: 2.4 Events per hour
 Duration of study with oxygen saturation <89%: 5.4 minutes
@@ -25,7 +26,7 @@ IMPRESSIONS:
 []. Class [] Obesity with BMI: []
 []. Snoring
 RECOMMENDATIONS:
-1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O with EPR 3 cm H2O and with further pressure adjustments to be made on a clinical basis.
+1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O and with further pressure adjustments to be made on a clinical basis.
 Alternatively, the patient may be a candidate for oral appliance therapy provided by a dentist.
 []. Due to the significant duration and extent of oxygen desaturations identified on this home sleep study, recommend obtaining a nocturnal oximetry following auto CPAP acclimatization or oral appliance therapy titration.
 []. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.

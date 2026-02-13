@@ -24,11 +24,10 @@ const empty_form = {
     n2:           {value: ""},
     n3:           {value: ""},
     rem:          {value: ""},
-    a_cc:         {value: ""},
-    a_oc:         {value: ""},
-    a_mc:         {value: ""},
-    h_c:          {value: ""},
-    rera:         {value: ""},
+    a_ci:         {value: ""},
+    a_oi:         {value: ""},
+    a_mi:         {value: ""},
+    hi:           {value: ""},
     arem_ahi:     {value: ""},
     rem_ahi:      {value: ""},
     supine:       {value: ""},
@@ -66,7 +65,6 @@ const empty_form = {
     // calculated
     eff:       {value: "", class: "calculated"},
     ahi:       {value: "", class: "calculated"},
-    rdi:       {value: "", class: "calculated"},
     ti_end:    {value: "", class: "calculated"},
     ti_eff:    {value: "", class: "calculated"},
     ti_rem:    {value: "", class: "calculated"},
@@ -76,6 +74,7 @@ const empty_form = {
     label_scored_at: {textContent: ""},
     sum_phase:       {textContent: ""},
     sum_pos:         {textContent: ""},
+    label_acmi:      {textContent: "", class: "a_cmi"},
   },
 }
 
@@ -116,11 +115,10 @@ function setup_valid() {
       n2:           {value: "51.0"},
       n3:           {value: "25.0"},
       rem:          {value: "15.0"},
-      a_cc:         {value: "1"},
-      a_oc:         {value: "4"},
-      a_mc:         {value: "3"},
-      h_c:          {value: "7"},
-      rera:         {value: "2"},
+      a_ci:         {value: "0.6"},
+      a_oi:         {value: "1.5"},
+      a_mi:         {value: "1.3"},
+      hi:           {value: "1.6"},
       arem_ahi:     {value: "1.7"},
       rem_ahi:      {value: "3.1"},
       supine:       {value: "30.0"},
@@ -158,18 +156,13 @@ function setup_valid() {
   });
 }
 
-test("update rdi", () => {
+test("check setup", () => {
   setup_valid();
-  expect(Number(global.rdi.value)).toBe(5); // check that update rdi worked
+  expect(Number(global.ahi.value)).toBe(5); // check that the setup worked
 });
 
 test("find_replace", () => {
   setup_valid();
-  tst.update_form({
-    key: {
-      rdi: {value: "4.9"}, // change rdi to test the template better
-    }
-  });
   let path = "PSG/SplitNight";
   let {template, expected} = tst.get_paths(path);
   expect(tst.get_lines(tst.find_replace(template))).toStrictEqual(tst.get_lines(tst.get_file_str(expected))); // ignore newline
@@ -188,11 +181,10 @@ test("empty form", () => {
     n2:           "0.0",
     n3:           "0.0",
     rem:          "0.0",
-    a_cc:         "0",
-    a_oc:         "0",
-    a_mc:         "0",
-    h_c:          "0",
-    rera:         "0",
+    a_ci:         "0.0",
+    a_oi:         "0.0",
+    a_mi:         "0.0",
+    hi:           "0.0",
     arem_ahi:     "0.0",
     rem_ahi:      "N/A",
     supine:       "0.0",
@@ -231,7 +223,7 @@ test("empty form", () => {
     ti_end:    "12:00 AM",
     eff:       "0.0",
     ahi:       "0.0",
-    rdi:       "0.0",
+    a_cmi:     "0",
     ti_eff:    "0.0",
     ti_rem:    "0.0",
     ti_supine: "0.0",

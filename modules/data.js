@@ -158,11 +158,13 @@ function template_set_string(id, k=key) {
 function clean_number(value, id, k=key) {
   let d = data[k].data[id];
   d.value = clip_number(value, d.precision, d.min, d.max);
+  update_labels(id, k);
 }
 
 function clean_string(value, id, k=key) {
   let d = data[k].data[id];
   d.value = value.trim();
+  update_labels(id, k);
 }
 
 function clean_date(value, id, k=key) {
@@ -171,11 +173,12 @@ function clean_date(value, id, k=key) {
   d.value.setYear(v[0]);
   d.value.setMonth(v[1]-1);
   d.value.setDate(v[2]);
+  update_labels(id, k);
 }
 
 function clean_time(value, id, k=key) {
   if (!value) {
-    console.error(`trying to set time to non-value (${value})`);
+    console.log(`trying to set time to non-value (${value})`);
     value = "00:00"; // default
   }
   let v = value.split(":");
@@ -183,10 +186,19 @@ function clean_time(value, id, k=key) {
   let d = data[k].data[id];
   d.value.setHours(v[0]);
   d.value.setMinutes(v[1]);
+  update_labels(id, k);
 }
 
 function clean_duration(value, id, k=key) {
   data[k].data[id].value.set(value);
+  update_labels(id, k);
+}
+
+// update all labels (labels use the object's name as its class)
+function update_labels(id, k=key) {
+  document.querySelectorAll(`.${id}`).forEach((label) => {
+    label.textContent = data[k].data[id].value;
+  });
 }
 
 function default_form_getter(id) {
