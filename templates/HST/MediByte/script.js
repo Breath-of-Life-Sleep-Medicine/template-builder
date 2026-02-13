@@ -1,4 +1,4 @@
-import { data, key, Defaults } from "../data.js";
+import { data, key, Defaults } from "../../../modules/data.js";
 
 data[key].data = {
   scored_at:   Defaults.percent({value:4, precision:0, min:3, max:4}),

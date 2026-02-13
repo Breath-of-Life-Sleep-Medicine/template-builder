@@ -1,7 +1,7 @@
-import { data, key, Defaults } from "../data.js";
-import { get_dt } from "../util.js";
-import { get_duration, duration_short_str } from "../duration.js";
-import { clip_percent } from "../clip.js";
+import { data, key, Defaults } from "../../../modules/data.js";
+import { get_dt } from "../../../modules/util.js";
+import { get_duration, duration_short_str } from "../../../modules/duration.js";
+import { clip_percent } from "../../../modules/clip.js";
 
 // updated duration value objects
 let duration1_value = {"h":0, "m":0};
