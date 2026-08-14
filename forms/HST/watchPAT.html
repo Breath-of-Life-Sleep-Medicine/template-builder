@@ -73,8 +73,8 @@
   </div>
   <!-- % REM of sleep time -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="rem_percent" class="form-control" placeholder="">
-    <label for="rem_percent">% REM of Sleep Time</label>
+    <input type="text" inputmode="numeric" id="tst_rem" class="form-control" placeholder="">
+    <label for="tst_rem">% REM of Sleep Time</label>
   </div>
   <span class="input-group-text">%</span>
 </div>
@@ -109,7 +109,7 @@
 
 <!-- Central + Mixed Apnea Indexes / AHI -->
 <div class="form-text text-end">
-  Inspire check: (central + mixed) / AHI = <span class="a_cmi">0</span>%
+  Inspire check: (central + mixed) / AHI = <span class="cahi_percent">0</span>%
 </div>
 
 <label>Cardiac Rhythm Analysis In Sleep: Suspected Atrial Fibrillation: Total duration</label>
@@ -136,6 +136,16 @@
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="ox_min" class="form-control" aria-label="Oxygen Saturation Minimum" placeholder="">
     <label for="ox_min">Minimum</label>
+  </div>
+  <span class="input-group-text">%</span>
+ <div class="form-floating">
+    <input type="text" inputmode="numeric" id="od_duration" class="form-control" aria-label="Pulse Rate Mean" placeholder="">
+    <label for="od_duration"><=88%</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="od_percent" class="form-control" aria-label="Pulse Rate Mean" placeholder="">
+    <label for="od_percent"><=88%</label>
   </div>
   <span class="input-group-text">%</span>
 </div>
@@ -215,8 +225,8 @@
 <div class="input-group">
   <!-- deep sleep % -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="deep_sleep_percent" class="form-control" placeholder="">
-    <label for="deep_sleep_percent">Deep</label>
+    <input type="text" inputmode="numeric" id="tst_deep" class="form-control" placeholder="">
+    <label for="tst_deep">Deep</label>
   </div>
   <span class="input-group-text">%</span>
 </div>
