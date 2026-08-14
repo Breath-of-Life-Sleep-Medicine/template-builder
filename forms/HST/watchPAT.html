@@ -1,0 +1,217 @@
+<!-- scored_at -->
+<label for="">Hypopneas scored at oxygen desaturation</label>
+<select id="guidelines" class="form-control">
+  <option value="3" selected>3%</option>
+  <option value="4">4%</option>
+</select>
+<!-- info -->
+<div class="form-text text-end">
+  Citrix > NextGen > Document Manager > search patient > document recently filed under Sleep
+</div>
+
+<hr>
+
+<label>Patient Information</label>
+<div class="input-group">
+
+  <!-- Epworth NA -->
+  <input type="checkbox" class="btn-check" id="epworth_na" autocomplete="off">
+  <label class="btn btn-secondary" for="epworth_na">N/A</label>
+  <!-- Epworth -->
+  <div class="form-floating epworth_visibility">
+    <input type="text" inputmode="numeric" id="epworth" class="form-control" aria-label="Epworth Score" placeholder="">
+    <label for="epworth">Epworth</label>
+  </div>
+  <!-- Stopbang NA -->
+  <input type="checkbox" class="btn-check" id="stopbang_na" autocomplete="off">
+  <label class="btn btn-secondary" for="stopbang_na">N/A</label>
+  <!-- Stopbang -->
+  <div class="form-floating stopbang_visibility">
+    <input type="text" inputmode="numeric" id="stopbang" class="form-control" aria-label="Stopbang Score" placeholder="">
+    <label for="stopbang">Stopbang</label>
+  </div>
+  <!-- BMI NA -->
+  <input type="checkbox" class="btn-check" id="bmi_na" autocomplete="off">
+  <label class="btn btn-secondary" for="bmi_na">N/A</label>
+  <!-- BMI -->
+   <div class="form-floating bmi_visibility">
+    <input type="text" inputmode="numeric" id="bmi" class="form-control" aria-label="Stopbang Score" placeholder="">
+    <label for="bmi">BMI</label>
+  </div>
+</div>
+<!-- info -->
+<div class="form-text text-end">
+  Skip any that are not in patient information.
+</div>
+
+<hr>
+
+<label>Sleep Summary</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="start" class="form-control">
+    <label for="start">Start study time</label>
+  </div>
+  <!-- end -->
+  <div class="form-floating">
+    <input type="time" id="end" class="form-control">
+    <label for="end">End study time</label>
+  </div>
+  <!-- total recording time -->
+  <div class="form-floating">
+    <input-duration class="form-control h m" id="study_duration"></input-duration>
+    <label for="study_duration">Total recording time (Hours : Minutes)</label>
+  </div>
+</div>
+
+<div class="input-group">
+  <!-- technically valid sleep time -->
+  <div class="form-floating">
+    <input-duration class="form-control h m" id="sleep_duration"></input-duration>
+    <label for="sleep_duration">Technically valid sleep time (Hours : Minutes)</label>
+  </div>
+  <!-- % REM of sleep time -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rem_percent" class="form-control" placeholder="">
+    <label for="rem_percent">% REM of Sleep Time</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<label>Respiratory Indices: All Night</label>
+<div class="input-group">
+  <!-- ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control" aria-label="Apnea-Hypopnea Index" placeholder="">
+    <label for="ahi">pAHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- central ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="cahi" class="form-control" aria-label="Central Apnea-Hypopnea Index" placeholder="">
+    <label for="cahi">pAHIc</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- odi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="odi" class="form-control" aria-label="Oxygen Desaturation Index" placeholder="">
+    <label for="odi">ODI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- rdi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rdi" class="form-control" aria-label="RDI" placeholder="">
+    <label for="rdi">pRDI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label>Cardiac Rhythm Analysis In Sleep: Suspected Atrial Fibrillation: Total duration</label>
+<!-- suspected atrial fibrillation: total duration -->
+<!-- options: Not detected or h:mm:ss -->
+<div class="input-group">
+  <!-- afib NA: checked by default -->
+  <input type="checkbox" class="btn-check" id="afib_na" autocomplete="off">
+  <label class="btn btn-secondary" for="afib_na">Not detected</label>
+  <!-- afib duration -->
+  <div class="form-floating afib_visibility">
+    <input-duration class="form-control h m s" id="afib_duration"></input-duration>
+    <label for="afib_duration">Hours : Minutes : Seconds</label>
+  </div>
+</div>
+
+<label>Oxygen Saturation Statistics</label>
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_avg" class="form-control" aria-label="Oxygen Saturation Mean" placeholder="">
+    <label for="ox_avg">Mean</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_min" class="form-control" aria-label="Oxygen Saturation Minimum" placeholder="">
+    <label for="ox_min">Minimum</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
+
+<label>Pulse Rate Statistics during Sleep (BPM)</label>
+<div class="input-group">
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_avg" class="form-control" aria-label="Pulse Rate Mean" placeholder="">
+    <label for="pulse_avg">Mean</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_min" class="form-control" aria-label="Pulse Rate Minimum" placeholder="">
+    <label for="pulse_min">Minimum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_max" class="form-control" aria-label="Pulse Rate Maximum" placeholder="">
+    <label for="pulse_max">Maximum</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+</div>
+
+<hr>
+
+<label>Body Position Statistics: Supine</label>
+<div class="input-group">
+  <!-- supine: sleep (min) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_duration_min" class="form-control" placeholder="">
+    <label for="s_duration_min">Sleep</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- supine: sleep (%) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_duration_percent" class="form-control" placeholder="">
+    <label for="s_duration_percent">Sleep</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- supine: pAHI -->
+   <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_ahi" class="form-control" placeholder="">
+    <label for="s_ahi">pAHI</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label>Snoring Statistics</label>
+<div class="input-group">
+  <!-- snoring minutes: sleep (min) >40 dB -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="snore_min" class="form-control" placeholder="">
+    <label for="snore_min">>40 dB</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- snoring %: sleep % >40 dB -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="snore_percent" class="form-control" placeholder="">
+    <label for="snore_percent">>40 dB</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- snoring loud: sleep (min) >60 dB -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="snore_min_60db" class="form-control" placeholder="">
+    <label for="snore_min_60db">>60 dB</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- snoring threshold dB (45 dB) duration: sleep (min) >threshold (45dB) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="snore_min_45db" class="form-control" placeholder="">
+    <label for="snore_min_45db">>Threshold (45 dB)</label>
+  </div>
+  <span class="input-group-text">min</span>
+</div>
+
+<label>Sleep Stages Chart: Sleep Stages</label>
+<div class="input-group">
+  <!-- deep sleep % -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="deep_sleep_percent" class="form-control" placeholder="">
+    <label for="deep_sleep_percent">Deep</label>
+  </div>
+  <span class="input-group-text">%</span>
+</div>
