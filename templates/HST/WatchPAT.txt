@@ -9,7 +9,7 @@ STOPBANG: ${stopbang}
 BMI: ${bmi}
 RESULTS: This was an unattended overnight portable home sleep study performed by Breath Of Life Sleep Medicine using a WatchPAT device. The following physiologic parameters were recorded: Actigraphy for wake versus sleep; PAT and pulse rate for sleep staging; PAT, pulse rate, and pulse oximetry for respiratory event detection(pAHI and pRDI); a 3-axis accelerometer for respiratory movement and body position; and a microphone for snoring. Hypopneas were scored using ${scored_at}% oxygen desaturation.
 Recording: Started: ${start}, Ended: ${end}, Total Recording Time: ${trt}
-1. TECHNICALLY VALID SLEEP TIME: ${tst}, REM: ${tst_rem}% TST, Deep Sleep: ${tst_deep}% TST
+1. TECHNICALLY VALID SLEEP TIME: ${tvt}, REM: ${tst_rem}% TST, Deep Sleep: ${tst_deep}% TST
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr, RDI: ${rdi}/hr
 Central Apnea Hypopnea Index: ${cahi}/hr
 %AHI central: ${cahi_percent}%

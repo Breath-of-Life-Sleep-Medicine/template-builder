@@ -11,6 +11,7 @@ data[key].data = {
   end: Defaults.time(),
   trt: Defaults.duration({h:0, m:0}), // calculated
   tst: Defaults.duration({h:0, m:0}),
+  tvt: Defaults.duration({h:0, m:0}),
   tst_rem: Defaults.percent({precision: 1}),
   tst_deep: Defaults.percent({precision: 2}),
   ahi: Defaults.index({precision: 1}),

@@ -20,6 +20,7 @@ const empty_form = {
     start:              {value:""},
     end:                {value:""},
     tst:                {value: {h: 0, m: 0}, class: "h m"},
+    tvt:                {value: {h: 0, m: 0}, class: "h m"},
     tst_rem:            {value:""},
     ahi:                {value:""},
     cahi:               {value:""},
@@ -79,7 +80,8 @@ function setup_valid() {
       bmi:           {value: "27.5"},
       start:         {value: "22:00"}, // 10:00 PM
       end:           {value: "04:00"}, // 4:00 AM
-      tst:           {value: {h: 4, m: 0}, class: "h m"},
+      tst:           {value: {h: 4, m: 26}, class: "h m"}, // 266 min
+      tvt:           {value: {h: 4, m: 0}, class: "h m"},  // 240 min
       tst_rem:       {value: "17.4"},
       ahi:           {value: "25.0"},
       cahi:          {value: "5.0"},
@@ -88,13 +90,13 @@ function setup_valid() {
       afib_duration: {value: {h: 1, m: 35, s: 47}, class: "h m s"},
       ox_avg:        {value: "95"},
       ox_min:        {value: "82"},
-      od_duration:   {value: "4.0"},
+      od_duration:   {value: "4.0"},   // % = 100*4/266 ~ 1.5038% ~ 1.5%
       pulse_avg:     {value: "64"},
       pulse_min:     {value: "60"},
       pulse_max:     {value: "75"},
-      s_duration_min:{value: "181.0"},
+      s_duration_min:{value: "181.0"}, // % = 100*181/266 ~ 68.0451 ~ 68.0%
       s_ahi:         {value: "35.0"},
-      snore_min:     {value: "60.0"},
+      snore_min:     {value: "60.0"},  // % = 100*60/266 ~ 22.5564 ~ 22.6%
       snore_min_60db:{value: "5.7"},
       snore_min_45db:{value: "37.6"},
       tst_deep:      {value: "42.86"},
@@ -123,6 +125,7 @@ test("empty form", () => {
     start:              "12:00 AM",
     end:                "12:00 AM",
     tst:                "0 minutes",
+    tvt:                "0 minutes",
     tst_rem:            "0.0",
     ahi:                "0.0",
     cahi:               "0.0",

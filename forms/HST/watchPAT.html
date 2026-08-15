@@ -66,10 +66,15 @@
 </div>
 
 <div class="input-group">
-  <!-- technically valid sleep time -->
+  <!-- total sleep time: used for snoring, body position calcs -->
   <div class="form-floating">
     <input-duration class="form-control h m" id="tst"></input-duration>
-    <label for="tst">Technically valid sleep time (Hours : Minutes)</label>
+    <label for="tst">Total sleep time (Hours : Minutes)</label>
+  </div>
+  <!-- technically valid sleep time: used for event-based calculations -->
+  <div class="form-floating">
+    <input-duration class="form-control h m" id="tvt"></input-duration>
+    <label for="tvt">Technically valid sleep time (Hours : Minutes)</label>
   </div>
   <!-- % REM of sleep time -->
   <div class="form-floating">
