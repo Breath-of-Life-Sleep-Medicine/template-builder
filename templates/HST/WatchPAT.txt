@@ -18,7 +18,7 @@ Supine AHI:${s_ahi}/hr, Duration Supine:${s_duration_min} Minutes/${s_duration_p
 Oxygen Desaturation Index:${odi} Events per hour
 Duration of study with oxygen saturation <= 88%: ${od_duration} Minutes/${od_percent}% TST
 4. HEART RATE: Mean: ${pulse_avg} BPM, Minimum: ${pulse_min} BPM, Maximum: ${pulse_max} BPM
-Atrial fibrillation ${afib} detected.
+Atrial fibrillation ${afib}.
 5. SNORING: ${snore_min}Minutes/${snore_percent}% TST, Duration > 45 decibels: ${snore_min_45db} Minutes, Duration > 60 decibels: ${snore_min_60db} Minutes
 IMPRESSIONS:
 1. [] Obstructive sleep apnea G47.33
@@ -33,6 +33,6 @@ Alternatively, the patient may be a candidate for oral appliance therapy provide
 []. Due to the significant duration and extent of oxygen desaturations identified on this home sleep study, recommend obtaining a nocturnal oximetry following auto CPAP acclimatization or oral appliance therapy titration.
 []. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.
 []. Under medical supervision, regular exercise as tolerated and weight reduction is encouraged. For patient's with a BMI 35 or greater, weight management/bariatric evaluation may be appropriate.
-COMMENT: This patient has been seen in consultation by [] and will be contacted to review the results of the study and discuss further management.  
+COMMENT: This patient has been seen in consultation by [] and will be contacted to review the results of the study and discuss further management.
 Thank you very much for your kind referral.
 Electronically signed by Interpreting Physician: Mary-Alice Jaeger MD, ABFM/Board Certified Sleep Physician

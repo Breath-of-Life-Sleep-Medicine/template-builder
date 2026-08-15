@@ -1,15 +1,11 @@
 import { data, key, Defaults } from "../data.js";
-// import { get_dt } from "../util.js";
-// import { get_duration, duration_short_str } from "../duration.js";
-// import { clip_percent } from "../clip.js";
 
-
-data[key].init = () => {
-  update_scored_at();
-};
 
 data[key].data = {
   scored_at: Defaults.percent({value:4, precision:0, min:3, max:4}),
+  epworth: Defaults.index({precision: 0, min: 0, max: 24}),
+  stopbang: Defaults.index({precision: 0, min: 0, max: 8}),
+  bmi: Defaults.index({precision: 1}),
   start: Defaults.time(),
   end: Defaults.time(),
   trt: Defaults.duration({h:0, m:0}), // calculated
@@ -33,58 +29,32 @@ data[key].data = {
   pulse_max: Defaults.pulse({precision: 0}),
   afib_duration: Defaults.duration({h: 0, m: 0, s: 0}),
   snore_min: Defaults.minutes({precision: 1}),
-  snore_percent: Defaults.percent({precision: 1}),
+  snore_percent: Defaults.percent({precision: 1}), // calculated
   snore_min_45db: Defaults.minutes({precision: 1}),
   snore_min_60db: Defaults.minutes({precision: 1}),
   ...data[key].data, // only set things that aren't already set
 }
+let DATA = data[key].data;
 
-// epworth_na
-// stopbang_na
-// bmi_na
-// afib_na
-// afib_duration
+// non-default template setters
+data[key].template_set = {
+  epworth:  () => epworth_na.checked ? "[]" : DATA.epworth.value.toStr(),
+  stopbang: () => stopbang_na.checked ? "[]" : DATA.stopbang.value.toStr(),
+  bmi:      () => bmi_na.checked ? "[]" : DATA.bmi.value.toStr(),
+  afib:     () => afib_na.checked ? "not detected" : "detected; total duration: " + DATA.afib_duration.value.toStr(),
+}
 
-// date
-// referring
-// provider
+// non-default onchange callback fns
+data[key].update = {
+  epworth_na:  () => {toggle('epworth_visibility');},
+  stopbang_na: () => {toggle('stopbang_visibility');},
+  bmi_na:      () => {toggle('bmi_visibility');},
+  afib_na:     () => {toggle('afib_visibility');},
+};
 
-// epworth
-// stopbang
-// bmi
-
-// scored_at
-
-// start
-// end
-// trt - calculated
-
-// tst
-// tst_rem
-// tst_deep
-
-// ahi
-// rdi
-// cahi
-// cahi_percent - calculated
-
-// s_ahi
-// s_duration_min
-// s_duration_percent - calculated
-
-// ox_avg
-// ox_min
-// odi
-// od_duration
-// od_percent - calculated
-
-// pulse_avg
-// pulse_min
-// pulse_max
-
-// afib
-
-// snore_min
-// snore_percent - calculated
-// snore_min_45db
-// snore_min_60db
+function toggle(toggle_class) {
+  let elements = document.getElementsByClassName(toggle_class);
+  for (let element of elements) {
+    element.hidden = !element.hidden;
+  }
+}
