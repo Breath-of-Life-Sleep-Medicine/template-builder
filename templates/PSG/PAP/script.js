@@ -1,6 +1,6 @@
-import { data, key, Defaults, clean } from "../data.js";
-import * as form from "../form.js";
-import { SCORE_LABEL } from "../util.js";
+import { data, key, Defaults, clean } from "../../../modules/data.js";
+import * as form from "../../../modules/form.js";
+import { SCORE_LABEL } from "../../../modules/util.js";
 
 // initialization function
 data[key].init = () => {
@@ -11,7 +11,7 @@ data[key].data = {
   // oxygen desaturation (%) that hypopneas are scored at
   scored_at:    Defaults.percent({value:4, precision:0, min:3, max:4}),
   start:        Defaults.time(),    // start time, ex: "10:00 PM"
-  // end:          Defaults.time(),    // end time, ex: "1:00 AM"; calculate: start + trt
+  end:          Defaults.time(),    // end time, ex: "1:00 AM"; calculate: start + trt
   trt:          Defaults.minutes(), // total recording time (minutes)
   tst:          Defaults.minutes(), // total sleep time (minutes)
   eff:          Defaults.percent(), // sleep efficiency (%); calculate: 100*tst/trt
@@ -29,6 +29,7 @@ data[key].data = {
   hi:           Defaults.index(),   // total hypopnea index
   a_cmi:        Defaults.percent({precision:0}), // inspire check: (central + mixed) / ahi
   arem_ahi:     Defaults.index(),   // non-REM AHI (events/hour)
+  a_ci:         Defaults.index(),   // central apnea index (events/hr)
   rem_ahi:      Defaults.index(),   // REM AHI (events/hour)
   supine:       Defaults.percent(), // (% TST)
   prone:        Defaults.percent(), // (% TST)
@@ -51,21 +52,6 @@ data[key].data = {
   pulse_min:    Defaults.pulse(),   // minimum heart rate (bpm)
   pulse_avg:    Defaults.pulse(),   // average heart rate (bpm)
   pulse_max:    Defaults.pulse(),   // maximum heart rate (bpm)
-
-  // titration portion
-  ti_start:           Defaults.time(),    // start time, ex: "10:00 PM"
-  ti_end:             Defaults.time(),    // end time, ex: "1:00 AM"; calculate: start + trt
-  ti_trt:             Defaults.minutes(), // total recording time (minutes)
-  ti_tst:             Defaults.minutes(), // total sleep time (minutes)
-  ti_eff:             Defaults.percent(), // sleep efficiency
-  ti_lat:             Defaults.minutes(), // sleep latency
-  ti_rem_duration:    Defaults.minutes(), // REM duration (minutes)
-  ti_rem:             Defaults.percent(), // REM (% TST); calculate
-  ti_supine_duration: Defaults.minutes(), // supine duration (minutes)
-  ti_supine:          Defaults.percent(), // supine (% TST); calculate
-  ti_ahi:             Defaults.index(),   // apnea + hypopnea index (events/hour)
-  ti_cai:             Defaults.index(),   // central apnea index (events/hour)
-
   ...data[key].data, // only set things that aren't already set
 };
 
@@ -87,10 +73,10 @@ DATA.r_lat.template.set = () => {
 
 // if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
-  // "start": () => form.update_end(end),
+  start: () => form.update_end(end),
   trt: () => {
     form.update_percentage(tst, trt, eff);
-    // form.update_end(end);
+    form.update_end(end);
   },
   tst: () => {
     form.update_percentage(tst, trt, eff);
@@ -106,43 +92,29 @@ data[key].update = {
   hi: update_ahi,
   ahi: update_acmi,
   supine: () => {
-    form.update_rdi("supine");
-    update_sum_pos();
-  },
-  prone: () => {
-    form.update_rdi("prone");
-    update_sum_pos();
-  },
-  left: () => {
-    form.update_rdi("left");
-    update_sum_pos();
-  },
-  right: () => {
-    form.update_rdi("right");
-    update_sum_pos();
-  },
-  n1: update_sum_phase,
-  n2: update_sum_phase,
-  n3: update_sum_phase,
-  rem: () => {
-    update_sum_phase(),
-    form.update_rem(rem, 'requires_rem');
-  },
-  scored_at: form.update_scored_at,
-
-  // titration portion
-  ti_start: () => form.update_end(ti_end, {start: DATA.ti_start, trt: DATA.ti_trt}),
-  ti_trt: () => {
-    form.update_end(ti_end, {start: DATA.ti_start, trt: DATA.ti_trt});
-    form.update_percentage(ti_tst, ti_trt, ti_eff);
-  },
-  ti_tst: () => {
-    form.update_percentage(ti_tst, ti_trt, ti_eff);
-    form.update_percentage(ti_supine_duration, ti_tst, ti_supine);
-    form.update_percentage(ti_rem_duration, ti_tst, ti_rem);
-  },
-  ti_rem_duration: () => form.update_percentage(ti_rem_duration, ti_tst, ti_rem),
-  ti_supine_duration: () => form.update_percentage(ti_supine_duration, ti_tst, ti_supine),
+      form.update_rdi("supine");
+      update_sum_pos();
+    },
+    "prone": () => {
+      form.update_rdi("prone");
+      update_sum_pos();
+    },
+    "left": () => {
+      form.update_rdi("left");
+      update_sum_pos();
+    },
+    "right": () => {
+      form.update_rdi("right");
+      update_sum_pos();
+    },
+    "n1": update_sum_phase,
+    "n2": update_sum_phase,
+    "n3": update_sum_phase,
+    "rem": () => {
+      update_sum_phase();
+      form.update_rem(rem, 'requires_rem');
+    },
+    "scored_at": form.update_scored_at,
 };
 
 // non-default template setters

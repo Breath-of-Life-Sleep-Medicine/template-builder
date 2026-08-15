@@ -156,7 +156,8 @@ function load_script(k=key, callback=null) {
   }
   data.init(k); // create empty data object if necessary
   const script = document.createElement('script');
-  script.src = path_base + "/modules/"+k+".js";
+  // script.src = path_base + "/modules/"+k+".js";
+  script.src = path_base + "/templates/" + k + "/script.js";
   script.type = "module";
   script.onload = () => {
     on_load();
@@ -168,7 +169,7 @@ function load_script(k=key, callback=null) {
 // onchange callbacks are generated from {clean - no_change}, or {update - clean}
 function load_form() {
   new_template_key();
-  let path = "forms/"+key+".html";
+  let path = "templates/"+key+"/form.html";
   let id = "form_container";
   fetch(path)
   .then(response => {
@@ -225,7 +226,8 @@ function is_windows() {
 }
 
 function submit_copy(event) {
-  load_txt_file(path_base + "/templates/"+template.value+".txt")
+  // load_txt_file(path_base + "/templates/"+template.value+".txt")
+  load_txt_file(path_base + "/templates/"+template.value+"/template.txt")
     .then(content => copy_to_clipboard(find_replace(content)))
     .catch(error => console.error("error loading file: ", error));
   // do not clear the form

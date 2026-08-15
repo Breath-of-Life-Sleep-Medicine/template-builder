@@ -1,5 +1,5 @@
-import { data, key, Defaults } from "../data.js";
-import { get_dt } from "../util.js";
+import { data, key, Defaults } from "../../../modules/data.js";
+import { get_dt } from "../../../modules/util.js";
 
 
 data[key].data = {

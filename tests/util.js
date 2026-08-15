@@ -25,7 +25,7 @@ function get_lines(str) {
 // locations for different files
 function get_paths(path) {
   return {
-    template: "templates/"+path+".txt",
+    template: "templates/"+path+"/template.txt",
     expected: "./tests/expected/"+path+".txt",
   };
 }

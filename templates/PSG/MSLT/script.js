@@ -1,4 +1,4 @@
-import { data, key, Defaults } from "../data.js";
+import { data, key, Defaults } from "../../../modules/data.js";
 
 // TODO: once sessionStorage is in use, use it to load in data from the previous diagnostic PSG to fill in the diagnostic part
 

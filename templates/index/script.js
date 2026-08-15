@@ -1,5 +1,5 @@
-import { load_form } from "../script.js"
-import { data, key_global, Defaults } from "./data.js";
+import { load_form } from "../../script.js"
+import { data, key_global, Defaults } from "../../modules/data.js";
 
 data[key_global].init = () => {
   provider.value = data[key_global].data.provider.value;

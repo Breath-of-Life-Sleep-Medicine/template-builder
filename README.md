@@ -2,16 +2,18 @@
 
 To run locally, you can use an vscode extension like Live Preview (Microsoft), which lets you run on localhost.
 
+# template file structure
+
+- `{template-name}`
+    - `form.html`
+    - `script.html`
+    - `template.txt`
+
 # To add a new template
 
-1. Add
-    - `.html` file to *forms* directory
-    - `.txt` file to *templates* directory
-    - `.js` file to *modules* directory
-        All these files need to have the *exact same middle path*, everything between their parent directory (forms, templates, modules) and their extension (.html, .txt, .js). This includes the names of subdirectories (of forms, templates, and modules).
-        example: `./templates/HST/MediByte.txt`, `./forms/HST/MediByte.html`, and `./modules/HST/MediByte.js`
+1. Move your template into the templates directory. (ex: `templates/HST/MediByte`)
 1. `index.html`: add your template as an option to the template select element (`id="template"`).
-    - **value**: middle pathname (ex: `HST/MediByte`)
+    - **value**: path to your template from inside the templates directory (ex: `HST/MediByte`)
     - **inner text**: display text (ex: `MediByte`)
     example
         ```html
@@ -23,7 +25,7 @@ To run locally, you can use an vscode extension like Live Preview (Microsoft), w
         <!-- form ... -->
         ```
 
-## .html file
+## form.html
 
 Create form inputs for the user to interact with.
 
@@ -43,7 +45,7 @@ Example snippet
 </div>
 ```
 
-## .txt file
+## template.txt
 
 When the user clicks *copy to clipboard*, `script.js` does a find/replace on this template, then copies the modified version to the clipboard.
 
@@ -55,13 +57,13 @@ Example snippet
 
 Place keywords to replace inside `${}`.
 
-## .js file
+## script.js
 
 Example snippet
 
 ```js
 // import using relative links b/c root is different for local & deployed
-import { data, key, Defaults } from "../data.js";
+import { data, key, Defaults } from "../../../modules/data.js";
 
 // initialization function
 // - a function that runs as soon as this script is loaded

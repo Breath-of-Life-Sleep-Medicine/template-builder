@@ -39,8 +39,8 @@ const empty_form = {
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
-  await import ("/modules/index.js");
-  await import("/modules/HST/AliceOne.js");
+  await import ("/templates/index/script.js");
+  await import("/templates/HST/AliceOne/script.js");
   tst.build_form(empty_form);
 });
 

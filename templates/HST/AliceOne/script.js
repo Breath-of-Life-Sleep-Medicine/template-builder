@@ -1,5 +1,5 @@
-import { data, key, Defaults } from "../data.js";
-import { update_end, update_scored_at } from "../form.js";
+import { data, key, Defaults } from "../../../modules/data.js";
+import { update_end, update_scored_at } from "../../../modules/form.js";
 
 data[key].data = {
   scored_at:   Defaults.percent({value:4, precision:0, min:3, max:4}),

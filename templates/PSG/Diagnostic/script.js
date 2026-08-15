@@ -1,11 +1,11 @@
-import { data, key, Defaults, clean } from "../data.js";
-import * as form from "../form.js";
-import { SCORE_LABEL } from "../util.js";
+import {data, key, Defaults, clean} from "../../../modules/data.js";
+import * as form from "../../../modules/form.js";
+import { SCORE_LABEL } from "../../../modules/util.js";
 
 // initialization function
 data[key].init = () => {
   form.update_scored_at();
-}
+};
 
 data[key].data = {
   // oxygen desaturation (%) that hypopneas are scored at
@@ -29,7 +29,6 @@ data[key].data = {
   hi:           Defaults.index(),   // total hypopnea index
   a_cmi:        Defaults.percent({precision:0}), // inspire check: (central + mixed) / ahi
   arem_ahi:     Defaults.index(),   // non-REM AHI (events/hour)
-  a_ci:         Defaults.index(),   // central apnea index (events/hr)
   rem_ahi:      Defaults.index(),   // REM AHI (events/hour)
   supine:       Defaults.percent(), // (% TST)
   prone:        Defaults.percent(), // (% TST)
@@ -71,7 +70,20 @@ DATA.r_lat.template.set = () => {
   (d.rem.value != 0) ? d.r_lat.str() : "N/A"
 }
 
-// non-default update functions
+let key_MSLT = "PSG/MSLT";
+
+if (!(key_MSLT in data)) {
+  data.init(key_MSLT);
+  data[key_MSLT].data = {
+    prev_ahi:   Defaults.index(),   // AHI (events/hr)
+    prev_tst:   Defaults.minutes(), // total sleep time (minutes)
+    prev_eff:   Defaults.percent(), // sleep efficiency (%)
+    prev_lat:   Defaults.minutes(), // sleep onset latency (minutes)
+    prev_r_lat: Defaults.minutes(), // rem latency - less wake time (minutes)
+  };
+}
+
+// if rem% == 0, rem latency locks to N/A, rem ahi locks to N/A, non-rem ahi locks to whatever AHI is
 data[key].update = {
   start: () => form.update_end(end),
   trt: () => {
@@ -80,17 +92,23 @@ data[key].update = {
   },
   tst: () => {
     form.update_percentage(tst, trt, eff);
-    update_ahi();
+    data[key_MSLT].data.prev_tst.value = DATA.tst.value;
   },
-  r_lat: () => {
+  eff: () => data[key_MSLT].data.prev_eff.value = DATA.eff.value,
+  lat: () => data[key_MSLT].data.prev_lat.value = DATA.lat.value,
+  r_lat: () => { // do update before clean
     form.rem_check(rem, r_lat);
     clean("r_lat");
+    data[key_MSLT].data.prev_r_lat.value = DATA.r_lat.value;
   },
   a_ci: update_ahi,
   a_oi: update_ahi,
   a_mi: update_ahi,
   hi: update_ahi,
-  ahi: update_acmi,
+  ahi: () => {
+    data[key_MSLT].data.prev_ahi.value = DATA.ahi.value;
+    update_acmi();
+  },
   supine: () => {
     form.update_rdi("supine");
     update_sum_pos();
@@ -111,7 +129,7 @@ data[key].update = {
   n2: update_sum_phase,
   n3: update_sum_phase,
   rem: () => {
-    update_sum_phase();
+    update_sum_phase(),
     form.update_rem(rem, 'requires_rem');
   },
   scored_at: form.update_scored_at,
