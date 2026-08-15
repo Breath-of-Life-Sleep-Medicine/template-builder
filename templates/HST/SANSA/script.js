@@ -14,13 +14,14 @@ data[key].data = {
   // scored_at
   // start
   // end
-  // duration // calculated
+  // trt // calculated: end - start
   // tst
+  // tvt // may or may not need tvt
   // tst_rem
-  // tst_non_rem
+  // tst_non_rem  // calculated: tst - tst_rem
   // ahi
   // cahi
-  // centrals_percent // calculated
+  // centrals_percent // calculated: 100 * cahi / ahi
   // odi
   // rem_ahi
   // ox_avg
@@ -31,10 +32,10 @@ data[key].data = {
   // pulse_max
   // s_ahi
   // s_duration_min
-  // s_duration_percent // caculated
+  // s_duration_percent // calculated: floor(100 * s_duration_min / tst)
   // has_snoring
-  // has_snoring options: null/unknown, true, false
-    // null/unknown: "[]"
+  // has_snoring options: unknown, true, false
+    // unknown: "[]"
     // true: "was detected"
     // false: "was not detected"
   ...data[key].data, // to only set things that aren't already set
