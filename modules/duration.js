@@ -75,6 +75,17 @@ class Duration {
   isZero() {
     return this[this.lo] === 0;
   }
+
+  // time conversions
+  toSeconds() {
+    return Number(this.h) + Number(this.m) / 60.0 + Number(this.s) / 60.0 / 60.0;
+  }
+  toMinutes() {
+    return Number(this.h) * 60.0 + Number(this.m) + Number(this.s) / 60.0;
+  }
+  toHours() {
+    return Number(this.h) * 60.0 * 60.0 + Number(this.m) * 60.0 + Number(this.s);
+  }
 }
 
 // start is a dt
