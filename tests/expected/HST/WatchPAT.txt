@@ -13,10 +13,10 @@ Recording: Started: 10:00 PM, Ended: 4:00 AM, Total Recording Time: 6 hours 0 mi
 2. RESPIRATORY EVENTS: AHI: 25.0/hr, RDI: 24.9/hr
 Central Apnea Hypopnea Index: 5.0/hr
 %AHI central: 20%
-Supine AHI: 35.0/hr, Duration Supine: 3 hours 1 minute/75.4% TST
+Supine AHI: 35.0/hr, Duration Supine: 181.0 minutes/75.4% TST
 3. OXYGEN SATURATION: Mean: 95%, Minimum: 82%
 Oxygen Desaturation Index: 12.5 Events per hour
-Duration of study with oxygen saturation <= 88%: 4 minutes/1.7% TST
+Duration of study with oxygen saturation <= 88%: 4.0 minutes/1.7% TST
 4. HEART RATE: Mean: 64 BPM, Minimum: 60 BPM, Maximum: 75 BPM
 Atrial fibrillation detected; total duration: 1 hour 35 minutes 47 seconds.
 5. SNORING: 60.0 minutes/25.0% TST, Duration > 45 decibels: 37.6 minutes, Duration > 60 decibels: 5.7 minutes
