@@ -1,6 +1,6 @@
 <!-- scored_at -->
-<label for="">Hypopneas scored at oxygen desaturation</label>
-<select id="guidelines" class="form-control">
+<label>Hypopneas scored at oxygen desaturation</label>
+<select id="scored_at" class="form-control">
   <option value="3" selected>3%</option>
   <option value="4">4%</option>
 </select>
@@ -59,8 +59,8 @@
     <label for="end">End study time</label>
   </div>
   <!-- total recording time -->
-  <div class="form-floating">
-    <input-duration class="form-control h m" id="study_duration"></input-duration>
+  <div class="form-floating calculated">
+    <input-duration class="form-control h m calculated" id="study_duration"></input-duration>
     <label for="study_duration">Total recording time (Hours : Minutes)</label>
   </div>
 </div>
@@ -111,6 +111,7 @@
 <div class="form-text text-end">
   Inspire check: (central + mixed) / AHI = <span class="cahi_percent">0</span>%
 </div>
+<!-- TODO: does this display work?? -->
 
 <label>Cardiac Rhythm Analysis In Sleep: Suspected Atrial Fibrillation: Total duration</label>
 <!-- suspected atrial fibrillation: total duration -->
@@ -144,7 +145,7 @@
   </div>
   <span class="input-group-text">min</span>
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="od_percent" class="form-control" aria-label="Pulse Rate Mean" placeholder="">
+    <input type="text" inputmode="numeric" id="od_percent" class="form-control calculated" aria-label="Pulse Rate Mean" placeholder="">
     <label for="od_percent"><=88%</label>
   </div>
   <span class="input-group-text">%</span>
@@ -181,7 +182,7 @@
   <span class="input-group-text">min</span>
   <!-- supine: sleep (%) -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="s_duration_percent" class="form-control" placeholder="">
+    <input type="text" inputmode="numeric" id="s_duration_percent" class="form-control calculated" placeholder="">
     <label for="s_duration_percent">Sleep</label>
   </div>
   <span class="input-group-text">%</span>
@@ -203,7 +204,7 @@
   <span class="input-group-text">min</span>
   <!-- snoring %: sleep % >40 dB -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="snore_percent" class="form-control" placeholder="">
+    <input type="text" inputmode="numeric" id="snore_percent" class="form-control calculated" placeholder="">
     <label for="snore_percent">>40 dB</label>
   </div>
   <span class="input-group-text">%</span>
