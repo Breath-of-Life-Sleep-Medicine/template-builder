@@ -1,0 +1,38 @@
+POLYSOMNOGRAM SUMMARY REPORT: WATCHPAT HOME SLEEP STUDY
+Date of study: 1/20/2025
+Referring provider: Example Doctor PAC
+Sleep provider: Rotcod Elpmaxe FNP
+HISTORY: []
+Medications: []
+Epworth Sleepiness Scale: 24
+STOPBANG: 8
+BMI: 27.5
+RESULTS: This was an unattended overnight portable home sleep study performed by Breath Of Life Sleep Medicine using a WatchPAT device. The following physiologic parameters were recorded: Actigraphy for wake versus sleep; PAT and pulse rate for sleep staging; PAT, pulse rate, and pulse oximetry for respiratory event detection(pAHI and pRDI); a 3-axis accelerometer for respiratory movement and body position; and a microphone for snoring. Hypopneas were scored using 3% oxygen desaturation.
+Recording: Started: 10:00 PM, Ended: 4:00 AM, Total Recording Time: 6 hours 0 minutes
+1. TECHNICALLY VALID SLEEP TIME: 4 hours 0 minutes, REM: 17.4% TST, Deep Sleep: 42.86% TST
+2. RESPIRATORY EVENTS: AHI: 25.0/hr, RDI: 24.9/hr
+Central Apnea Hypopnea Index: 5.0/hr
+%AHI central: 20%
+Supine AHI: 35.0/hr, Duration Supine: 3 hours 1 minute/75.4% TST
+3. OXYGEN SATURATION: Mean: 95%, Minimum: 82%
+Oxygen Desaturation Index: 12.5 Events per hour
+Duration of study with oxygen saturation <= 88%: 4 minutes/1.7% TST
+4. HEART RATE: Mean: 64 BPM, Minimum: 60 BPM, Maximum: 75 BPM
+Atrial fibrillation detected; total duration: 1 hour 35 minutes 47 seconds.
+5. SNORING: 60.0 minutes/25.0% TST, Duration > 45 decibels: 37.6 minutes, Duration > 60 decibels: 5.7 minutes
+IMPRESSIONS:
+1. [] Obstructive sleep apnea G47.33
+[]. [] Central sleep apnea G47.31
+[]. Nocturnal hypoxemia G47.36
+[]. Excessive daytime sleepiness with high ESS score. G47.10
+[]. Obesity with BMI: [], E66.01
+[]. Snoring R06.83
+RECOMMENDATIONS:
+1. The patient has obstructive sleep apnea and may benefit from a trial of auto CPAP provided by a DME company with a pressure range from [] centimeters H2O and with further pressure adjustments to be made on a clinical basis.
+Alternatively, the patient may be a candidate for oral appliance therapy provided by a dentist.
+[]. Due to the significant duration and extent of oxygen desaturations identified on this home sleep study, recommend obtaining a nocturnal oximetry following auto CPAP acclimatization or oral appliance therapy titration.
+[]. The patient should be advised to avoid driving or operating heavy machinery if not fully alert.
+[]. Under medical supervision, regular exercise as tolerated and weight reduction is encouraged. For patient's with a BMI 35 or greater, weight management/bariatric evaluation may be appropriate.
+COMMENT: This patient has been seen in consultation by [] and will be contacted to review the results of the study and discuss further management.
+Thank you very much for your kind referral.
+Electronically signed by Interpreting Physician: Mary-Alice Jaeger MD, ABFM/Board Certified Sleep Physician
