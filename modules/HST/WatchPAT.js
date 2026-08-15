@@ -1,4 +1,5 @@
 import { data, key, Defaults } from "../data.js";
+import { get_dt } from "../util.js";
 
 
 data[key].data = {
@@ -77,17 +78,21 @@ function toggle(toggle_class) {
 
 function update_duration() {
   // duration = end - start
-  DATA.trt.value.set_dt(start.value, end.value);
-  DATA.trt.clean.fn(DATA.trt.value, "trt"); // dumb, but clean does extra stuff
+  let [s, e] = get_dt("1970-01-01", start.value, end.value);
+  DATA.trt.value.set_dt(s, e);
+  trt.value = DATA.trt.value;
+  trt.dispatchEvent(new Event('calculated'));
 }
 
 function update_cahi_percent() {
   // cahi % = cahi / ahi
-  let val = Number(DATA.cahi.value) / Number(DATA.ahi.value);
+  let val = 100.0 * Number(DATA.cahi.value) / Number(DATA.ahi.value);
   DATA.cahi_percent.clean.fn(val, "cahi_percent");
 }
 
 // get % of minutes / tst
 function update_duration_percent(percent, percent_str, minutes) {
-  DATA[percent_str].clean.fn(100.0 * (Number(minutes)/Number(DATA.tst.value.toMinutes())), percent_str);
+  DATA[percent_str].clean.fn(100.0 * (Number(minutes.value)/Number(DATA.tst.value.toMinutes())), percent_str);
+  percent.value = DATA[percent_str].value;
+  percent.dispatchEvent(new Event('calculated'));
 }
