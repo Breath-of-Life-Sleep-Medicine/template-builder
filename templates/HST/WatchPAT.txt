@@ -1,28 +1,28 @@
-POLYSOMNOGRAM SUMMARY REPORT:  WATCHPAT HOME SLEEP STUDY
+POLYSOMNOGRAM SUMMARY REPORT: WATCHPAT HOME SLEEP STUDY
 Date of study: ${date}
 Referring provider: ${referring}
-Sleep provider:  ${provider}
+Sleep provider: ${provider}
 HISTORY: []
 Medications: []
 Epworth Sleepiness Scale: ${epworth}
 STOPBANG: ${stopbang}
 BMI: ${bmi}
-RESULTS: This was an unattended overnight portable home sleep study performed by Breath Of Life Sleep Medicine using a WatchPAT device. The following physiologic parameters were recorded:  Actigraphy for wake versus sleep; PAT and pulse rate for sleep staging; PAT, pulse rate, and pulse oximetry for respiratory event detection(pAHI and pRDI); a 3-axis accelerometer for respiratory movement and body position; and a microphone for snoring. Hypopneas were scored using ${scored_at}% oxygen desaturation.
+RESULTS: This was an unattended overnight portable home sleep study performed by Breath Of Life Sleep Medicine using a WatchPAT device. The following physiologic parameters were recorded: Actigraphy for wake versus sleep; PAT and pulse rate for sleep staging; PAT, pulse rate, and pulse oximetry for respiratory event detection(pAHI and pRDI); a 3-axis accelerometer for respiratory movement and body position; and a microphone for snoring. Hypopneas were scored using ${scored_at}% oxygen desaturation.
 Recording: Started: ${start}, Ended: ${end}, Total Recording Time: ${trt}
 1. TECHNICALLY VALID SLEEP TIME: ${tst}, REM: ${tst_rem}% TST, Deep Sleep: ${tst_deep}% TST
-2. RESPIRATORY EVENTS: AHI:${ahi}/hr, RDI: ${rdi}/hr
-Central Apnea Hypopnea Index:${cahi}/hr
+2. RESPIRATORY EVENTS: AHI: ${ahi}/hr, RDI: ${rdi}/hr
+Central Apnea Hypopnea Index: ${cahi}/hr
 %AHI central: ${cahi_percent}%
-Supine AHI:${s_ahi}/hr, Duration Supine:${s_duration_min} Minutes/${s_duration_percent}% TST
-3. OXYGEN SATURATION: Mean:${ox_avg}%, Minimum:${ox_min}%
-Oxygen Desaturation Index:${odi} Events per hour
+Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_duration_min} Minutes/${s_duration_percent}% TST
+3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
+Oxygen Desaturation Index: ${odi} Events per hour
 Duration of study with oxygen saturation <= 88%: ${od_duration} Minutes/${od_percent}% TST
 4. HEART RATE: Mean: ${pulse_avg} BPM, Minimum: ${pulse_min} BPM, Maximum: ${pulse_max} BPM
 Atrial fibrillation ${afib}.
 5. SNORING: ${snore_min}Minutes/${snore_percent}% TST, Duration > 45 decibels: ${snore_min_45db} Minutes, Duration > 60 decibels: ${snore_min_60db} Minutes
 IMPRESSIONS:
 1. [] Obstructive sleep apnea G47.33
-[]. []  Central sleep apnea G47.31
+[]. [] Central sleep apnea G47.31
 []. Nocturnal hypoxemia G47.36
 []. Excessive daytime sleepiness with high ESS score. G47.10
 []. Obesity with BMI: [], E66.01
