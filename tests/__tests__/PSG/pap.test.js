@@ -68,8 +68,8 @@ const empty_form = {
 // sets data callback functions
 beforeAll(async () => {
   tst.init_data();
-  await import ("/modules/index.js");
-  await import("/modules/PSG/PAP.js");
+  await import ("/templates/index/script.js");
+  await import("/templates/PSG/PAP/script.js");
   global.rdi_pos_div = {hidden: true};
   global.rdi_pos_label = {hidden: true};
   tst.build_form(empty_form);
