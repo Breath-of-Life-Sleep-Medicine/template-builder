@@ -96,7 +96,7 @@ function setup_valid() {
       pulse_max:     {value: "75"},
       s_duration_min:{value: "181.0"}, // % = 100*181/266 ~ 68.0451 ~ 68.0%
       s_ahi:         {value: "35.0"},
-      snore_min:     {value: "60.0"},  // % = 100*60/266 ~ 22.5564 ~ 22.6%
+      snore_min:     {value: "60.0"},  // % = 100*60/266 ~ 22.5564 ~ 22.5% (always rounds down)
       snore_min_60db:{value: "5.7"},
       snore_min_45db:{value: "37.6"},
       tst_deep:      {value: "42.86"},

@@ -19,7 +19,7 @@ Oxygen Desaturation Index: 12.5 Events per hour
 Duration of study with oxygen saturation <= 88%: 4.0 minutes/1.5% TST
 4. HEART RATE: Mean: 64 BPM, Minimum: 60 BPM, Maximum: 75 BPM
 Atrial fibrillation detected; total duration: 1 hour 35 minutes 47 seconds.
-5. SNORING: 60.0 minutes/22.6% TST, Duration > 45 decibels: 37.6 minutes, Duration > 60 decibels: 5.7 minutes
+5. SNORING: 60.0 minutes/22.5% TST, Duration > 45 decibels: 37.6 minutes, Duration > 60 decibels: 5.7 minutes
 IMPRESSIONS:
 1. [] Obstructive sleep apnea G47.33
 []. [] Central sleep apnea G47.31
