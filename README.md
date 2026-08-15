@@ -75,7 +75,8 @@ data[key].init = () => {
 // - contain value, type, clean functions, form getters and setters, template setters,
 //   and most settings relevant to data
 data[key].data = {
-  duration: Defaults.minutes();
+  duration: Defaults.minutes(),
+  ...data[key].data, // to only set things that aren't already set
 };
 
 // update functions
