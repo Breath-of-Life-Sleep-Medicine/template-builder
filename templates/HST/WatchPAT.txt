@@ -13,13 +13,13 @@ Recording: Started: ${start}, Ended: ${end}, Total Recording Time: ${trt}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr, RDI: ${rdi}/hr
 Central Apnea Hypopnea Index: ${cahi}/hr
 %AHI central: ${cahi_percent}%
-Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_duration_min} Minutes/${s_duration_percent}% TST
+Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_duration_min}/${s_duration_percent}% TST
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
 Oxygen Desaturation Index: ${odi} Events per hour
-Duration of study with oxygen saturation <= 88%: ${od_duration} Minutes/${od_percent}% TST
+Duration of study with oxygen saturation <= 88%: ${od_duration}/${od_percent}% TST
 4. HEART RATE: Mean: ${pulse_avg} BPM, Minimum: ${pulse_min} BPM, Maximum: ${pulse_max} BPM
 Atrial fibrillation ${afib}.
-5. SNORING: ${snore_min}Minutes/${snore_percent}% TST, Duration > 45 decibels: ${snore_min_45db} Minutes, Duration > 60 decibels: ${snore_min_60db} Minutes
+5. SNORING: ${snore_min}/${snore_percent}% TST, Duration > 45 decibels: ${snore_min_45db}, Duration > 60 decibels: ${snore_min_60db}
 IMPRESSIONS:
 1. [] Obstructive sleep apnea G47.33
 []. [] Central sleep apnea G47.31
