@@ -67,8 +67,12 @@ data[key].update = {
   end: update_trt,
   ahi: update_centrals_percent,
   cahi: update_centrals_percent,
-  tst: update_tst_non_rem,
   tst_rem: update_tst_non_rem,
+  s_duration_min: update_supine_time,
+  tst: () => {
+    update_tst_non_rem();
+    update_supine_time();
+  },
 };
 
 // non-default template setter functions
@@ -115,6 +119,13 @@ function update_trt() {
 function update_centrals_percent() {
   let val = 100.0 * Number(DATA.cahi.value) / Number(DATA.ahi.value);
   DATA.centrals_percent.clean.fn(val, "centrals_percent");
+}
+
+function update_supine_time() {
+  let val = Math.floor(100.0 * Number(DATA.s_duration_min.value.m) / Number(DATA.tst.value.toMinutes()));
+  DATA.s_duration_percent.clean.fn(val, "s_duration_percent");
+  s_duration_percent.value = DATA.s_duration_percent.value;
+  s_duration_percent.dispatchEvent(new Event('calculated'));
 }
 
 function update_tst_non_rem() {
