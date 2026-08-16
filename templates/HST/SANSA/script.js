@@ -29,7 +29,7 @@ data[key].data = {
   rem_ahi: Defaults.index({precision: 1}),
   ox_avg: Defaults.percent({precision: 1}),
   ox_min: Defaults.percent({precision: 1}),
-  od_duration: Defaults.minutes({precision: 0}),
+  od_duration_min: Defaults.minutes({precision: 0}),
   pulse_min: Defaults.pulse({precision: 0}),
   pulse_avg: Defaults.pulse({precision: 0}),
   pulse_max: Defaults.pulse({precision: 0}),

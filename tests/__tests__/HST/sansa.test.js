@@ -25,7 +25,7 @@ const empty_form = {
     rem_ahi:            {value:""},
     ox_avg:             {value:""},
     ox_min:             {value:""},
-    od_duration:        {value:""},
+    od_duration_min:    {value:""},
     pulse_min:          {value:""},
     pulse_avg:          {value:""},
     pulse_max:          {value:""},
@@ -58,33 +58,33 @@ beforeEach(() => {
 function setup_valid() {
   tst.update_form({
     key_global: {
-      date:          {value: "2025-01-20"},
-      referring:     {value: "Example Doctor PAC"},
-      provider:      {value: "Rotcod Elpmaxe FNP"},
+      date:            {value: "2025-01-20"},
+      referring:       {value: "Example Doctor PAC"},
+      provider:        {value: "Rotcod Elpmaxe FNP"},
     },
     key: {
-      bmi:           {value: "27.57"},
-      scored_at:     {value: "3"},
-      start:         {value: "22:00"}, // 10:00 PM
-      end:           {value: "04:00"}, // 4:00 AM
-      tst:           {value: {h: 4, m: 26}, class: "h m"}, // 266 min
-      tvt:           {value: {h: 4, m: 0}, class: "h m"},  // 240 min
-      tst_rem:       {value: "27"},    // 266 - 27 = 239 min
-      ahi:           {value: "25.0"},
-      cahi:          {value: "5.0"},   // 100 * 5 / 25 = 20%
-      odi:           {value: "12.5"},
-      rem_ahi:       {value: "47.3"},
-      ox_avg:        {value: "95.2"},
-      ox_min:        {value: "82.5"},
-      od_duration:   {value: "4"},     // % = 100*4/266 ~ 1.5038% ~ 1.5%
-      pulse_min:     {value: "60"},
-      pulse_avg:     {value: "64"},
-      pulse_max:     {value: "75"},
-      s_ahi:         {value: "35.1"},
-      s_duration_min:{value: "181"},   // % = 100*181/266 ~ 68.0451 ~ 68%
-      has_snoring:   {value: "true"},
+      bmi:             {value: "27.57"},
+      scored_at:       {value: "3"},
+      start:           {value: "22:00"}, // 10:00 PM
+      end:             {value: "04:00"}, // 4:00 AM
+      tst:             {value: {h: 4, m: 26}, class: "h m"}, // 266 min
+      tvt:             {value: {h: 4, m: 0}, class: "h m"},  // 240 min
+      tst_rem:         {value: "27"},    // 266 - 27 = 239 min
+      ahi:             {value: "25.0"},
+      cahi:            {value: "5.0"},   // 100 * 5 / 25 = 20%
+      odi:             {value: "12.5"},
+      rem_ahi:         {value: "47.3"},
+      ox_avg:          {value: "95.2"},
+      ox_min:          {value: "82.5"},
+      od_duration_min: {value: "4"},     // % = 100*4/266 ~ 1.5038% ~ 1.5%
+      pulse_min:       {value: "60"},
+      pulse_avg:       {value: "64"},
+      pulse_max:       {value: "75"},
+      s_ahi:           {value: "35.1"},
+      s_duration_min:  {value: "181"},   // % = 100*181/266 ~ 68.0451 ~ 68%
+      has_snoring:     {value: "true"},
       // checkboxes
-      bmi_na:        {checked: false},
+      bmi_na:          {checked: false},
     }
   });
 }
@@ -110,7 +110,7 @@ test("empty form", () => {
     rem_ahi:            "0.0",
     ox_avg:             "0.0",
     ox_min:             "0.0",
-    od_duration:        "0 minutes",
+    od_duration_min:    "0 minutes",
     pulse_min:          "0",
     pulse_avg:          "0",
     pulse_max:          "0",

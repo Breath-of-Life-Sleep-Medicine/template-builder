@@ -11,7 +11,7 @@ PROCEDURE
 The sleep study was completed using SANSA (FDA clearance: K240285), a technically adequate home sleep apnea testing (HSAT) TYPE III device measuring oxygen saturation, heart rate, respiratory effort, chest movement, body position, snoring, sleep staging, and actigraphy.
 Prior to using the device, the patient received verbal and written instructions for its application and was provided with the help desk phone number for additional telephonic instruction with 24-hour availability of qualified personnel to answer questions. Patient affirmed they were comfortable with the instructions and given opportunity to ask questions.
 Physiological data were autoscored and then manually re-scored/analyzed according to the current version of AASM Manual for the Scoring of Sleep and Associated Events.
-Hypopneas were scored using {scored_at}% oxygen desaturation.
+Hypopneas were scored using ${scored_at}% oxygen desaturation.
 RECORDING SUMMARY
 The study started at ${start} and ended at ${end}. Total study time: ${trt}
 1. SANSA study with sleep time: ${tst}, REM: ${tst_rem}, non-REM: ${tst_non_rem}
@@ -21,7 +21,7 @@ Total central events%: ${centrals_percent}%
 ODI: ${odi} Events per hour
 REM AHI: ${rem_ahi}/hr
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
-Duration of study with oxygen saturation <= 88%: ${od_duration} Minutes
+Duration of study with oxygen saturation <= 88%: ${od_duration_min}
 4. HEART RATE during sleep: Minimum: ${pulse_min} BPM, Mean: ${pulse_avg} BPM, Maximum: ${pulse_max} BPM
 5. Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_duration_min} Minutes/${s_duration_percent}% TST
 6. SNORING: ${has_snoring} Detected
