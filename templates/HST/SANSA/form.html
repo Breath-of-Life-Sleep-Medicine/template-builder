@@ -1,0 +1,162 @@
+<label>Study Information</label>
+<div class="input-group">
+  <!-- start -->
+  <div class="form-floating">
+    <input type="time" id="start" class="form-control">
+    <label for="start">Study start</label>
+  </div>
+  <!-- end -->
+  <div class="form-floating">
+    <input type="time" id="end" class="form-control">
+    <label for="end">Study end</label>
+  </div>
+  <!-- BMI NA -->
+  <input type="checkbox" class="btn-check" id="bmi_na" autocomplete="off">
+  <label class="btn btn-secondary" for="bmi_na">N/A</label>
+  <!-- BMI -->
+   <div class="form-floating bmi_visibility">
+    <input type="text" inputmode="numeric" id="bmi" class="form-control" aria-label="Stopbang Score" placeholder="">
+    <label for="bmi">BMI</label>
+  </div>
+</div>
+
+<label>Events Summary</label>
+<div class="input-group">
+  <!-- scored_at -->
+  <div class="form-floating">
+    <select id="scored_at" class="form-control">
+      <option value="3" selected>3%</option>
+      <option value="4">4%</option>
+    </select>
+    <label for="scored_at">Scoring Criteria</label>
+  </div>
+  <!-- ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ahi" class="form-control" aria-label="Apnea-Hypopnea Index" placeholder="">
+    <label for="ahi">sAHI <span class="scored_at"></span>%</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- central ahi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="cahi" class="form-control" aria-label="Central Apnea-Hypopnea Index" placeholder="">
+    <label for="cahi">sAHIc</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+  <!-- odi -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="odi" class="form-control" aria-label="Oxygen Desaturation Index" placeholder="">
+    <label for="odi">ODI <span class="scored_at"></span>%</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<!-- Central + Mixed Apnea Indexes / AHI -->
+<div class="form-text text-end">
+  Inspire check: (central + mixed) / AHI = <span class="centrals_percent">0</span>%
+</div>
+
+<label>Sleep Summary</label>
+<div class="input-group">
+  <!-- total recording time -->
+  <div class="form-floating">
+    <input-duration class="form-control h m calculated" id="trt"></input-duration>
+    <label for="trt">Total study time (Hours : Minutes)</label>
+  </div>
+  <!-- total sleep time -->
+   <div class="form-floating">
+    <input-duration class="form-control h m" id="tst"></input-duration>
+    <label for="tst">Sleep time (Hours : Minutes)</label>
+  </div>
+  <!-- REM -->
+  <div class="form-floating">
+    <input-duration class="form-control h m" id="tst_rem"></input-duration>
+    <label for="tst_rem">REM (Hours : Minutes)</label>
+  </div>
+  <!-- non-REM -->
+  <div class="form-floating">
+    <input-duration class="form-control h m calculated" id="tst_non_rem"></input-duration>
+    <label for="tst_non_rem">Non-REM (Hours : Minutes)</label>
+  </div>
+  <!-- REM AHI -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="rem_ahi" class="form-control" aria-label="REM AHI" placeholder="">
+    <label for="rem_ahi">sAHI (REM)</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
+
+<label>SpO2 Statistics (%)</label>
+<div class="input-group">
+  <!-- ox min -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_min" class="form-control" aria-label="SpO2 minimum" placeholder="">
+    <label for="ox_min">Min</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- ox avg -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="ox_avg" class="form-control" aria-label="SpO2 mean" placeholder="">
+    <label for="ox_avg">Mean</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- <= 88% -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="od_duration_min" class="form-control" aria-label="Minutes oxygen saturation is less than or equal to 88%" placeholder="">
+    <label for="od_duration_min">&le; 88%</label>
+  </div>
+  <span class="input-group-text">min</span>
+</div>
+
+<label>Heart Rate Statistics: Sleeping</label>
+<div class="input-group">
+  <!-- min heart rate -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_min" class="form-control" aria-label="Pulse Rate Minimum" placeholder="">
+    <label for="pulse_min">Min</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <!-- mean heart rate -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_avg" class="form-control" aria-label="Pulse Rate Mean" placeholder="">
+    <label for="pulse_avg">Mean</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+  <!-- max heart rate -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="pulse_max" class="form-control" aria-label="Pulse Rate Maximum" placeholder="">
+    <label for="pulse_max">Max</label>
+  </div>
+  <span class="input-group-text">bpm</span>
+</div>
+
+<!-- snoring -->
+<label>Graphs: Snore</label>
+<select id="has_snoring" class="form-control">
+  <option value="unknown" selected><b>unknown</b>: cannot determine</option>
+  <option value="true"><b>shows snoring</b>: snore graph has spikes</option>
+  <option value="false"><b>does not show snoring</b>: snore graph is a flat line</option>
+</select>
+
+<hr>
+
+<label>Positional Metrics: Supine</label>
+<div class="input-group">
+  <!-- Supine Sleep Time (Min) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_duration_min" class="form-control" aria-label="Supine sleep time in minutes" placeholder="">
+    <label for="s_duration_min">Sleep Time</label>
+  </div>
+  <span class="input-group-text">min</span>
+  <!-- Supine Sleep Time (%) -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_duration_percent" class="form-control calculated" aria-label="Supine sleep time as a percentage" placeholder="">
+    <label for="s_duration_percent">Sleep Time</label>
+  </div>
+  <span class="input-group-text">%</span>
+  <!-- Supine AHI -->
+  <div class="form-floating">
+    <input type="text" inputmode="numeric" id="s_ahi" class="form-control" aria-label="Apnea-Hypopnea Index" placeholder="">
+    <label for="s_ahi">sAHI <span class="scored_at"></span>%</label>
+  </div>
+  <span class="input-group-text">evt/hr</span>
+</div>
