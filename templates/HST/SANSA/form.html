@@ -50,30 +50,33 @@
   <span class="input-group-text">evt/hr</span>
 </div>
 
+<!-- Central + Mixed Apnea Indexes / AHI -->
+<div class="form-text text-end">
+  Inspire check: (central + mixed) / AHI = <span class="centrals_percent">0</span>%
+</div>
+
 <label>Sleep Summary</label>
 <div class="input-group">
   <!-- total recording time -->
-  <div class="form-floating calculated">
+  <div class="form-floating">
     <input-duration class="form-control h m calculated" id="trt"></input-duration>
     <label for="trt">Total study time (Hours : Minutes)</label>
   </div>
   <!-- total sleep time -->
-   <div class="form-floating calculated">
+   <div class="form-floating">
     <input-duration class="form-control h m" id="tst"></input-duration>
     <label for="tst">Sleep time (Hours : Minutes)</label>
   </div>
   <!-- REM -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="tst_rem" class="form-control" placeholder="">
-    <label for="tst_rem">REM</label>
+    <input-duration class="form-control h m" id="tst_rem"></input-duration>
+    <label for="tst_rem">REM (Hours : Minutes)</label>
   </div>
-  <span class="input-group-text">min</span>
   <!-- non-REM -->
   <div class="form-floating">
-    <input type="text" inputmode="numeric" id="tst_non_rem" class="form-control calculated" placeholder="">
-    <label for="tst_non_rem">Non-REM</label>
+    <input-duration class="form-control h m calculated" id="tst_non_rem"></input-duration>
+    <label for="tst_non_rem">Non-REM (Hours : Minutes)</label>
   </div>
-  <span class="input-group-text">min</span>
   <!-- REM AHI -->
   <div class="form-floating">
     <input type="text" inputmode="numeric" id="rem_ahi" class="form-control" aria-label="REM AHI" placeholder="">

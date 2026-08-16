@@ -1,9 +1,13 @@
 import { data, key, Defaults } from "../../../modules/data.js";
+import { get_dt } from "../../../modules/util.js";
 
 // initialization function
 // - a function that runs as soon as this script is loaded
 // - ex: set default template values
 data[key].init = () => {
+  // update labels
+  data[key].scored_at = Defaults.percent({value:3, precision:0, min:3, max:4});
+  data[key].scored_at.clean.fn(3, "scored_at");
 };
 
 // data objects
@@ -39,19 +43,76 @@ data[key].data = {
     // false: "was not detected"
   ...data[key].data, // to only set things that aren't already set
 };
+let DATA = data[key].data;
 
 // update functions
 // - automatically runs on item when it is changed in the form (runs after clean function)
 // - ex: sum two inputs into another input when their values change
 data[key].update = {
+  // NA toggles
+  bmi_na: () => {toggle('bmi_visibility');},
+  // update calculated fields
+  start: update_trt,
+  end: update_trt,
+  ahi: update_centrals_percent,
+  cahi: update_centrals_percent,
+  tst: update_tst_non_rem,
+  tst_rem: update_tst_non_rem,
 };
 
 // non-default template setter functions
 // - runs only when moving data into the template
 // - for each id, if this is set, this setter function will run INSTEAD of the default template setter
 data[key].template_set = {
+  bmi: () => bmi_na.checked ? "[]" : DATA.bmi.template.set("bmi"),
 };
 
 // functions that return the default data value
 data[key].default = {
+  has_snoring: () => "unknown",
 };
+
+function toggle(toggle_class) {
+  let elements = document.getElementsByClassName(toggle_class);
+  for (let element of elements) {
+    element.hidden = !element.hidden;
+  }
+}
+
+// calculations for calculated fields
+
+function update_trt() {
+  // duration = end - start
+  let [s, e] = get_dt("1970-01-01", start.value, end.value);
+  DATA.trt.value.set_dt(s, e);
+  trt.value = DATA.trt.value;
+  trt.dispatchEvent(new Event('calculated'));
+}
+
+function update_centrals_percent() {
+  let val = 100.0 * Number(DATA.cahi.value) / Number(DATA.ahi.value);
+  DATA.centrals_percent.clean.fn(val, "centrals_percent");
+}
+
+function update_tst_non_rem() {
+  subtract_durations(DATA.tst_non_rem.value, DATA.tst.value, DATA.tst_rem.value);
+  DATA.tst_non_rem.clean.fn(DATA.tst_non_rem.value, "tst_non_rem");
+  tst_non_rem.value = DATA.tst_non_rem.value;
+  tst_non_rem.dispatchEvent(new Event('calculated'));
+}
+
+// store l - r into result and return result
+// could rewrite to be smart actually
+function subtract_durations(result, l, r) {
+  let s = Number(l.toSeconds() - r.toSeconds());
+  if (result.h !== null) {
+    result.h = Math.floor(s/60/60);
+  }
+  if (result.m !== null) {
+    result.m = Math.floor(s/60 - result.h*60);
+  }
+  if (result.s !== null) {
+    result.s = Math.floor(s - result.m*60 - result.h*60*60);
+  }
+  return result;
+}
