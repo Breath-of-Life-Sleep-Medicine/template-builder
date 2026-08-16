@@ -45,6 +45,17 @@ data[key].data = {
 };
 let DATA = data[key].data;
 
+// clean function
+DATA.has_snoring.clean.fn = (value, id, k=key) => {
+  let d = data[k].data[id];
+  d.value = value.trim();
+  if (d.value == "true" || d.value == "false")
+    return;
+  d.value = "unknown";
+}
+
+// clean:{fn:clean_fn=clean_date, on:clean_on=true, change:clean_change=true}
+
 // update functions
 // - automatically runs on item when it is changed in the form (runs after clean function)
 // - ex: sum two inputs into another input when their values change
@@ -65,6 +76,18 @@ data[key].update = {
 // - for each id, if this is set, this setter function will run INSTEAD of the default template setter
 data[key].template_set = {
   bmi: () => bmi_na.checked ? "[]" : DATA.bmi.template.set("bmi"),
+  has_snoring: () => {
+    switch (DATA.has_snoring.value) {
+      case "unknown":
+        return "[] detected";
+      case "true":
+        return "detected";
+      case "false":
+        return "not detected";
+      default:
+        return "[] detected";
+    }
+  },
 };
 
 // functions that return the default data value

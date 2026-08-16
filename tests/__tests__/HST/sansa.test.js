@@ -18,8 +18,7 @@ const empty_form = {
     start:              {value:""},
     end:                {value:""},
     tst:                {value: {h: 0, m: 0}, class: "h m"},
-    tvt:                {value: {h: 0, m: 0}, class: "h m"},
-    tst_rem:            {value:""},
+    tst_rem:            {value: {h: 0, m: 0}, class: "h m"},
     ahi:                {value:""},
     cahi:               {value:""},
     odi:                {value:""},
@@ -37,7 +36,7 @@ const empty_form = {
     bmi_na:             {checked: false},
     // calculated
     trt:                {value:{h:0, m:0}, class:"calculated h m"},
-    tst_non_rem:        {value:"", class:"calculated"},
+    tst_non_rem:        {value:{h:0, m:0}, class:"calculated h m"},
     s_duration_percent: {value:"", class:"calculated"},
     // misc
     label_cahi:         {textContent: "", class: "centrals_percent"},
@@ -90,8 +89,8 @@ function setup_valid() {
   });
 }
 
-test("watchpat find_replace", () => {
-  let path = "HST/WatchPAT";
+test("sansa find_replace", () => {
+  let path = "HST/SANSA";
   let {template, expected} = tst.get_paths(path);
   setup_valid();
   expect(tst.get_lines(tst.find_replace(template))).toStrictEqual(tst.get_lines(tst.get_file_str(expected))); // ignore newline
@@ -104,7 +103,6 @@ test("empty form", () => {
     start:              "12:00 AM",
     end:                "12:00 AM",
     tst:                "0 minutes",
-    tvt:                "0 minutes",
     tst_rem:            "0 minutes",
     ahi:                "0.0",
     cahi:               "0.0",
@@ -118,7 +116,7 @@ test("empty form", () => {
     pulse_max:          "0",
     s_ahi:              "0.0",
     s_duration_min:     "0 minutes",
-    has_snoring:        "unknown",
+    has_snoring:        "[] detected",
     // calculated
     trt:                "0 minutes",
     tst_non_rem:        "0 minutes",
