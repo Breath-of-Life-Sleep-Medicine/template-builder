@@ -68,8 +68,7 @@ function setup_valid() {
       start:           {value: "22:00"}, // 10:00 PM
       end:             {value: "04:00"}, // 4:00 AM
       tst:             {value: {h: 4, m: 26}, class: "h m"}, // 266 min
-      tvt:             {value: {h: 4, m: 0}, class: "h m"},  // 240 min
-      tst_rem:         {value: "27"},    // 266 - 27 = 239 min
+      tst_rem:         {value: {h: 0, m: 27}, class: "h m"}, // 266 - 27 = 239 min
       ahi:             {value: "25.0"},
       cahi:            {value: "5.0"},   // 100 * 5 / 25 = 20%
       odi:             {value: "12.5"},

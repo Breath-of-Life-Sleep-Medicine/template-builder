@@ -85,9 +85,9 @@ data[key].template_set = {
       case "unknown":
         return "[] detected";
       case "true":
-        return "detected";
+        return "was detected";
       case "false":
-        return "not detected";
+        return "was not detected";
       default:
         return "[] detected";
     }

@@ -14,14 +14,14 @@ Physiological data were autoscored and then manually re-scored/analyzed accordin
 Hypopneas were scored using 3% oxygen desaturation.
 RECORDING SUMMARY
 The study started at 10:00 PM and ended at 4:00 AM. Total study time: 6 hours 0 minutes
-1. SANSA study with sleep time: 4 hours 0 minutes, REM: 27 minutes, non-REM: 239 minutes
+1. SANSA study with sleep time: 4 hours 26 minutes, REM: 27 minutes, non-REM: 3 hours 59 minutes
 2. RESPIRATORY EVENTS: AHI: 25.0/hr
 AHIc: 5.0/hr
 Total central events%: 20%
 ODI: 12.5 Events per hour
 REM AHI: 47.3/hr
 3. OXYGEN SATURATION: Mean: 95.2%, Minimum: 82.5%
-Duration of study with oxygen saturation <= 88%: 4.0 minutes
+Duration of study with oxygen saturation <= 88%: 4 minutes
 4. HEART RATE during sleep: Minimum: 60 BPM, Mean: 64 BPM, Maximum: 75 BPM
 5. Supine AHI: 35.1/hr, Duration Supine: 181 minutes/68% TST
 6. SNORING: was detected

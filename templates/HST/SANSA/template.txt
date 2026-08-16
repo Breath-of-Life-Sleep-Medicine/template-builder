@@ -23,8 +23,8 @@ REM AHI: ${rem_ahi}/hr
 3. OXYGEN SATURATION: Mean: ${ox_avg}%, Minimum: ${ox_min}%
 Duration of study with oxygen saturation <= 88%: ${od_duration_min}
 4. HEART RATE during sleep: Minimum: ${pulse_min} BPM, Mean: ${pulse_avg} BPM, Maximum: ${pulse_max} BPM
-5. Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_duration_min} Minutes/${s_duration_percent}% TST
-6. SNORING: ${has_snoring} Detected
+5. Supine AHI: ${s_ahi}/hr, Duration Supine: ${s_duration_min}/${s_duration_percent}% TST
+6. SNORING: ${has_snoring}
 IMPRESSIONS
 1. Technically adequate study
 2. ECG showed no significant cardiac abnormalities.

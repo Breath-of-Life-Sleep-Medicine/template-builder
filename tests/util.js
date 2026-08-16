@@ -104,6 +104,8 @@ function update_form(form) {
   Object.entries(form).map(([k, d]) =>{
     k = eval(k);
     Object.entries(d).map(([id, value]) => {
+      if (global[id] === undefined)
+        console.error(id, "is undefined");
       // set form
       global[id].value       = value.value;
       global[id].textContent = value.textContent;
