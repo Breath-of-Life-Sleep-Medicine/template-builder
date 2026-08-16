@@ -10,29 +10,29 @@ data[key].init = () => {
 // - contain value, type, clean functions, form getters and setters, template setters,
 //   and most settings relevant to data
 data[key].data = {
-  // bmi
-  // scored_at
-  // start
-  // end
-  // trt // calculated: end - start
-  // tst
-  // tst_rem
-  // tst_non_rem  // calculated: tst - tst_rem
-  // ahi
-  // cahi
-  // centrals_percent // calculated: 100 * cahi / ahi
-  // odi
-  // rem_ahi
-  // ox_avg
-  // ox_min
-  // od_duration
-  // pulse_min
-  // pulse_avg
-  // pulse_max
-  // s_ahi
-  // s_duration_min
-  // s_duration_percent // calculated: floor(100 * s_duration_min / tst)
-  // has_snoring
+  bmi: Defaults.index({precision: 2}),
+  scored_at: Defaults.percent({value:3, precision:0, min:3, max:4}),
+  start: Defaults.time(),
+  end: Defaults.time(),
+  trt: Defaults.duration({h:0, m:0}), // calculated: end - start
+  tst: Defaults.duration({h:0, m:0}),
+  tst_rem: Defaults.duration({h:0, m:0}),
+  tst_non_rem: Defaults.duration({h:0, m:0}), // calculated: tst - tst_rem
+  ahi: Defaults.index({precision: 1}),
+  cahi: Defaults.index({precision: 1}),
+  centrals_percent: Defaults.percent({precision: 0}), // calculated: 100 * cahi / ahi
+  odi: Defaults.index({precision: 1}),
+  rem_ahi: Defaults.index({precision: 1}),
+  ox_avg: Defaults.percent({precision: 1}),
+  ox_min: Defaults.percent({precision: 1}),
+  od_duration: Defaults.minutes({precision: 0}),
+  pulse_min: Defaults.pulse({precision: 0}),
+  pulse_avg: Defaults.pulse({precision: 0}),
+  pulse_max: Defaults.pulse({precision: 0}),
+  s_ahi: Defaults.index({precision: 1}),
+  s_duration_min: Defaults.minutes({precision: 0}),
+  s_duration_percent: Defaults.percent({precision: 0}), // calculated: floor(100 * s_duration_min / tst)
+  has_snoring: Defaults.string({value: "unknown"}),
   // has_snoring options: unknown, true, false
     // unknown: "[]"
     // true: "was detected"
