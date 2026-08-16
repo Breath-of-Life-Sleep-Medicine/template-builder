@@ -14,7 +14,7 @@ Physiological data were autoscored and then manually re-scored/analyzed accordin
 Hypopneas were scored using {scored_at}% oxygen desaturation.
 RECORDING SUMMARY
 The study started at ${start} and ended at ${end}. Total study time: ${trt}
-1. SANSA study with sleep time: ${tvt}, REM: ${tst_rem}, non-REM: ${tst_non_rem}
+1. SANSA study with sleep time: ${tst}, REM: ${tst_rem}, non-REM: ${tst_non_rem}
 2. RESPIRATORY EVENTS: AHI: ${ahi}/hr
 AHIc: ${cahi}/hr
 Total central events%: ${centrals_percent}%

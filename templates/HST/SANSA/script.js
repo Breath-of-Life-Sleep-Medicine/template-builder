@@ -16,7 +16,6 @@ data[key].data = {
   // end
   // trt // calculated: end - start
   // tst
-  // tvt // may or may not need tvt
   // tst_rem
   // tst_non_rem  // calculated: tst - tst_rem
   // ahi
