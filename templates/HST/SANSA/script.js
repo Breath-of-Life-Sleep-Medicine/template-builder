@@ -35,6 +35,9 @@ data[key].data = {
   pulse_max: Defaults.pulse({precision: 0}),
   s_ahi: Defaults.index({precision: 1}),
   s_duration_min: Defaults.minutes({precision: 0}),
+  // TODO: this should be a whole number and the min and max should be whole numbers
+  // clean? or something is not using the actual precision value... assumes precision is always 0.1
+  // initialize() in script.js
   s_duration_percent: Defaults.percent({precision: 0}), // calculated: floor(100 * s_duration_min / tst)
   has_snoring: Defaults.string({value: "unknown"}),
   // has_snoring options: unknown, true, false

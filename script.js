@@ -11,8 +11,8 @@ $(function(){
   path_base.pop();
   path_base = path_base.join('/');
 
-  load_script(key_global, load_form); // initialize data for main form
-  // once index script is loaded, load sub-form & initialize its data
+  // once index script is loaded (load_script), load sub-form & initialize its data (load_form)
+  load_script(key_global, load_form); // initialize data for default template
 
   // event listeners
   formID.addEventListener("submit", submit_copy);
@@ -61,7 +61,12 @@ function metadata(name) {
   return meta ? meta.content : undefined;
 }
 
+// initializes the form
+// assumes data is already initialized
 function initialize() {
+  // go through data & check for corresponding form elements
+  // update form elements based on data attributes (precision, min, max)
+
   let cls = document.getElementsByClassName("calculated");
   for (let elem of cls) {
     if (elem.type == "text" && elem.inputMode == "numeric") {
